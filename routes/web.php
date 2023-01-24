@@ -28,7 +28,7 @@ Route::get('/login', [AuthController::class, 'index'])->name('login')->middlewar
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
-Route::post('/register', [AuthController::class, 'registrate'])->name('register');
+Route::post('/register', [AuthController::class,'store'])->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout']);
 
