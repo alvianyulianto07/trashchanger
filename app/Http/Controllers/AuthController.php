@@ -42,4 +42,33 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
+    public function store(Request $request)
+    {
+        $validate= $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email|unique:users',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'password' => 'required|min:8',
+            'check' => 'required'
+        ]);
+        $role = 1;
+        if($request->check){
+            $role = 2;
+        }
+        $user = User::create([
+            'name' => $request->name,
+            'email' =>  $request->email,
+            'alamat' => $request->alamat,
+            'no_hp' => $request->no_hp,
+            'role' => 1,
+            'password' => Hash::make($request->password),
+        ]);
+        if($role == 1){
+            return redirect('/login')->with('success','Anda berhasil mendaftar');
+        } else {
+            return redirect('/daftarbanksampah')->with('success','Anda dapat melanjutkan mendaftar menjadi Bank Sampah');
+        }
+    }
+
 }
