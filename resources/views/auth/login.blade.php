@@ -39,6 +39,16 @@
                                 <div class="d-flex justify-content-center mb-4">
                                     <span class="fw-bold fs-5" style="color: #26a745;">TrashChanger Login</span>
                                 </div>
+                                @if(session('login_gagal'))
+                        
+                                    <div class="alert alert-warning alert-dismissible fade show error font-error ml-3" role="alert">
+                                     {{-- <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span> --}}
+                                        <span class="alert-inner--text"><strong>Peringatan!</strong> <br>Username atau password yang anda masukkan salah.</br> </span>
+                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
                                 <div class="col login">
                                     <form action="{{url('login')}}" method="POST" id="logForm" autocomplete="off">
                                         @csrf
@@ -71,7 +81,7 @@
                                             <button class="btn btn-success" type="submit">Masuk</button>
                                         </div>
                                         <div class="text-center">
-                                            <p>Belum punya akun? <a href="/auth/register" style="color: #26a745;">Daftar</a></p>
+                                            <p>Belum punya akun? <a href="/register" style="color: #26a745;">Daftar</a></p>
                                         </div>
                                     </form>
                                 </div>

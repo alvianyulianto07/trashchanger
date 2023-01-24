@@ -96,7 +96,7 @@
                                             <button class="btn btn-success" type="submit">Daftar</button>
                                         </div>
                                         <div class="text-center">
-                                            <p>Sudah punya akun? <a href="/auth/login" style="color: #26a745;">Masuk</a></p>
+                                            <p>Sudah punya akun? <a href="/login" style="color: #26a745;">Masuk</a></p>
                                         </div>
                                     </form>
                                 </div>
