@@ -37,7 +37,7 @@
                         <div class="d-flex align-items-center justify-content-center pt-3 pb-3 p-2">
                             <div class="card-body align-items-center">
                                 <div class="d-flex justify-content-center mb-4">
-                                    <span class="fw-bold fs-5">TrashChanger Login</span>
+                                    <span class="fw-bold fs-5" style="color: #26a745;">TrashChanger Login</span>
                                 </div>
                                 <div class="col login">
                                     <form action="{{url('login')}}" method="POST" id="logForm" autocomplete="off">
@@ -71,7 +71,7 @@
                                             <button class="btn btn-success" type="submit">Masuk</button>
                                         </div>
                                         <div class="text-center">
-                                            <p>Belum punya akun? <a href="/auth/register" class="text-primary">Daftar</a></p>
+                                            <p>Belum punya akun? <a href="/auth/register" style="color: #26a745;">Daftar</a></p>
                                         </div>
                                     </form>
                                 </div>

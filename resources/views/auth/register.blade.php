@@ -39,7 +39,7 @@
                         <div class="d-flex align-items-center justify-content-center pt-3 pb-1">
                             <div class="card-body align-items-center mx-2">
                                 <div class="d-flex justify-content-center mb-4">
-                                    <span class="fw-bold fs-5">TrashChanger Register</span>
+                                    <span class="fw-bold fs-5" style="color: #26a745;">TrashChanger Register</span>
                                 </div>
                                 <div class="col m-0">
                                     <form action="{{url('register')}}" method="POST" id="regForm" autocomplete="off" class="p-0 m-0">
@@ -96,7 +96,7 @@
                                             <button class="btn btn-success" type="submit">Daftar</button>
                                         </div>
                                         <div class="text-center">
-                                            <p>Sudah punya akun? <a href="/auth/login" class="text-primary">Masuk</a></p>
+                                            <p>Sudah punya akun? <a href="/auth/login" style="color: #26a745;">Masuk</a></p>
                                         </div>
                                     </form>
                                 </div>
