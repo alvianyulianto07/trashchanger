@@ -1,0 +1,16 @@
+/* COLOR */
+:root{
+    --main-green: #26a745;
+}
+
+.fa-brands {
+    font-size: 23px;
+}
+
+.icon-left .fa-brands {
+    color: var(--main-green);
+}
+
+.navbar-brand {
+    font-size: 18px;
+}
