@@ -14,3 +14,16 @@
 .navbar-brand {
     font-size: 18px;
 }
+
+ul {
+    text-decoration: none;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mydiv {
+    text-align: right;
+}

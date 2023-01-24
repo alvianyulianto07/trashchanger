@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
-    
+
+
+
 </head>
 
 <style>
@@ -26,8 +28,12 @@
     <div>
         @yield('konten')
     </div>
+
+    <script src="{{ asset('assets/modules/popper.js') }}"></script>
+    <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
 </body>
 
-<script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+
 
 </html>
