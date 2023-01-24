@@ -45,7 +45,7 @@
                                     <form action="{{url('register')}}" method="POST" id="regForm" autocomplete="off" class="p-0 m-0">
                                         @csrf
                                         <div class="form-group mb-3">
-                                            <label class="form-label" for="nama">Nama</label>
+                                            <label class="form-label" for="name">Nama</label>
                                             <input
                                                 class="form-control"
                                                 id="name"
@@ -55,7 +55,6 @@
                                                 placeholder="Masukkan Nama"/>
                                         </div>
                                         <div class="form-group mb-3">
-                                            
                                             <label class="form-label" for="email">Email</label>
                                             <input
                                                 class="form-control"
@@ -66,6 +65,32 @@
                                                 placeholder="Masukkan Email"/>
                                             @if($errors->has('email'))
                                             <span class="error font-error text-danger">Email wajib diisi!</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="no_hp">No HP</label>
+                                            <input
+                                                class="form-control"
+                                                id="no_hp"
+                                                name="no_hp"
+                                                type="text"
+                                                value="{{old('no_hp')}}"
+                                                placeholder="Masukkan No HP"/>
+                                            @if($errors->has('no_hp'))
+                                            <span class="error font-error text-danger">No HP wajib diisi!</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="alamat">Alamat</label>
+                                            <input
+                                                class="form-control"
+                                                id="alamat"
+                                                name="alamat"
+                                                type="text"
+                                                value="{{old('alamat')}}"
+                                                placeholder="Masukkan Alamat"/>
+                                            @if($errors->has('alamat'))
+                                            <span class="error font-error text-danger">Alamat wajib diisi!</span>
                                             @endif
                                         </div>
                                         <div class="form-group mb-3">
@@ -84,7 +109,7 @@
                                             <label class="form-label" for="inputPassword2">Konfirmasi Password</label>
                                             <input
                                                 class="form-control"
-                                                id="inputPassword2"
+                                                id="password_confirmation"
                                                 type="password"
                                                 name="password_confirmation"
                                                 placeholder="Masukkan Password Konfirmasi"/>
@@ -93,7 +118,7 @@
                                             @endif
                                         </div>
                                         <div class="form-check mb-4">
-                                            <input class="form-check-input" type="checkbox" value="" id="form2Example31"/>
+                                            <input class="form-check-input" name="check" type="checkbox" id="check"/>
                                             <label class="form-check-label" for="form2Example31"> Daftar Bank Sampah </label>
                                         </div>
                                         <div class="d-grid gap-2 mb-2">

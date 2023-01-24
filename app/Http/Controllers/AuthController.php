@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -45,19 +47,19 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $validate= $request->validate([
-            'nama' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
             'alamat' => 'required',
             'no_hp' => 'required',
             'password' => 'required|min:8',
-            'check' => 'required'
+            'password_confirmation' => 'required|same:password'
         ]);
         $role = 1;
         if($request->check){
             $role = 2;
         }
         $user = User::create([
-            'name' => $request->name,
+            'nama' => $request->name,
             'email' =>  $request->email,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
