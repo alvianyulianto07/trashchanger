@@ -92,6 +92,10 @@
                                             <span class="error font-error text-danger">Password tidak sama!</span>
                                             @endif
                                         </div>
+                                        <div class="form-check mb-4">
+                                            <input class="form-check-input" type="checkbox" value="" id="form2Example31"/>
+                                            <label class="form-check-label" for="form2Example31"> Daftar Bank Sampah </label>
+                                        </div>
                                         <div class="d-grid gap-2 mb-2">
                                             <button class="btn btn-success" type="submit">Daftar</button>
                                         </div>
