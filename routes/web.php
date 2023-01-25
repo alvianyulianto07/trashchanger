@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,15 +28,19 @@ Route::get('/login', [AuthController::class, 'index'])->name('login')->middlewar
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
-Route::post('/register', [AuthController::class,'store'])->name('register');
+Route::post('/register', [AuthController::class, 'store'])->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout']);
-
+// group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
+Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
+    Route::get('/daftarbanksampah', [AuthController::class, 'daftarbanksampah'])->name('daftarbanksampah');
+    Route::post('/daftarbanksampah', [AuthController::class, 'create'])->name('daftarbanksampah');
+});
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
-Route::group(['middleware' => ['auth','cekrole:0,1,2']], function(){
+Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
     Route::resources([
         'beranda' => BerandaController::class,
-        
+
     ]);
 });

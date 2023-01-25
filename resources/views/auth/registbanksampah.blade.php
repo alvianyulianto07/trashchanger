@@ -35,97 +35,30 @@
         <main>
             <div class="container">
                 <div class="d-flex align-items-center justify-content-center vh-100">
-                    <div class="card register" style="width: 800px">
+                    <div class="card register" style="width: 400px">
                         <div class="d-flex align-items-center justify-content-center pt-3 pb-1">
                             <div class="card-body align-items-center mx-2">
                                 <div class="d-flex justify-content-center mb-4">
-                                    <span class="fw-bold fs-5" style="color: #26a745;">Daftar</span>
+                                    <span class="fw-bold fs-5" style="color: #26a745;">Daftar Sebagai Bank Sampah</span>
                                 </div>
                                 <div class="col m-0">
-                                    <form action="{{url('register')}}" method="POST" id="regForm" autocomplete="off" class="p-0 m-0">
+                                    <form action="{{url('daftarbanksampah')}}" method="POST" id="regForm" autocomplete="off" class="p-0 m-0">
                                         @csrf
                                         <div class="form-group mb-3">
-                                            <label class="form-label" for="name">Nama</label>
+                                            <label class="form-label" for="name">Nama Bank Sampah</label>
                                             <input
                                                 class="form-control"
                                                 id="name"
                                                 name="name"
                                                 type="text"
                                                 value="{{old('name')}}"
-                                                placeholder="Masukkan Nama"/>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="form-label" for="email">Email</label>
-                                            <input
-                                                class="form-control"
-                                                id="email"
-                                                name="email"
-                                                type="text"
-                                                value="{{old('email')}}"
-                                                placeholder="Masukkan Email"/>
-                                            @if($errors->has('email'))
-                                            <span class="error font-error text-danger">Email wajib diisi!</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="form-label" for="no_hp">No HP</label>
-                                            <input
-                                                class="form-control"
-                                                id="no_hp"
-                                                name="no_hp"
-                                                type="text"
-                                                value="{{old('no_hp')}}"
-                                                placeholder="Masukkan No HP"/>
-                                            @if($errors->has('no_hp'))
-                                            <span class="error font-error text-danger">No HP wajib diisi!</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="form-label" for="alamat">Alamat</label>
-                                            <input
-                                                class="form-control"
-                                                id="alamat"
-                                                name="alamat"
-                                                type="text"
-                                                value="{{old('alamat')}}"
-                                                placeholder="Masukkan Alamat"/>
-                                            @if($errors->has('alamat'))
-                                            <span class="error font-error text-danger">Alamat wajib diisi!</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label class="form-label" for="inputPassword">Password</label>
-                                            <input
-                                                class="form-control"
-                                                id="inputPassword"
-                                                type="password"
-                                                name="password"
-                                                placeholder="Masukkan Password"/>
-                                            @if($errors->has('password'))
-                                            <span class="error font-error text-danger">Password wajib diisi!</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="form-label" for="inputPassword2">Konfirmasi Password</label>
-                                            <input
-                                                class="form-control"
-                                                id="password_confirmation"
-                                                type="password"
-                                                name="password_confirmation"
-                                                placeholder="Masukkan Password Konfirmasi"/>
-                                            @if($errors->has('password_confirmation'))
-                                            <span class="error font-error text-danger">Password tidak sama!</span>
-                                            @endif
-                                        </div>
-                                        <div class="form-check mb-4">
-                                            <input class="form-check-input" name="check" type="checkbox" id="check"/>
-                                            <label class="form-check-label" for="form2Example31"> Daftar Bank Sampah </label>
+                                                placeholder="Masukkan Nama Bank Sampah"/>
                                         </div>
                                         <div class="d-grid gap-2 mb-2">
-                                            <button class="btn btn-success" type="submit">Daftar</button>
+                                            <button class="btn btn-success" type="submit">Ajukan</button>
                                         </div>
                                         <div class="text-center">
-                                            <p>Sudah punya akun? <a href="/login" style="color: #26a745;">Masuk</a></p>
+                                            <p><a href="/login" style="color: #26a745;">Kembali</a></p>
                                         </div>
                                     </form>
                                 </div>

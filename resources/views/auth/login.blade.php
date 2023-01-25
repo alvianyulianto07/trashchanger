@@ -37,7 +37,7 @@
                         <div class="d-flex align-items-center justify-content-center pt-3 pb-3 p-2">
                             <div class="card-body align-items-center">
                                 <div class="d-flex justify-content-center mb-4">
-                                    <span class="fw-bold fs-5" style="color: #26a745;">TrashChanger Login</span>
+                                    <span class="fw-bold fs-5" style="color: #26a745;">Masuk</span>
                                 </div>
                                 @if(session('login_gagal'))
                         
