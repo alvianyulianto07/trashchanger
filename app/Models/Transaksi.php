@@ -11,6 +11,7 @@ class Transaksi extends Model
     protected $fillable = [
         'users_id',
         'bankSampah_id',
+        'sampah_id',
         'jumlah_barang',
         'total_harga',
         'tanggal',
@@ -22,5 +23,8 @@ class Transaksi extends Model
     }
     public function bank_sampah(){
     	return $this->belongsTo(BankSampah::class);
+    }
+    public function sampah(){
+    	return $this->belongsTo(Sampah::class);
     }
 }
