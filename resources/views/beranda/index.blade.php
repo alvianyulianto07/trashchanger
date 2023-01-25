@@ -107,7 +107,12 @@
             </div>
         </div>
 
+        {{-- PRODUCT GRID --}}
+        <div class="container">
+            <div class="card">
 
+            </div>
+        </div>
 
     </div>
 @endsection
