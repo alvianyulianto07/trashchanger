@@ -66,3 +66,37 @@ ul {
 .carousel .carousel-control {
   border-radius: 10px;
 }
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.product-grid .cost {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.product-grid .kategori {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--main-green);
+    margin-bottom: 5;
+}
+
+.product-grid .bank-name {
+    font-size: 12px;
+    font-weight: 300;
+    margin: 0;
+}
+
+.product-grid .item {
+    cursor: pointer;
+}
+
+.product-grid .item:hover {
+    box-shadow: 0 0 20px hsla(0, 0%, 0%, 0.1);
+}
+

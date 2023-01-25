@@ -19,11 +19,14 @@
                             height="30" alt="Avatar" loading="lazy" />
                         Admin
                     </a>
-                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Logout</a>
-                    </div>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </div>
+                    </form>
                 </li>
             </div>
         </nav>
@@ -109,10 +112,58 @@
 
         {{-- PRODUCT GRID --}}
         <div class="container">
-            <div class="card">
-
+            <div class="product-grid card mx-4 mb-3 p-3">
+                <div class="card item">
+                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                    <div class="m-2">
+                        <h3 class="kategori">Kategori</h3>
+                        <p class="cost">Rp. 25.000,00</p>
+                        <p class="bank-name">Nama Bank Sampah</p>
+                    </div>
+                </div>
+                <div class="card item">
+                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                    <div class="m-2">
+                        <h3 class="kategori">Kategori</h3>
+                        <p class="cost">Rp. 25.000,00</p>
+                        <p class="bank-name">Nama Bank Sampah</p>
+                    </div>
+                </div>
+                <div class="card item">
+                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                    <div class="m-2">
+                        <h3 class="kategori">Kategori</h3>
+                        <p class="cost">Rp. 25.000,00</p>
+                        <p class="bank-name">Nama Bank Sampah</p>
+                    </div>
+                </div>
+                <div class="card item">
+                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                    <div class="m-2">
+                        <h3 class="kategori">Kategori</h3>
+                        <p class="cost">Rp. 25.000,00</p>
+                        <p class="bank-name">Nama Bank Sampah</p>
+                    </div>
+                </div>
+                <div class="card item">
+                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                    <div class="m-2">
+                        <h3 class="kategori">Kategori</h3>
+                        <p class="cost">Rp. 25.000,00</p>
+                        <p class="bank-name">Nama Bank Sampah</p>
+                    </div>
+                </div>
             </div>
         </div>
 
+        {{-- FOOTER --}}
+        <footer class="bg-light text-center text-lg-start">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: #26a745; color: antiquewhite;">
+                © 2022 Copyright:
+                <a class="text-light" href="https://mdbootstrap.com/">Trashchanger.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
     </div>
 @endsection
