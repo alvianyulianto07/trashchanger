@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BankSampahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
 Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
     Route::resources([
         'beranda' => BerandaController::class,
+        'banksampah' => BankSampahController::class,
 
     ]);
 });
