@@ -42,6 +42,14 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
 Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
     Route::resources([
         'beranda' => BerandaController::class,
+
+    ]);
+});
+
+
+// group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
+Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
+    Route::resources([
         'banksampah' => BankSampahController::class,
 
     ]);
