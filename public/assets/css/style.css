@@ -1,18 +1,24 @@
 /* COLOR */
 :root{
     --main-green: #26a745;
+    --main-gray: hsl(0, 0%, 33%);
 }
 
 .fa-brands {
-    font-size: 23px;
+    font-size: 20px;
 }
 
 .icon-left .fa-brands {
+    color: var(--main-gray);
+}
+
+.icon-left .fa-brands:hover {
     color: var(--main-green);
 }
 
 .navbar-brand {
     font-size: 18px;
+    font-weight: 600;
 }
 
 ul {
@@ -24,6 +30,39 @@ ul {
     justify-content: flex-end;
 }
 
-.mydiv {
-    text-align: right;
+.dropdown-profile {
+    font-size: 16px;
+}
+
+.fam {
+    font-size: 25px;
+    margin-right: 40px;
+    color: var(--main-green);
+}
+
+.btn-outline-search {
+    background-color: var(--main-green);
+    color: white;
+}
+
+.btn-outline-search:hover {
+    background-color: var(--main-gray);
+    color: white;
+}
+
+.kategori {
+    font-weight: 700;
+}
+
+.item-kategori {
+    cursor: pointer;
+    color: var(--main-green);
+}
+
+.carousel, .slide,
+.carousel .carousel-inner,
+.carousel .carousel-item,
+.carousel .carousel-item img,
+.carousel .carousel-control {
+  border-radius: 10px;
 }
