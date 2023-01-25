@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\BankSampah;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class BankSampahController extends Controller
