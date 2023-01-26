@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         //
         $users = User::all();
-        return view('users.index', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         //
         $users = User::findorfail($id);
-        return view('users.show', compact('users'));
+        return view('admin.users.show', compact('users'));
     }
 
     /**
@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         //
         $users = User::findorfail($id);
-        return view('users.edit', compact('users'));
+        return view('admin.users.edit', compact('users'));
     }
     /**
      * Update the specified resource in storage.

@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
     Route::resources([
         'toko' => TokoController::class,
         'keranjang' => KeranjangController::class,
-        'pembelian' => PembelianController::class,ss,
+        'pembelian' => PembelianController::class,
         'profil' => ProfilController::class,
     ]);
 });
