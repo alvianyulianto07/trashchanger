@@ -13,13 +13,14 @@ class PenjualanController extends Controller
     public function index()
     {
         //
-        $penjualan = Transaksi::where('bank', Auth::user()->id)->get();
+        $banksampah = BankSampah::where('users_id', Auth::user()->id)->get();
         $banksampahid = 0;
-        foreach($banksampah as $data){
+        foreach ($banksampah as $data) {
             $banksampahid = $data->id;
         }
-        $sampah = Sampah::where('bankSampah_id', $banksampahid)->get();
-        return view('banksampah.penjualan.index', compact('sampah'));
+        $penjualan = Transaksi::where('bankSampah_id', $banksampahid)->get();
+
+        return view('banksampah.penjualan.index', compact('penjualan'));
     }
 
     /**
@@ -28,31 +29,7 @@ class PenjualanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $validate = $request->validate([
-            'name' => 'required',
-            'jumlah' => 'required',
-            'harga' => 'required',
-            'kategori' => 'required',
-        ]);
-
-        $id = Auth::user()->id;
-        $banksampah = BankSampah::where('users_id', $id);
-        $banksampahid = 0;
-        foreach($banksampah as $data){
-            $banksampahid = $data->id;
-        }
-
-        $sampah = Sampah::create([
-            'nama_sampah' => $request->name,
-            'jumlah' => $request->jumlah,
-            'harga' => $request->harga,
-            'bankSampah_id' => $banksampahid,
-            'kategori_id' => $request->kategori,
-        ]);
-
-        return redirect('/sampah')->with('success', 'Penambahan Sampah Berhasil');
-        //
+    { //
     }
 
     /**
@@ -75,8 +52,8 @@ class PenjualanController extends Controller
     public function show($id)
     {
         //
-        $sampah = Sampah::findOrFail($id);
-        return view('banksampah.sampah.show', compact('sampah'));
+        $transaksi = Transaksi::findOrFail($id);
+        return view('banksampah.penjualan.show', compact('transaksi'));
     }
 
     /**
@@ -88,8 +65,8 @@ class PenjualanController extends Controller
     public function edit($id)
     {
         //
-        $sampah = Sampah::findOrFail($id);
-        return view('banksampah.sampah.edit', compact('sampah'));
+        $transaksi = Transaksi::findOrFail($id);
+        return view('banksampah.penjualan.edit', compact('transaksi'));
     }
     /**
      * Update the specified resource in storage.
@@ -101,20 +78,14 @@ class PenjualanController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            'name' => 'required',
-            'jumlah' => 'required',
-            'harga' => 'required',
-            'kategori' => 'required',
+            'status' => 'required',
         ]);
-        $sampah = Sampah::findOrFail($id);
-        $sampah->nama_sampah = $request->name;
-        $sampah->jumlah = $request->jumlah;
-        $sampah->harga = $request->harga;
-        $sampah->kategori_id = $request->kategori;
-        $sampah->save();
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->status = $request->status;
+        $transaksi->save();
 
-        return redirect()->route('sampah.index')->with('success', 'Data sampah anda berhasil diperbarui');
-    
+        return redirect()->route('penjualan.index')->with('success', 'Data penjualan anda berhasil diperbarui');
+
     }
 
     /**
