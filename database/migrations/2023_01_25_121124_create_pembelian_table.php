@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('pembelian', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('jumlah_barang');
-            $table->string('total_harga');
+            $table->string('jumlah_total');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('pembelian');
     }
 };
