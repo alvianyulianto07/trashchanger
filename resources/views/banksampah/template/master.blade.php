@@ -5,28 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Situs Jual Beli Sampah | TrashChanger</title>
+    <title>Manajemen Bank Sampah | TrashChanger</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/banksampah.css') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/modules/datatable/datatables.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/banksampah.css') }}">
 
-    <script src="{{ asset('assets/modules/datatable/datatable.min.js') }}"></script>
+    <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('assets/modules/datatable/datatables.js') }}"></script>
     <script src="{{ asset('assets/modules/popper.js') }}"></script>
     <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/banksampah.js') }}"></script>
-
-
 
 </head>
 
 <style>
     body {
         font-family: "Poppins";
+        font-size: 12px;
     }
 </style>
 
@@ -42,7 +42,7 @@
                     </ul>
                 </form>
                 <ul class="navbar-nav">
-                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-list">
                     </div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -51,7 +51,7 @@
                         </a>
                         <form action="/logout" method="POST">
                             @csrf
-                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <button type="submit" class="dropdown-item">Logout</button>
                             </div>
                         </form>
