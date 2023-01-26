@@ -1,7 +1,7 @@
 @extends('banksampah.template.master')
 @section('konten')
     <div class="card">
-        <form id="form" action="#" method="POST" enctype="multipart/form-data">
+        <form id="form" action="{{ route('sampah.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="m-4">
                 <div class="row pl-0 pr-0">
@@ -20,7 +20,9 @@
                                 <div class="col-sm-10">
                                     <select class="select2 col-sm-12" name="kategori" data-placeholder="Pilih kategori">
                                         <option>Pilih kategori</option>
-                                        <option value="">Tes</option>
+                                        <option value="1">Plastik</option>
+                                        <option value="2">Botol</option>
+                                        <option value="3">Besi</option>
                                     </select>
                                 </div>
                             </div>
@@ -28,7 +30,7 @@
                         <div class="mb-3 row align-items-center">
                             <label for="inputNamaSampah" class="col-sm-2 col-form-label font-form">Nama</label>
                             <div class="col-sm-10">
-                                <input type="text" name="kilometer" value="" required="required"
+                                <input type="text" name="name" value="{{ old('name') }}" required="required"
                                     class="form-control" placeholder="Masukkan Nama Sampah"
                                     id="nama_sampah">
                             </div>
@@ -36,19 +38,19 @@
                         <div class="mb-3 row align-items-center">
                             <label for="inputJumlah"  class="col-sm-2 col-form-label font-form">Jumlah</label>
                                 <div class="col-sm-10 col-form-label">
-                                    <input type="number" name="jumlah" value="" required="required" class="form-control form-control-size" placeholder="Masukkan Jumlah Sampah" id="jumlah">
+                                    <input type="number" name="jumlah" value="{{ old('jumlah') }}" required="required" class="form-control form-control-size" placeholder="Masukkan Jumlah Sampah" id="jumlah">
                                 </div>
                         </div>
                         <div class="mb-3 row align-items-center">
                             <label for="inputHarga"  class="col-sm-2 col-form-label font-form">Harga</label>
                                 <div class="col-sm-10 col-form-label">
-                                    <input type="number" name="harga" value="" required="required" class="form-control form-control-size" placeholder="Masukkan Harga Sampah" id="harga">
+                                    <input type="text" name="harga" value="{{ old('harga') }}" required="required" class="form-control form-control-size" placeholder="Masukkan Harga Sampah" id="harga">
                                 </div>
                         </div>
                         <div class="mb-3 row align-items-center">
                             <label for="file-upload" class="col-sm-2 col-form-label font-form">Foto Sampah</label>
                             <div class="form-floating col-sm-10">
-                                <input class="form-control file-upload " accept="image/*" name="foto[]" type="file"
+                                <input class="form-control file-upload " accept="image/*" name="foto" type="file"
                                     id="file-upload" multiple></input>
                             </div>
                         </div>
