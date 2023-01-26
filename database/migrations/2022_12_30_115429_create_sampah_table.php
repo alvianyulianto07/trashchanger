@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_sampah');
             $table->string('jumlah');
             $table->string('harga');
+            $table->string('foto');
             $table->timestamps();
         });
     }
