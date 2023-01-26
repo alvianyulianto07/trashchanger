@@ -1,4 +1,4 @@
-@extends('banksampahtemplate.master')
+@extends('banksampah.template.master')
 @section('konten')
     
 @endsection

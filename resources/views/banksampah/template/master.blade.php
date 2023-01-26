@@ -59,7 +59,7 @@
                 </ul>
             </nav>
 
-            @include('banksampahtemplate.sidebar')
+            @include('banksampah.template.sidebar')
 
             <!-- Main Content -->
             <div class="main-content">
