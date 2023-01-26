@@ -18,21 +18,23 @@
                     </tr>
                 </thead>
                 <tr>
-                    <td>1</td>
-                    <td>Foto Sampah</td>
-                    <td>Plastik</td>
-                    <td>Kresek Hitam</td>
-                    <td>100</td>
-                    <td>25.000</td>
-                    <td>
-                        <form id="" class="p-0" action="" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                        </form>
-                    </td>
+                    @foreach ($sampah as $s)
+                        <td>{{$loop->iteration}}</td>
+                        <td>Foto Sampah</td>
+                        <td>{{$s->kategori}}</td>
+                        <td>Kresek Hitam</td>
+                        <td>100</td>
+                        <td>25.000</td>
+                        <td>
+                            <form id="" class="p-0" action="" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                            </form>
+                        </td>
+                    @endforeach
                 </tr>
             </table>
         </div>

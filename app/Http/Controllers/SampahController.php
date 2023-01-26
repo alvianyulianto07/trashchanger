@@ -56,7 +56,7 @@ class SampahController extends Controller
         ]);
 
         $id = Auth::user()->id;
-        $banksampah = BankSampah::where('users_id', $id);
+        $banksampah = BankSampah::where('users_id', $id)->get();
         $banksampahid = 0;
         foreach($banksampah as $data){
             $banksampahid = $data->id;
