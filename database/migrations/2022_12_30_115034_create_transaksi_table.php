@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('jumlah_barang');
             $table->string('total_harga');
+            $table->string('status');
             $table->timestamps();
         });
     }

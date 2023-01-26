@@ -72,6 +72,7 @@ class SampahController extends Controller
             $request->file('foto')->storeAs('foto', $newName);
         }
 
+
         $sampah = Sampah::create([
             'nama_sampah' => $request->name,
             'jumlah' => $request->jumlah,
