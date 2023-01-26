@@ -34,30 +34,8 @@ class SampahController extends Controller
      */
     public function create()
     {
-        $validate = $request->validate([
-            'name' => 'required',
-            'jumlah' => 'required',
-            'harga' => 'required',
-            'kategori' => 'required',
-        ]);
-
-        $id = Auth::user()->id;
-        $banksampah = BankSampah::where('users_id', $id);
-        $banksampahid = 0;
-        foreach($banksampah as $data){
-            $banksampahid = $data->id;
-        }
-
-        $sampah = Sampah::create([
-            'nama_sampah' => $request->name,
-            'jumlah' => $request->jumlah,
-            'harga' => $request->harga,
-            'bankSampah_id' => $banksampahid,
-            'kategori_id' => $request->kategori,
-        ]);
-
-        return redirect('/sampah')->with('success', 'Penambahan Sampah Berhasil');
         //
+        return view('banksampah.sampah.create');
     }
 
     /**
@@ -69,6 +47,41 @@ class SampahController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'name' => 'required',
+            'jumlah' => 'required',
+            'harga' => 'required',
+            'kategori' => 'required',
+            'foto' => 'required'
+        ]);
+
+        $id = Auth::user()->id;
+        $banksampah = BankSampah::where('users_id', $id);
+        $banksampahid = 0;
+        foreach($banksampah as $data){
+            $banksampahid = $data->id;
+        }
+
+        $num = rand(1, 100);
+        $basenamefile = str_replace(' ', '_', $request->name);
+
+        $newName = "";
+        if ($request->hasFile('foto')) {
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $newName = $basenamefile . '&upd=' . $num . '.' . $extension;
+            $request->file('foto')->storeAs('foto', $newName);
+        }
+
+        $sampah = Sampah::create([
+            'nama_sampah' => $request->name,
+            'jumlah' => $request->jumlah,
+            'harga' => $request->harga,
+            'bankSampah_id' => $banksampahid,
+            'kategori_id' => $request->kategori,
+            'foto' => $newName,
+        ]);
+
+        return redirect('/sampah')->with('success', 'Penambahan Sampah Berhasil');
     }
 
     /**
