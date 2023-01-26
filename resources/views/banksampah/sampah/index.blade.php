@@ -18,13 +18,13 @@
                     </tr>
                 </thead>
                 <tr>
-                    @foreach ($sampah as $s)
-                        <td>{{$loop->iteration}}</td>
-                        <td>Foto Sampah</td>
-                        <td>{{$s->kategori}}</td>
-                        <td>Kresek Hitam</td>
-                        <td>100</td>
-                        <td>25.000</td>
+                    @foreach ($sampah as $data)
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $data->foto }}</td>
+                        <td>{{ $data->kategori_id }}</td>
+                        <td>{{ $data->nama_sampah }}</td>
+                        <td>{{ $data->jumlah }}</td>
+                        <td>{{ $data->harga }}</td>
                         <td>
                             <form id="" class="p-0" action="" method="POST">
                                 @method('DELETE')
