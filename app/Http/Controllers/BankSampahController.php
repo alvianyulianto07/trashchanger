@@ -16,7 +16,7 @@ class BankSampahController extends Controller
     {
         //
         $banksampah = BankSampah::all();
-        return view('banksampah.index', compact('banksampah'));
+        return view('admin.banksampah.index', compact('banksampah'));
     }
 
     /**
@@ -49,8 +49,8 @@ class BankSampahController extends Controller
     public function show($id)
     {
         //
-        $banksampah = BankSampah::findorfail($id);
-        return view('banksampah.show', compact('banksampah'));
+        $banksampah = BankSampah::findOrFail($id);
+        return view('admin.banksampah.show', compact('banksampah'));
     }
 
     /**
@@ -62,8 +62,8 @@ class BankSampahController extends Controller
     public function edit($id)
     {
         //
-        $banksampah = BankSampah::findorfail($id);
-        return view('banksampah.edit', compact('banksampah'));
+        $banksampah = BankSampah::findOrFail($id);
+        return view('admin.banksampah.edit', compact('banksampah'));
     }
     /**
      * Update the specified resource in storage.

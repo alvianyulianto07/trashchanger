@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TokoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SampahController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\BankSampahController;
 
 /*
@@ -43,7 +49,24 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
 Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
     Route::resources([
         'beranda' => BerandaController::class,
+    ]);
+});
 
+// group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
+Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
+    Route::resources([
+        'user' => UserController::class,
+        'banksampah' => BankSampahController::class,
+    ]);
+});
+
+// group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
+Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
+    Route::resources([
+        'toko' => TokoController::class,
+        'keranjang' => KeranjangController::class,
+        'pembelian' => PembelianController::class,ss,
+        'profil' => ProfilController::class,
     ]);
 });
 
@@ -51,6 +74,8 @@ Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
 Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
     Route::resources([
         'sampah' => SampahController::class,
-
+        'penjualan' => PenjualanController::class,
+        'profil' => ProfilController::class,
     ]);
 });
+

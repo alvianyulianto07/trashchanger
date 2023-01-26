@@ -80,7 +80,7 @@ class SampahController extends Controller
     public function show($id)
     {
         //
-        $sampah = Sampah::findorfail($id);
+        $sampah = Sampah::findOrFail($id);
         return view('banksampah.sampah.show', compact('sampah'));
     }
 
@@ -93,7 +93,7 @@ class SampahController extends Controller
     public function edit($id)
     {
         //
-        $sampah = Sampah::findorfail($id);
+        $sampah = Sampah::findOrFail($id);
         return view('banksampah.sampah.edit', compact('sampah'));
     }
     /**
@@ -111,7 +111,7 @@ class SampahController extends Controller
             'harga' => 'required',
             'kategori' => 'required',
         ]);
-        $sampah = Sampah::findorfail($id);
+        $sampah = Sampah::findOrFail($id);
         $sampah->nama_sampah = $request->name;
         $sampah->jumlah = $request->jumlah;
         $sampah->harga = $request->harga;
