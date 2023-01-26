@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SampahController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\BankSampahController;
 
@@ -46,11 +47,10 @@ Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
     ]);
 });
 
-
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
 Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
     Route::resources([
-        'banksampah' => BankSampahController::class,
+        'sampah' => SampahController::class,
 
     ]);
 });

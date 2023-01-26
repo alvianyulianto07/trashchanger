@@ -18,8 +18,13 @@ class SampahController extends Controller
     public function index()
     {
         //
-        $sampah = Sampah::all();
-        return view('sampah.index', compact('sampah'));
+        $banksampah = BankSampah::where('users_id', Auth::user()->id)->get();
+        $banksampahid = 0;
+        foreach($banksampah as $data){
+            $banksampahid = $data->id;
+        }
+        $sampah = Sampah::where('bankSampah_id', $banksampahid)->get();
+        return view('banksampah.sampah.index', compact('sampah'));
     }
 
     /**
@@ -37,17 +42,21 @@ class SampahController extends Controller
         ]);
 
         $id = Auth::user()->id;
-        $id_banksampah = BankSampah::where('$users_id', $id);
+        $banksampah = BankSampah::where('users_id', $id);
+        $banksampahid = 0;
+        foreach($banksampah as $data){
+            $banksampahid = $data->id;
+        }
 
-        $user = User::create([
+        $sampah = Sampah::create([
             'nama_sampah' => $request->name,
             'jumlah' => $request->jumlah,
             'harga' => $request->harga,
-            'bankSampah_id' => $id_banksampah,
-            'kategori' => $request->kategori,
+            'bankSampah_id' => $banksampahid,
+            'kategori_id' => $request->kategori,
         ]);
 
-        return redirect('/banksampah')->with('success', 'Penambahan Sampah Berhasil');
+        return redirect('/sampah')->with('success', 'Penambahan Sampah Berhasil');
         //
     }
 
@@ -72,7 +81,7 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findorfail($id);
-        return view('sampah.show', compact('sampah'));
+        return view('banksampah.sampah.show', compact('sampah'));
     }
 
     /**
@@ -85,7 +94,7 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findorfail($id);
-        return view('sampah.edit', compact('sampah'));
+        return view('banksampah.sampah.edit', compact('sampah'));
     }
     /**
      * Update the specified resource in storage.
@@ -100,14 +109,16 @@ class SampahController extends Controller
             'name' => 'required',
             'jumlah' => 'required',
             'harga' => 'required',
+            'kategori' => 'required',
         ]);
         $sampah = Sampah::findorfail($id);
         $sampah->nama_sampah = $request->name;
         $sampah->jumlah = $request->jumlah;
         $sampah->harga = $request->harga;
+        $sampah->kategori_id = $request->kategori;
         $sampah->save();
 
-        return redirect()->route('pelanggan.index')->with('success', 'Data sampah anda berhasil diupdate');
+        return redirect()->route('sampah.index')->with('success', 'Data sampah anda berhasil diperbarui');
     
     }
 
