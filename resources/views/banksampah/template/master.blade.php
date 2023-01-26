@@ -13,12 +13,14 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/modules/datatable/datatables.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/banksampah.css') }}">
 
     <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/modules/datatable/datatables.js') }}"></script>
     <script src="{{ asset('assets/modules/popper.js') }}"></script>
     <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js')}}"></script>
     <script src="{{ asset('assets/js/banksampah.js') }}"></script>
 
 </head>

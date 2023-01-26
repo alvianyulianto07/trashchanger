@@ -8,7 +8,7 @@
         </div>
         <ul class="sidebar-menu" id="sidebar-menu">
 
-            <li class="{{ request()->is('sampah') ? 'active' : '' }}">
+            <li class="{{ request()->is('sampah', 'sampah/*') ? 'active' : '' }}">
                 <a class="nav-link" href="#"><i class="fas fa-bars-progress"></i><span>Manajemen</span></a>
             </li>
 
