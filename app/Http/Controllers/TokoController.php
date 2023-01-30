@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sampah;
+use App\Models\BankSampah;
 use App\Http\Controllers\Controller;
 
 class TokoController extends Controller
@@ -42,7 +43,20 @@ class TokoController extends Controller
     public function show($id)
     {
         //
-        $sampah = Sampah::findOrFail($id);
-        return view('pengepul.toko.showsampah', compact('sampah'));
+        $banksampah = BankSampah::findOrFail($id);
+        return view('pengepul.toko.showsampah', compact('banksampah'));
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showSampah($id, $idsampah)
+    {
+        //
+        $sampah = sampah::findOrFail($idsampah);
+        return view('pengepul.toko.show', compact('sampah'));
     }
 }
