@@ -34,7 +34,13 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/beranda');
+            if(Auth::user()->role == "0"){
+                return redirect()->intended('/beranda');
+            } else if (Auth::user()->role == "1"){
+                return redirect()->intended('/beranda');
+            } else {
+                return redirect()->intended('/sampah');
+            }
         }
         return back()->with('login_gagal', 'login gagal');
     }
