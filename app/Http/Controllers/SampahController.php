@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Sampah;
 use App\Models\BankSampah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -96,7 +97,8 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findOrFail($id);
-        return view('banksampah.sampah.show', compact('sampah'));
+        $kategori = DB::table('kategori')->get();
+        return view('banksampah.sampah.show', compact('sampah', 'kategori'));
     }
 
     /**
