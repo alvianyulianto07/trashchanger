@@ -68,8 +68,8 @@ Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
         'pembelian' => PembelianController::class,
         'profil' => ProfilController::class,
     ]);
-    Route::get('/{id}',[TokoController::class,'show'])->name('toko.show');
-    Route::get('/{id}/{idsampah}',[TokoController::class,'showSampah'])->name('toko.showsampah');
+    Route::get('/toko/{id}',[TokoController::class,'show'])->name('toko.show');
+    Route::get('/toko/{id}/{idsampah}',[TokoController::class,'showSampah'])->name('toko.showsampah');
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
