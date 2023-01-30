@@ -35,7 +35,8 @@ class SampahController extends Controller
     public function create()
     {
         //
-        return view('banksampah.sampah.create');
+        $kategori = DB::table('kategori')->get();
+        return view('banksampah.sampah.create', compact('kategori'));
     }
 
     /**
@@ -108,7 +109,8 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findOrFail($id);
-        return view('banksampah.sampah.edit', compact('sampah'));
+        $kategori = DB::table('kategori')->get();
+        return view('banksampah.sampah.edit', compact('sampah', 'kategori'));
     }
     /**
      * Update the specified resource in storage.
