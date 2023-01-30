@@ -17,25 +17,29 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tr>
+                <tbody>
                     @foreach ($sampah as $data)
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->foto }}</td>
-                        <td>{{ $data->kategori_id }}</td>
-                        <td>{{ $data->nama_sampah }}</td>
-                        <td>{{ $data->jumlah }}</td>
-                        <td>{{ $data->harga }}</td>
-                        <td>
-                            <form id="" class="p-0" action="" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                            </form>
-                        </td>
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $data->foto }}</td>
+                            <td>{{ $data->kategori_id }}</td>
+                            <td>{{ $data->nama_sampah }}</td>
+                            <td>{{ $data->jumlah }}</td>
+                            <td>{{ $data->harga }}</td>
+                            <td>
+                                <form id="{{$data->id}}" class="p-0" action="{{route('sampah.destroy',$data->id) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <a href="{{ route('sampah.edit', $data->id) }}" class="btn btn-primary btn-sm"><i
+                                            class="fa fa-edit"></i></a>
+                                    <a href="{{ route('sampah.show', $data->id) }}" class="btn btn-info btn-sm"><i
+                                            class="fa fa-eye"></i></a>
+                                    <button class='delete btn btn-danger btn-sm' value="{{$data->id}}" type="submit"><i class="far fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
-                </tr>
+                </tbody>
             </table>
         </div>
     @endsection
