@@ -113,7 +113,7 @@
         {{-- PRODUCT GRID --}}
         <div class="container">
             <div class="product-grid card mx-4 mb-3 p-3">
-                {{-- @foreach ($sampah as $item) --}}
+                @foreach ($sampah as $item)
                 <div class="card item">
                     <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
                     <div class="m-2">
@@ -122,7 +122,7 @@
                         <p class="bank-name">Nama Bank Sampah</p>
                     </div>
                 </div>
-                {{-- @endforeach --}}
+                @endforeach
             </div>
         </div>
 
