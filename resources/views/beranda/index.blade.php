@@ -121,38 +121,6 @@
                         <p class="bank-name">Nama Bank Sampah</p>
                     </div>
                 </div>
-                <div class="card item">
-                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
-                    <div class="m-2">
-                        <h3 class="kategori">Kategori</h3>
-                        <p class="cost">Rp. 25.000,00</p>
-                        <p class="bank-name">Nama Bank Sampah</p>
-                    </div>
-                </div>
-                <div class="card item">
-                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
-                    <div class="m-2">
-                        <h3 class="kategori">Kategori</h3>
-                        <p class="cost">Rp. 25.000,00</p>
-                        <p class="bank-name">Nama Bank Sampah</p>
-                    </div>
-                </div>
-                <div class="card item">
-                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
-                    <div class="m-2">
-                        <h3 class="kategori">Kategori</h3>
-                        <p class="cost">Rp. 25.000,00</p>
-                        <p class="bank-name">Nama Bank Sampah</p>
-                    </div>
-                </div>
-                <div class="card item">
-                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
-                    <div class="m-2">
-                        <h3 class="kategori">Kategori</h3>
-                        <p class="cost">Rp. 25.000,00</p>
-                        <p class="bank-name">Nama Bank Sampah</p>
-                    </div>
-                </div>
             </div>
         </div>
 
