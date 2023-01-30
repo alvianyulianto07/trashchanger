@@ -30,8 +30,8 @@
                         <div class="">
                             <div class="mb-3 row align-items-center">
                                 <label for="inputKategori" class="col-sm-2 col-form-label font-form">Kategori</label>
-                                <div class="col-sm-10" aria-readonly="true">
-                                    <select class="select2 col-sm-12" name="kategori" data-placeholder="Pilih kategori">
+                                <div class="col-sm-10">
+                                    <select class="select2 col-sm-12" name="kategori" data-placeholder="Pilih kategori" aria-readonly="true">
                                         @foreach($kategori as $k)
                                             <option value="{{$k->id}}" {{$k->id==$sampah->kategori_id ? 'selected' : ''}}>{{$k->nama_kategori}}</option>
                                         @endforeach
