@@ -31,11 +31,11 @@
                             <div class="mb-3 row align-items-center">
                                 <label for="inputKategori" class="col-sm-2 col-form-label font-form">Kategori</label>
                                 <div class="col-sm-10">
-                                    <select class="select2 col-sm-12" name="kategori" data-placeholder="Pilih kategori" aria-readonly="true">
-                                        @foreach($kategori as $k)
-                                            <option value="{{$k->id}}" {{$k->id==$sampah->kategori_id ? 'selected' : ''}}>{{$k->nama_kategori}}</option>
-                                        @endforeach
-                                    </select>
+                                    @foreach ($kategori as $k)
+                                    <input type="text" name="kategori" value="{!! $k->nama_kategori !!}" required="required"
+                                    class="form-control"
+                                    id="kategori" readonly>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <label for="inputNamaSampah" class="col-sm-2 col-form-label font-form">Nama</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" value="{!! $sampah->nama_sampah !!}" required="required"
-                                    class="form-control" placeholder="Masukkan Nama Sampah"
+                                    class="form-control"
                                     id="nama_sampah" readonly>
                             </div>
                         </div>
