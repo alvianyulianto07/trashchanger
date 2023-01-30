@@ -70,10 +70,9 @@ class SampahController extends Controller
         $newName = "";
         if ($request->hasFile('foto')) {
             $extension = $request->file('foto')->getClientOriginalExtension();
-            $newName = $basenamefile . '&upd=' . $num . '.' . $extension;
+            $newName = $basenamefile. $id . '&upd=' . $num . '.' . $extension;
             $request->file('foto')->storeAs('foto', $newName);
         }
-
 
         $sampah = Sampah::create([
             'nama_sampah' => $request->name,
@@ -129,7 +128,23 @@ class SampahController extends Controller
             'harga' => 'required',
             'kategori' => 'required',
         ]);
+
         $sampah = Sampah::findOrFail($id);
+
+        $num = rand(1, 100);
+        $basenamefile = str_replace(' ', '_', $request->name);
+
+        $newName = "";
+        $namaFoto = $sampah->foto;
+        if ($request->hasFile('foto')) {
+            if ($namaFoto != null || $namaFoto != '') {
+                Storage::delete('foto/' . $namaFoto);
+            }
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $newName = $basenamefile. $id . '&upd=' . $num . '.' . $extension;
+            $request->file('foto')->storeAs('foto', $newName);
+            $sampah->foto = $newName;
+        }
         $sampah->nama_sampah = $request->name;
         $sampah->jumlah = $request->jumlah;
         $sampah->harga = $request->harga;
