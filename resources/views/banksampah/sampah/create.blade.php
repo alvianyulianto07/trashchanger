@@ -30,7 +30,7 @@
                         <div class="mb-3 row align-items-center">
                             <label for="inputNamaSampah" class="col-sm-2 col-form-label font-form">Nama</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" value="{{ old('name') }}" required="required"
+                                <input type="text" name="nama_sampah" value="{{ old('nama_sampah') }}" required="required"
                                     class="form-control" placeholder="Masukkan Nama Sampah"
                                     id="nama_sampah">
                             </div>

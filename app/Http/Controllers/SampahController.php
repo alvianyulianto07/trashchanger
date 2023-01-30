@@ -50,7 +50,7 @@ class SampahController extends Controller
     {
         //
         $validate = $request->validate([
-            'name' => 'required',
+            'nama_sampah' => 'required',
             'jumlah' => 'required',
             'harga' => 'required',
             'kategori' => 'required',
