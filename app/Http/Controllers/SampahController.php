@@ -97,7 +97,8 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findOrFail($id);
-        return view('banksampah.sampah.show', compact('sampah'));
+        $kategori = DB::table('kategori')->get();
+        return view('banksampah.sampah.show', compact('sampah', 'kategori'));
     }
 
     /**
