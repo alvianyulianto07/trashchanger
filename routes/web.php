@@ -46,13 +46,6 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
-Route::group(['middleware' => ['auth', 'cekrole:0,1,2']], function () {
-    Route::resources([
-        'beranda' => BerandaController::class,
-    ]);
-});
-
-// group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
 Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
     Route::resources([
         'user' => UserController::class,
@@ -63,13 +56,13 @@ Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
 Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
     Route::resources([
-        'toko' => TokoController::class,
+        'beranda' => TokoController::class,
         'keranjang' => KeranjangController::class,
         'pembelian' => PembelianController::class,
         'profil' => ProfilController::class,
     ]);
-    Route::get('/toko/{id}',[TokoController::class,'show'])->name('toko.show');
-    Route::get('/toko/{id}/{idsampah}',[TokoController::class,'showSampah'])->name('toko.showsampah');
+    Route::get('/toko/{id}',[TokoController::class,'show'])->name('beranda.show');
+    Route::get('/toko/{id}/{idsampah}',[TokoController::class,'showSampah'])->name('beranda.showsampah');
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
