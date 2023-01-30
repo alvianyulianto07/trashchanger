@@ -146,6 +146,9 @@ class SampahController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sampah = Sampah::findorfail($id);
+        $sampah->delete();
+        return redirect()->route('sampah.index')->with('success', 'Data Sampah anda berhasil dihapus');
+    
     }
 }
