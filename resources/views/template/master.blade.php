@@ -65,14 +65,14 @@
                     </div>
                 </div>
                 <div class="col-8">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Cari sampah" aria-label="Cari sampah"
-                            aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-search" type="button" id="button-addon2"><i
-                                    class="fas fa-search"></i></button>
+                    <form action="{{ route('beranda.search') }}" method="POST">
+                        @csrf
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="text"
+                                id="text">
+                            <button class="btn btn-outline-search" type="submit"><i class="fas fa-search"></i></button>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="col d-flex justify-content-center">
                     <a href="/keranjang"><i class="fas fam fa-cart-shopping"></i></a>
