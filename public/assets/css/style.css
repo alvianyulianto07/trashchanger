@@ -74,13 +74,14 @@ ul {
 }
 
 .product-grid .cost {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 400;
     margin: 0;
+    margin-bottom: 8px;
 }
 
 .product-grid .kategori {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--main-green);
     margin-bottom: 5;
@@ -88,7 +89,7 @@ ul {
 
 .product-grid .bank-name {
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 500;
     margin: 0;
 }
 
@@ -100,3 +101,17 @@ ul {
     box-shadow: 0 0 20px hsla(0, 0%, 0%, 0.1);
 }
 
+.trash-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.item {
+    text-decoration: none;
+    color: black;
+}
+
+.item:hover  {
+    color: black;
+}
