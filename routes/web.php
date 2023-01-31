@@ -40,6 +40,7 @@ Route::get('/login', function () {
 Route::get('/', function () {
     return redirect()->route('welcome.index');
 });
+Route::post('/logout', [AuthController::class, 'logout']);
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
 Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
@@ -47,7 +48,6 @@ Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
         'user' => UserController::class,
         'banksampah' => BankSampahController::class,
     ]);
-    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
@@ -60,7 +60,6 @@ Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
     ]);
     Route::get('/toko/{id}', [TokoController::class, 'show'])->name('beranda.show');
     Route::get('/toko/{id}/{idsampah}', [TokoController::class, 'showSampah'])->name('beranda.showsampah');
-    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
@@ -70,6 +69,5 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
         'penjualan' => PenjualanController::class,
         'profil' => ProfilController::class,
     ]);
-    Route::post('/logout', [AuthController::class, 'logout']);
 
 });
