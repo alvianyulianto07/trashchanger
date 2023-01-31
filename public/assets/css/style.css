@@ -115,3 +115,34 @@ ul {
 .item:hover  {
     color: black;
 }
+
+.input-jumlah-barang {
+    width: 100%;
+}
+
+.minimum-buy {
+    font-size: 10px;
+    font-weight: 300;
+}
+
+.total-harga {
+    font-size: 20px;
+    font-weight: 600;
+    color: #26a745;
+}
+
+.label-total-harga {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.deskripsi-pembelian {
+    font-size: 12px;
+    margin: 0;
+}
+
+.harga-display {
+    font-size: 28px;
+    color: #26a745;
+    font-weight: 700;
+}
