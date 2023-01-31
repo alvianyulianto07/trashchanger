@@ -34,7 +34,7 @@
                     <a href="" style="margin-right: 7px"><i class="fa-brands fa-instagram "></i></a>
                     <a href=""><i class="fa-brands fa-youtube"></i></a>
                 </div>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/beranda">
                     TrashChanger
                 </a>
                 <li class="nav-item dropdown dropdown-profile">
@@ -47,8 +47,8 @@
                     <form action="/logout" method="POST">
                         @csrf
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="/profil">Profile</a>
+                            <a class="dropdown-item" href="/pengaturan">Settings</a>
                             <button type="submit" class="dropdown-item">Logout</button>
                         </div>
                     </form>
@@ -75,8 +75,8 @@
                     </div>
                 </div>
                 <div class="col d-flex justify-content-center">
-                    <a href=""><i class="fas fam fa-cart-shopping"></i></a>
-                    <a href=""><i class="fas fam fa-receipt"></i></a>
+                    <a href="/keranjang"><i class="fas fam fa-cart-shopping"></i></a>
+                    <a href="/pembelian"><i class="fas fam fa-receipt"></i></a>
                 </div>
             </div>
         </div>

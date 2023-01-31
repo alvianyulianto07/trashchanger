@@ -5,7 +5,7 @@
             <a href="{{ route('sampah.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-2"></i>Tambah
                 Sampah</a>
             <br><br>
-            <table id="example" class="display col-12">
+            <table id="example" class="display nowrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -22,19 +22,25 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->foto }}</td>
-                            <td>{{ $data->kategori_id }}</td>
+                            <td>
+                                @foreach ($kategori as $k)
+                                    {{ $data->kategori_id == $k->id ? $k->nama_kategori : '' }}
+                                @endforeach
+                            </td>
                             <td>{{ $data->nama_sampah }}</td>
                             <td>{{ $data->jumlah }}</td>
                             <td>{{ $data->harga }}</td>
                             <td>
-                                <form id="{{$data->id}}" class="p-0" action="{{route('sampah.destroy',$data->id) }}" method="POST">
+                                <form id="{{ $data->id }}" class="p-0" action="{{ route('sampah.destroy', $data->id) }}"
+                                    method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <a href="{{ route('sampah.edit', $data->id) }}" class="btn btn-primary btn-sm"><i
                                             class="fa fa-edit"></i></a>
                                     <a href="{{ route('sampah.show', $data->id) }}" class="btn btn-info btn-sm"><i
                                             class="fa fa-eye"></i></a>
-                                    <button class='delete btn btn-danger btn-sm' value="{{$data->id}}" type="submit"><i class="far fa-trash-alt"></i></button>
+                                    <button class='delete btn btn-danger btn-sm' value="{{ $data->id }}"
+                                        type="submit"><i class="far fa-trash-alt"></i></button>
                                 </form>
                             </td>
                         </tr>

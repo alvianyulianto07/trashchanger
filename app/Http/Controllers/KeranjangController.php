@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Keranjang;
 use App\Models\BankSampah;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,7 @@ class KeranjangController extends Controller
     {
         //
         $id = Auth::user()->id;
-        $keranjang = DB::table('keranjang')->where('users_id', $id)->get();
+        $keranjang = Keranjang::where('users_id', $id)->get();
         return view('pengepul.keranjang.index', compact('keranjang'));
     }
 

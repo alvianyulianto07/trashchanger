@@ -19,10 +19,9 @@
                                 <label for="inputKategori" class="col-sm-2 col-form-label font-form">Kategori</label>
                                 <div class="col-sm-10">
                                     <select class="select2 col-sm-12" name="kategori" data-placeholder="Pilih kategori">
-                                        <option>Pilih kategori</option>
-                                        <option value="1">Plastik</option>
-                                        <option value="2">Botol</option>
-                                        <option value="3">Besi</option>
+                                        @foreach($kategori as $k)
+                                            <option value="{{$k->id}}">{{$k->nama_kategori}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

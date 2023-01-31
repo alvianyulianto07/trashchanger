@@ -2,27 +2,26 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Sampah;
-use App\Models\Pembelian;
 use App\Models\BankSampah;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Transaksi extends Model
+class Keranjang extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'pembelian_id',
+        'users_id',
         'bankSampah_id',
         'sampah_id',
         'jumlah_barang',
         'total_harga',
-        'status'
     ];
-    protected $table = 'transaksi';
+    protected $table = 'keranjang';
 
-    public function pembelian(){
-    	return $this->belongsTo(Pembelian::class);
+    public function user(){
+    	return $this->belongsTo(User::class);
     }
     public function bank_sampah(){
     	return $this->belongsTo(BankSampah::class);

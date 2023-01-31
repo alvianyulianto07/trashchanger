@@ -3,11 +3,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Sampah;
+use App\Models\Kategori;
 use App\Models\BankSampah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SampahController extends Controller
 {
@@ -25,7 +27,8 @@ class SampahController extends Controller
             $banksampahid = $data->id;
         }
         $sampah = Sampah::where('bankSampah_id', $banksampahid)->get();
-        return view('banksampah.sampah.index', compact('sampah'));
+        $kategori = Kategori::all();
+        return view('banksampah.sampah.index', compact('sampah', 'kategori'));
     }
 
     /**
@@ -36,7 +39,7 @@ class SampahController extends Controller
     public function create()
     {
         //
-        $kategori = DB::table('kategori')->get();
+        $kategori = Kategori::all();
         return view('banksampah.sampah.create', compact('kategori'));
     }
 
@@ -75,7 +78,7 @@ class SampahController extends Controller
         }
 
         $sampah = Sampah::create([
-            'nama_sampah' => $request->name,
+            'nama_sampah' => $request->nama_sampah,
             'jumlah' => $request->jumlah,
             'harga' => $request->harga,
             'bankSampah_id' => $banksampahid,
@@ -96,7 +99,7 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findOrFail($id);
-        $kategori = DB::table('kategori')->where('id', $sampah->kategori_id)->get();
+        $kategori = Kategori::where('id', $sampah->kategori_id)->get();
         return view('banksampah.sampah.show', compact('sampah', 'kategori'));
     }
 
@@ -110,7 +113,7 @@ class SampahController extends Controller
     {
         //
         $sampah = Sampah::findOrFail($id);
-        $kategori = DB::table('kategori')->get();
+        $kategori = Kategori::all();
         return view('banksampah.sampah.edit', compact('sampah', 'kategori'));
     }
     /**

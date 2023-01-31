@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            $table->unsignedBigInteger('bankSampah_id')->after('users_id')->required();
+            $table->unsignedBigInteger('bankSampah_id')->after('id')->required();
             $table->foreign('bankSampah_id')->references('id')->on('bank_sampah')->onDelete('restrict');  
         });
     }

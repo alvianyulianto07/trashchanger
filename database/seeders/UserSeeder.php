@@ -31,5 +31,14 @@ class UserSeeder extends Seeder
             'alamat' => 'Jalan',
             'no_hp' => '081212341234'
         ]);
+
+        User::create([
+            'nama' => 'Tono Oli',
+            'email' => 'tono@email.com',
+            'password' => bcrypt('12345678'),
+            'role' => '1',
+            'alamat' => 'Jalan',
+            'no_hp' => '081212341234'
+        ]);
     }
 }

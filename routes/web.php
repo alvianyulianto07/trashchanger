@@ -1,16 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TokoController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\SampahController;
-use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\BankSampahController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
-use App\Http\Controllers\BankSampahController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SampahController;
+use App\Http\Controllers\TokoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,27 +22,23 @@ use App\Http\Controllers\BankSampahController;
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::resources([
+    'welcome' => WelcomeController::class,
+]);
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
-
-// route login dan logout//
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/register', [AuthController::class, 'store'])->name('register');
 
-Route::post('/logout', [AuthController::class, 'logout']);
-// group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
-Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
-    Route::get('/daftarbanksampah', [AuthController::class, 'daftarbanksampah'])->name('daftarbanksampah');
-    Route::post('/daftarbanksampah', [AuthController::class, 'create'])->name('daftarbanksampah');
+Route::get('/login', function () {
+    return view('auth.login');
+});
+
+Route::get('/', function () {
+    return redirect()->route('welcome.index');
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
@@ -51,6 +47,7 @@ Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
         'user' => UserController::class,
         'banksampah' => BankSampahController::class,
     ]);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
@@ -61,8 +58,9 @@ Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
         'pembelian' => PembelianController::class,
         'profil' => ProfilController::class,
     ]);
-    Route::get('/toko/{id}',[TokoController::class,'show'])->name('beranda.show');
-    Route::get('/toko/{id}/{idsampah}',[TokoController::class,'showSampah'])->name('beranda.showsampah');
+    Route::get('/toko/{id}', [TokoController::class, 'show'])->name('beranda.show');
+    Route::get('/toko/{id}/{idsampah}', [TokoController::class, 'showSampah'])->name('beranda.showsampah');
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
@@ -72,6 +70,6 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
         'penjualan' => PenjualanController::class,
         'profil' => ProfilController::class,
     ]);
-    
-});
+    Route::post('/logout', [AuthController::class, 'logout']);
 
+});

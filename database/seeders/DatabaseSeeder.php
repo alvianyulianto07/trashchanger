@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             BankSampahSeeder::class,
+            KategoriSeeder::class,
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

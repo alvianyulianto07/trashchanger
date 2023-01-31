@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sampah;
+use App\Models\Kategori;
 use App\Models\BankSampah;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,7 @@ class TokoController extends Controller
         //
         $banksampah = BankSampah::all();
         $sampah = Sampah::all();
-        $kategori = DB::table('kategori')->get();
+        $kategori = Kategori::all();
         return view('pengepul.toko.index', compact('sampah', 'banksampah', 'kategori'));
     }
 
@@ -59,7 +60,7 @@ class TokoController extends Controller
     public function showSampah($id, $idsampah)
     {
         //
-        $sampah = Sampah::findOrFail($idsampah)->get();
+        $sampah = Sampah::findOrFail($idsampah);
         return view('pengepul.toko.showsampah', compact('sampah'));
     }
 }

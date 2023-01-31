@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('jumlah_total');
             $table->date('tanggal');
             $table->timestamps();
         });
