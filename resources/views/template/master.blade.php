@@ -61,7 +61,7 @@
             <div class="row align-items-center">
                 <div class="col">
                     <div class="text-center">
-                        TrashChanger
+                        <a style="text-decoration: none; color:black;" href="/beranda">TrashChanger</a>
                     </div>
                 </div>
                 <div class="col-8">
