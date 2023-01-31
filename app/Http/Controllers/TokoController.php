@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Sampah;
 use App\Models\Kategori;
 use App\Models\Keranjang;
@@ -70,8 +71,11 @@ class TokoController extends Controller
     {
         //
         $searchquery = '';
+        $banksampah = BankSampah::findOrFail($id);
+        $kategori = Kategori::all();
+        $alamatbanksampah = User::findOrFail($banksampah->users_id)->alamat;
         $sampah = Sampah::findOrFail($idsampah);
-        return view('pengepul.toko.showsampah', compact('sampah', 'searchquery'));
+        return view('pengepul.toko.showsampah', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'alamatbanksampah'));
     }
 
     public function addToCart(Request $request)
