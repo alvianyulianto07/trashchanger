@@ -21,10 +21,11 @@ class TokoController extends Controller
     public function index()
     {
         //
+        $searchquery = '';
         $banksampah = BankSampah::all();
         $sampah = Sampah::all();
         $kategori = Kategori::all();
-        return view('pengepul.toko.index', compact('sampah', 'banksampah', 'kategori'));
+        return view('pengepul.toko.index', compact('sampah', 'banksampah', 'kategori', 'searchquery'));
     }
 
     
@@ -35,10 +36,12 @@ class TokoController extends Controller
      */
     public function search(Request $request)
     {
-        $searchTerm = '%'.$request->text.'%';
-        $sampah = Sampah::having('nama_sampah','LIKE', "%$searchTerm")->get();
-        dd($sampah);
-        return view('pengepul.toko.searchresult', compact('sampah'));
+        $searchquery = $request->searchquery;
+        $banksampah = BankSampah::all();
+        $kategori = Kategori::all();
+        $searchTerm = '%'.$searchquery.'%';
+        $sampah = Sampah::where('nama_sampah','like', $searchTerm)->get();
+        return view('pengepul.toko.searchresult', compact('sampah', 'banksampah', 'kategori', 'searchquery'));
     }
 
     
