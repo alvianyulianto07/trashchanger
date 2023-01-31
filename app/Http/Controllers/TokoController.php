@@ -54,8 +54,9 @@ class TokoController extends Controller
     public function show($id)
     {
         //
+        $searchquery = '';
         $banksampah = BankSampah::findOrFail($id);
-        return view('pengepul.toko.show', compact('banksampah'));
+        return view('pengepul.toko.show', compact('banksampah', 'searchquery'));
     }
     
     /**
@@ -67,8 +68,9 @@ class TokoController extends Controller
     public function showSampah($id, $idsampah)
     {
         //
+        $searchquery = '';
         $sampah = Sampah::findOrFail($idsampah);
-        return view('pengepul.toko.showsampah', compact('sampah'));
+        return view('pengepul.toko.showsampah', compact('sampah', 'searchquery'));
     }
 
     public function addToCart(Request $request)
