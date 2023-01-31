@@ -68,8 +68,13 @@
                     <form action="{{ route('beranda.search') }}" method="POST">
                         @csrf
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari sampah" name="text"
-                                id="text">
+                            @if ($searchquery != "")
+                                <input type="text" class="form-control" placeholder="Cari sampah" name="searchquery"
+                                    id="searchquery" value="{{ $searchquery }}">
+                            @else
+                                <input type="text" class="form-control" placeholder="Cari sampah" name="searchquery"
+                                    id="searchquery">
+                            @endif
                             <button class="btn btn-outline-search" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
