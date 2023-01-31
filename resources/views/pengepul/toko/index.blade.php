@@ -43,7 +43,7 @@
         </div>
 
         {{-- PRODUCT GRID --}}
-        <div class="container">
+        <div class="container mt-2">
             <div class="product-grid card mx-4 mb-3 p-3">
                 @foreach ($sampah as $item)
                 <a href="{{route('beranda.showsampah', ['id'=>1, 'idsampah'=>$item->id] )}}" class="card item">

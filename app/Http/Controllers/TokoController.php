@@ -41,6 +41,7 @@ class TokoController extends Controller
         $kategori = Kategori::all();
         $searchTerm = '%'.$searchquery.'%';
         $sampah = Sampah::where('nama_sampah','like', $searchTerm)->get();
+        // dd($sampah);
         return view('pengepul.toko.searchresult', compact('sampah', 'banksampah', 'kategori', 'searchquery'));
     }
 
