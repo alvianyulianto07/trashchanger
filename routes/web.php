@@ -26,7 +26,6 @@ Route::resources([
     'welcome' => WelcomeController::class,
 ]);
 
-
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
@@ -71,5 +70,8 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
         'penjualan' => PenjualanController::class,
         'profil' => ProfilController::class,
     ]);
+
+    Route::get('/daftarbanksampah', [AuthController::class, 'daftarbanksampah']);
+    Route::post('/daftarbanksampah', [AuthController::class, 'create']);
 
 });

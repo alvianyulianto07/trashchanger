@@ -15,6 +15,7 @@ class Sampah extends Model
         'jumlah',
         'harga',
         'foto',
+        'status'
     ];
     protected $table = 'sampah';
 

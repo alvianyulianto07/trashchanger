@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('jumlah');
             $table->string('harga');
             $table->string('foto');
+            $table->string('status');
             $table->timestamps();
         });
     }

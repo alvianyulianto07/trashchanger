@@ -10,7 +10,7 @@
                 <div class="col-5">
                     <h3 style="margin: 0">{{ $sampah->nama_sampah }}</h3>
                     <p>Stok: <strong>{{ $sampah->jumlah }}</strong></p>
-                    <p id="price" class="harga-display">{{ $sampah->harga }}/kg</p>
+                    <p id="price" class="harga-display" >Rp. {{ number_format($sampah->harga, 0, ',', '.');}}</p>
                     <hr>
                     <p style="margin: 0">Nama Bank Sampah: <strong>{{ $banksampah->nama_banksampah }}</strong></p>
                     <p style="margin: 0">Alamat: <strong>{{ $alamatbanksampah }}</strong></p>
@@ -47,7 +47,7 @@
                                 <div class="col-7 mb-3">
                                     <div class="d-flex">
                                         <div class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost();">
                                             <i class="fas fa-minus"></i>
                                         </div>
 
@@ -55,7 +55,7 @@
                                             class="form-control form-control-barang" />
 
                                         <div class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost();">
                                             <i class="fas fa-plus"></i>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                                 <p><input class="total-harga" id="totalprice" name="total_harga"
                                         value="{{ $sampah->harga }}" readonly></p>
                             </div>
-                            <button class="btn btn-success btn-sm mb-2" type="submit">Keranjang</button>
+                            <button class="btn btn-success btn-sm mb-2" type="submit">Tambah ke Keranjang</button>
                             <button class="btn btn-outline-success btn-sm">Beli langsung</button>
                         </div>
                     </form>
@@ -79,12 +79,32 @@
     </div>
 
     <script>
+        
+        function currency(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+        }
+
         function totalCost() {
-            var price = document.getElementById("price").value;
+            var price = document.getElementById("price").innerHTML;
+            price = parseInt(price.replace(/[^,\d]/g, ''));
             var totalproduct = document.getElementById("jumlah_barang").value;
+            console.log(price);
             var totalprice = 0;
             var totalprice = price * totalproduct;
-            document.getElementById("totalprice").innerHTML = totalprice;
+            totalprice = currency(totalprice.toString(), 'Rp');
+            document.getElementById("totalprice").value = totalprice;
         }
     </script>
 @endsection

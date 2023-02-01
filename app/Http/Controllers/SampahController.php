@@ -1,13 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Sampah;
-use App\Models\Kategori;
-use App\Models\BankSampah;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\BankSampah;
+use App\Models\Kategori;
+use App\Models\Sampah;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,10 +22,10 @@ class SampahController extends Controller
         //
         $banksampah = BankSampah::where('users_id', Auth::user()->id)->get();
         $banksampahid = 0;
-        foreach($banksampah as $data){
+        foreach ($banksampah as $data) {
             $banksampahid = $data->id;
         }
-        $sampah = Sampah::where('bankSampah_id', $banksampahid)->get();
+        $sampah = Sampah::where('bankSampah_id', $banksampahid)->where('status', 'Tersedia')->get();
         $kategori = Kategori::all();
         return view('banksampah.sampah.index', compact('sampah', 'kategori'));
     }
@@ -57,13 +56,13 @@ class SampahController extends Controller
             'jumlah' => 'required',
             'harga' => 'required',
             'kategori' => 'required',
-            'foto' => 'required'
+            'foto' => 'required',
         ]);
 
         $id = Auth::user()->id;
         $banksampah = BankSampah::where('users_id', $id)->get();
         $banksampahid = 0;
-        foreach($banksampah as $data){
+        foreach ($banksampah as $data) {
             $banksampahid = $data->id;
         }
 
@@ -73,17 +72,18 @@ class SampahController extends Controller
         $newName = "";
         if ($request->hasFile('foto')) {
             $extension = $request->file('foto')->getClientOriginalExtension();
-            $newName = $basenamefile. $id . '&upd=' . $num . '.' . $extension;
+            $newName = $basenamefile . $id . '&upd=' . $num . '.' . $extension;
             $request->file('foto')->storeAs('foto', $newName);
         }
 
         $sampah = Sampah::create([
             'nama_sampah' => $request->nama_sampah,
             'jumlah' => $request->jumlah,
-            'harga' => $request->harga,
+            'harga' => preg_replace('/[^0-9]/', '', $request->harga),
             'bankSampah_id' => $banksampahid,
             'kategori_id' => $request->kategori,
             'foto' => $newName,
+            'status' => "Tersedia",
         ]);
 
         return redirect('/sampah')->with('success', 'Penambahan Sampah Berhasil');
@@ -144,18 +144,18 @@ class SampahController extends Controller
                 Storage::delete('foto/' . $namaFoto);
             }
             $extension = $request->file('foto')->getClientOriginalExtension();
-            $newName = $basenamefile. $id . '&upd=' . $num . '.' . $extension;
+            $newName = $basenamefile . $id . '&upd=' . $num . '.' . $extension;
             $request->file('foto')->storeAs('foto', $newName);
             $sampah->foto = $newName;
         }
         $sampah->nama_sampah = $request->name;
         $sampah->jumlah = $request->jumlah;
-        $sampah->harga = $request->harga;
+        $sampah->harga = preg_replace('/[^0-9]/', '', $request->harga);
         $sampah->kategori_id = $request->kategori;
         $sampah->save();
 
         return redirect()->route('sampah.index')->with('success', 'Data sampah anda berhasil diperbarui');
-    
+
     }
 
     /**
@@ -166,9 +166,10 @@ class SampahController extends Controller
      */
     public function destroy($id)
     {
-        $sampah = Sampah::findorfail($id);
-        $sampah->delete();
-        return redirect()->route('sampah.index')->with('success', 'Data Sampah anda berhasil dihapus');
-    
+        $sampah = Sampah::findOrFail($id);
+        $sampah->status = "Diarsip";
+        $sampah->save();
+        return redirect()->route('sampah.index')->with('success', 'Data Sampah anda berhasil diarsip');
+
     }
 }

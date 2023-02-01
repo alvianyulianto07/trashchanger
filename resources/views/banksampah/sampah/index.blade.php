@@ -29,7 +29,7 @@
                             </td>
                             <td>{{ $data->nama_sampah }}</td>
                             <td>{{ $data->jumlah }}</td>
-                            <td>{{ $data->harga }}</td>
+                            <td>Rp. {{ number_format($data->harga, 0, ',', '.');}}</td>
                             <td>
                                 <form id="{{ $data->id }}" class="p-0" action="{{ route('sampah.destroy', $data->id) }}"
                                     method="POST">

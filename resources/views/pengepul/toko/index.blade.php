@@ -45,20 +45,27 @@
         {{-- PRODUCT GRID --}}
         <div class="container mt-2">
             <div class="product-grid card mx-4 mb-3 p-3">
-                @foreach ($sampah as $item)
-                <a href="{{route('beranda.showsampah', ['id'=>1, 'idsampah'=>$item->id] )}}" class="card item">
-                    <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
-                    <div class="m-2">
-                        @foreach ($kategori as $k)
-                            <h3 class="kategori"{{$k->id != $item->kategori_id ? 'hidden' : ''}}>{{$k->nama_kategori}}</h3>
-                        @endforeach
-                        <p class="trash-name">{{$item->nama_sampah}}</p>
-                        <p class="cost">{{$item->harga}}/kg</p>
-                        @foreach ($banksampah as $b)
-                            <p class="bank-name"{{$b->id != $item->bankSampah_id ? 'hidden' : ''}}>Bank Sampah: <strong>{{$b->nama_banksampah}}</strong></p>
-                        @endforeach
-                    </div>
-                </a>
+                @foreach ($banksampah as $b)
+                    @foreach ($sampah as $item)
+                        @if ($b->id == $item->bankSampah_id)
+                            <a href="{{ route('beranda.showsampah', ['id' => $b->id, 'idsampah' => $item->id]) }}"
+                                class="card item">
+                                <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                                <div class="m-2">
+                                    @foreach ($kategori as $k)
+                                        <h3 class="kategori"{{ $k->id != $item->kategori_id ? 'hidden' : '' }}>
+                                            {{ $k->nama_kategori }}</h3>
+                                    @endforeach
+                                    <p class="trash-name">{{ $item->nama_sampah }}</p>
+                                    <p class="cost">{{ $item->harga }}/kg</p>
+                                    <p class="bank-name">Bank Sampah:
+                                        <strong>{{ $b->nama_banksampah }}</strong>
+                                    </p>
+
+                                </div>
+                            </a>
+                        @endif
+                    @endforeach
                 @endforeach
             </div>
         </div>

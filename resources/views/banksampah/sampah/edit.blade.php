@@ -54,7 +54,7 @@
                         <div class="mb-3 row align-items-center">
                             <label for="inputHarga"  class="col-sm-2 col-form-label font-form">Harga</label>
                                 <div class="col-sm-10 col-form-label">
-                                    <input type="text" name="harga" value="{!! $sampah->harga !!}" required="required" class="form-control form-control-size" placeholder="Masukkan Harga Sampah" id="harga">
+                                    <input type="text" name="harga" value="Rp. {{ number_format($sampah->harga, 0, ',', '.');}}" required="required" class="form-control form-control-size" placeholder="Masukkan Harga Sampah" id="harga">
                                 </div>
                         </div>
                         <div class="mb-3 row align-items-center">
