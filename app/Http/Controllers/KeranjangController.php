@@ -1,15 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Keranjang;
-use App\Models\BankSampah;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Keranjang;
 use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +16,15 @@ class KeranjangController extends Controller
     public function index()
     {
         //
+        $searchquery = '';
         $id = Auth::user()->id;
-        $keranjang = Keranjang::where('users_id', $id)->get();
-        return view('pengepul.keranjang.index', compact('keranjang'));
+        $allcart = Keranjang::join('users', 'users.id', '=', 'keranjang.users_id')
+            ->join('bank_sampah', 'bank_sampah.id', '=', 'keranjang.bankSampah_id')
+            ->join('sampah', 'sampah.id', '=', 'keranjang.sampah_id')
+            ->where('keranjang.users_id', $id);
+        $cart = $allcart->get(['keranjang.*', 'bank_sampah.nama_banksampah',
+            'sampah.nama_sampah', 'sampah.harga', 'sampah.foto']);
+        return view('pengepul.keranjang.index', compact('cart', 'searchquery'));
     }
 
     /**
@@ -34,5 +38,5 @@ class KeranjangController extends Controller
         //
         return view('pengepul.keranjang.checkout');
     }
-    
+
 }
