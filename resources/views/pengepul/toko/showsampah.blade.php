@@ -5,7 +5,7 @@
         <div class="container mt-4">
             <div class="row">
                 <div class="col-4">
-                    <img class="rounded" src="{{ asset('assets/images/sampah1.jpg') }}" width="100%" alt="">
+                    <img class="rounded" src="{{ asset('storage/foto/' . $sampah->foto) }}" width="100%" alt="">
                 </div>
                 <div class="col-5">
                     <h3 style="margin: 0">{{ $sampah->nama_sampah }}</h3>
@@ -27,7 +27,7 @@
                             <p class="card-buy">Atur jumlah pembelian</p>
                             <div class="row px-2">
                                 <div class="col-5">
-                                    <img class="rounded" src="{{ asset('assets/images/sampah1.jpg') }}" width="100%"
+                                    <img class="rounded" src="{{ asset('storage/foto/' . $sampah->foto) }}" width="100%"
                                         alt="">
                                 </div>
                                 <div class="col-7">
