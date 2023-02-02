@@ -3,6 +3,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Keranjang;
+use App\Models\Pembelian;
+use App\Models\Transaksi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
@@ -34,39 +38,43 @@ class KeranjangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function checkout($id)
+    public function checkout(Request $request)
     {
-        //
-        return view('pengepul.keranjang.checkout');
-    }
+        $collect = [];
 
-    
-    public function buy (Request $request)
-    {
-        $validate = $request->validate([
-            'bankSampah_id' => 'required',
-            'sampah_id' => 'required',
-            'jumlah_barang' => 'required',
-            'total_harga' => 'required',
-        ]);
-
-        try {
-            $keranjang = Keranjang::where('users_id', Auth::user()->id)->where('sampah_id', $request->sampah_id)->firstOrFail();
-            $jumlahlama = (int) $keranjang->jumlah_barang;
-            $jumlahtambahan = (int) $request->jumlah_barang;
-            $jumlahbaru = (string) $jumlahlama + $jumlahtambahan;
-            $keranjang->jumlah_barang = $jumlahbaru;
-            $keranjang->save();
-        } catch (ModelNotFoundException $ex) {
-            $keranjang = Keranjang::create([
-                'users_id' => Auth::user()->id,
-                'bankSampah_id' => $request->bankSampah_id,
-                'sampah_id' => $request->sampah_id,
-                'jumlah_barang' => $request->jumlah_barang,
-                'total_harga' => preg_replace('/[^0-9]/', '', $request->total_harga),
-            ]);
+        foreach ($request->all() as $input_key => $input_value) {
+            if ($input_key != "cbperitem" && $input_value != null && $input_key != "_token") {
+                $id = $input_value['id'];
+                $jumlah_barang = $input_value['jumlah_barang'];
+                $total_harga = $input_value['total_harga'];
+                if ($id != null) {
+                    $collect[] = array(
+                        'idkeranjang' => $id,
+                        'jumlah_barang' => $jumlah_barang,
+                        'total_harga' => $total_harga,
+                    );
+                }
+            }
         }
-
-        return back()->with('success', 'Sukses Menambahkan Barang');
+        $id = Auth::user()->id;
+        $time = Carbon::now()->isoFormat('YYYY-MM-DD');
+        Pembelian::create([
+            "users_id" => $id,
+            "tanggal" => $time,
+        ]);
+        foreach ($collect as $order) {
+            $keranjang = Keranjang::findOrFail($order['idkeranjang']);
+            $pembelian = Pembelian::where("users_id", $id)->where("tanggal", $time)->firstOrFail();
+            Transaksi::create([
+                "sampah_id" => $keranjang->sampah_id,
+                "bankSampah_id" => $keranjang->bankSampah_id,
+                "pembelian_id" => $pembelian->id,
+                "jumlah_barang" => $order['jumlah_barang'],
+                "total_harga" => $order['total_harga'],
+                "status" => "Dalam Proses",
+            ]);
+            $keranjang->delete();
+        }
+        return redirect('/pembelian');
     }
 }
