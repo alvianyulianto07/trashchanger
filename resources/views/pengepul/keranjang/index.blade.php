@@ -35,8 +35,8 @@
                                                         value="{{ $item->id }}"
                                                         onchange="event.preventDefault(); dosomething(this.value, this);"
                                                         id="cbperitem">
-                                                    <input name="item{{$item->id}}[id]"
-                                                        id="item{{$item->id}}[id]" style="display: none;"
+                                                    <input name="item{{ $item->id }}[id]"
+                                                        id="item{{ $item->id }}[id]" style="display: none;"
                                                         value="" hidden>
                                                 </div>
                                             </div>
@@ -46,28 +46,31 @@
                                             </div>
                                             <div class="col-8 p-0">
                                                 <div class="m-2">
-                                                    <p class="trash-name-keranjang">Nama barang:
+                                                    <p class="trash-name-keranjang">
                                                         {{ $item->nama_sampah }}
                                                     </p>
-                                                    <p class="cost-satuan-keranjang">Harga satuan {{ $item->harga }}/kg
+                                                    <p class="cost-satuan-keranjang" id="price">Rp.
+                                                        {{ number_format($item->harga, 0, ',', '.') }}/kg
                                                     </p>
-                                                    <input value="{{ $item->total_harga }}" name="item{{$item->id}}[total_harga]"
-                                                        id="item{{$item->id}}[total_harga]" class="cost-keranjang"
+                                                    <input value="Rp. {{ number_format($item->total_harga, 0, ',', '.') }}"
+                                                        name="item{{ $item->id }}[total_harga]"
+                                                        id="item{{ $item->id }}[total_harga]" class="cost-keranjang"
                                                         readonly />
                                                 </div>
                                                 <div class="d-flex justify-content-end">
                                                     <div class="d-flex justify-content-end">
                                                         <div class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost();">
+                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost({{ $item->id }});">
                                                             <i class="fas fa-minus"></i>
                                                         </div>
 
-                                                        <input id="item{{$item->id}}[jumlah_barang]" min="1" name="item{{$item->id}}[jumlah_barang]"
+                                                        <input id="item{{ $item->id }}[jumlah_barang]" min="1"
+                                                            name="item{{ $item->id }}[jumlah_barang]"
                                                             value="{{ $item->jumlah_barang }}" type="number"
                                                             class="form-control form-control-barang-keranjang" />
 
                                                         <div class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost();">
+                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost({{ $item->id }});">
                                                             <i class="fas fa-plus"></i>
                                                         </div>
                                                     </div>
@@ -88,14 +91,14 @@
                             <p class="ringkasan-belanja">Ringkasan Belanja</p>
                             <div class="d-flex justify-content-between">
                                 <p class="label-total-harga-cart" style="margin: 0; padding: 0;">Total Harga</p>
-                                <input type="number" value="1.000" class="total-harga-cart">
+                                <input type="number" value="0" class="total-harga-cart">
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <p class="label-total-harga-cart-akhir" style="margin: 0; padding: 0;">Total Harga</p>
-                                <input type="number" value="1.000" class="total-harga-cart-akhir">
+                                <input type="number" value="0" class="total-harga-cart-akhir">
                             </div>
-                            <button type="submit" class="btn btn-success btn-block mt-3">Beli (11)</button>
+                            <button id="btnsubmit" type="submit" class="btn btn-success btn-block mt-3">Beli (0)</button>
                         </div>
                     </div>
                 </div>
@@ -105,12 +108,48 @@
 
     <script>
         function dosomething(id, checkboxElem) {
-            var idsampah = "item"+ id + "[id]";
+            var idsampah = "item" + id + "[id]";
 
             var inputsampah = document.getElementById(idsampah);
+            var btnsubmit = document.getElementById("btnsubmit");
+            var textsubmit = parseInt(btnsubmit.innerHTML.replace(/[^,\d]/g, ''));
             if (checkboxElem.checked) {
+                textsubmit = textsubmit + 1;
                 inputsampah.value = id;
-            } else {}
+                btnsubmit.innerHTML = "Beli (" + textsubmit.toString() + ")";
+            } else {
+                inputsampah.value = "";
+                textsubmit = textsubmit - 1;
+                btnsubmit.innerHTML = "Beli (" + textsubmit.toString() + ")";
+            }
+        }
+
+        function currency(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+        }
+
+        function totalCost(id) {
+            var idtotalharga = "item" + id + "[total_harga]";
+            var idtotalitem = "item" + id + "[jumlah_barang]";
+            var price = document.getElementById("price").innerHTML;
+            price = parseInt(price.replace(/[^,\d]/g, ''));
+            var totalproduct = document.getElementById(idtotalitem).value;
+            var totalprice = 0;
+            var totalprice = price * totalproduct;
+            totalprice = currency(totalprice.toString(), 'Rp');
+            document.getElementById(idtotalharga).value = totalprice;
         }
     </script>
 @endsection
