@@ -40,4 +40,33 @@ class KeranjangController extends Controller
         return view('pengepul.keranjang.checkout');
     }
 
+    
+    public function buy (Request $request)
+    {
+        $validate = $request->validate([
+            'bankSampah_id' => 'required',
+            'sampah_id' => 'required',
+            'jumlah_barang' => 'required',
+            'total_harga' => 'required',
+        ]);
+
+        try {
+            $keranjang = Keranjang::where('users_id', Auth::user()->id)->where('sampah_id', $request->sampah_id)->firstOrFail();
+            $jumlahlama = (int) $keranjang->jumlah_barang;
+            $jumlahtambahan = (int) $request->jumlah_barang;
+            $jumlahbaru = (string) $jumlahlama + $jumlahtambahan;
+            $keranjang->jumlah_barang = $jumlahbaru;
+            $keranjang->save();
+        } catch (ModelNotFoundException $ex) {
+            $keranjang = Keranjang::create([
+                'users_id' => Auth::user()->id,
+                'bankSampah_id' => $request->bankSampah_id,
+                'sampah_id' => $request->sampah_id,
+                'jumlah_barang' => $request->jumlah_barang,
+                'total_harga' => preg_replace('/[^0-9]/', '', $request->total_harga),
+            ]);
+        }
+
+        return back()->with('success', 'Sukses Menambahkan Barang');
+    }
 }
