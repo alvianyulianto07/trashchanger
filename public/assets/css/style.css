@@ -212,6 +212,12 @@ input[type=number] {
     border-radius: 5px;
 }
 
+.card-img-pembelian {
+    width: 95%;
+    height: 95%;
+    border-radius: 5px;
+}
+
 .header-keranjang {
     font-size: 28px;
     font-weight: 600;
@@ -221,6 +227,14 @@ input[type=number] {
     font-size: 18px;
     font-weight: 600;
     color: var(--main-green);
+}
+
+.toko-name-pembelian {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--main-green);
+    margin-left: 15px;
+    margin-top: 5px;
 }
 
 .cost-keranjang {
@@ -234,8 +248,19 @@ input[type=number] {
     font-size: 16px;
     font-weight: 700;
     margin: 0;
+    margin-top: 5px;
 }
 
 .cost-satuan-keranjang {
     font-size: 14px;
+}
+
+.status-pembelian {
+    padding: 5px 15px;
+    display: inline;
+    font-size: 10px;
+    color: var(--main-green);
+    border-color: #26a745;
+    background-color: #49f070;
+    border-radius: 10px;
 }
