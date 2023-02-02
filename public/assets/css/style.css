@@ -224,6 +224,7 @@ input[type=number] {
 }
 
 .cost-keranjang {
+    border: none;
     font-size: 24px;
     font-weight: 600;
     color: var(--main-green);
