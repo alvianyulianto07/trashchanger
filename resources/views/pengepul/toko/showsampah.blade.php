@@ -67,7 +67,7 @@
                             <div class="d-flex justify-content-between px-2 align-items-center">
                                 <p class="label-total-harga">Total harga</p>
                                 <p><input class="total-harga" id="totalprice" name="total_harga"
-                                        value="{{ $sampah->harga }}" readonly></p>
+                                        value="Rp. {{ number_format($sampah->harga, 0, ',', '.');}}" readonly></p>
                             </div>
                             <button class="btn btn-success btn-sm mb-2" type="submit">Tambah ke Keranjang</button>
                             <button class="btn btn-outline-success btn-sm">Beli langsung</button>
