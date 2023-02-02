@@ -159,6 +159,11 @@ ul {
     text-align: center;
 }
 
+.form-control-barang-keranjang {
+    width: 20%;
+    text-align: center;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -201,6 +206,35 @@ input[type=number] {
     color: #26a745;
 }
 
-.item-keranjang {
-    padding-left: 20px;
+.card-img-keranjang {
+    width: 135px;
+    height: 135px;
+    border-radius: 5px;
+}
+
+.header-keranjang {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.toko-name-keranjang {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--main-green);
+}
+
+.cost-keranjang {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--main-green);
+}
+
+.trash-name-keranjang {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.cost-satuan-keranjang {
+    font-size: 14px;
 }
