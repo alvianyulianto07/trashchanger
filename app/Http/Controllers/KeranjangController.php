@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Keranjang;
 use App\Models\Pembelian;
 use App\Models\Transaksi;
+use App\Models\BankSampah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
@@ -28,8 +29,9 @@ class KeranjangController extends Controller
             ->where('keranjang.users_id', $id);
         $cart = $allcart->get(['keranjang.*', 'bank_sampah.nama_banksampah',
             'sampah.nama_sampah', 'sampah.harga', 'sampah.foto'])
-            ->groupBy('nama_banksampah');
-        return view('pengepul.keranjang.index', compact('cart', 'searchquery'));
+            ->groupBy('bankSampah_id');
+        $banksampah = BankSampah::all();
+        return view('pengepul.keranjang.index', compact('cart', 'searchquery', 'banksampah'));
     }
 
     /**
