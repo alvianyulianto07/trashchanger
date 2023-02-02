@@ -162,6 +162,20 @@
                     var selectedToko = document.getElementById(idcbpertoko);
                     selectedToko.checked = true;
                 }
+
+
+                var allCBChecked = 0;
+                var all = document.getElementById("allcheckbox");
+                var allcbselected = all.querySelectorAll('.cbpertoko');
+                for (var i = 0; i < allcbselected.length; i++) {
+                    if (!allcbselected[i].checked) {
+                        allCBChecked = 1;
+                    }
+                }
+                if (allCBChecked == 0) {
+                    var checkboxall = document.getElementById("checkall");
+                    checkboxall.checked = true;
+                }
             } else {
                 textsubmit = textsubmit - 1;
                 texttotal_keranjang = texttotal_keranjang - textprice;
@@ -172,20 +186,11 @@
                 total_keranjang.innerHTML = currency(texttotal_keranjang.toString(), 'Rp');
                 total_bayar.innerHTML = currency(texttotal_bayar.toString(), 'Rp');
 
-
-                var allChecked = 1;
-                var selectedToko = document.getElementById(bankSampah_id);
-                var allCBSelectedToko = selectedToko.querySelectorAll('input[type="checkbox"]');
-                for (var i = 0; i < allCBSelectedToko.length; i++) {
-                    if (allCBSelectedToko[i].checked) {
-                        allChecked = 0;
-                    }
-                }
-                if (allChecked == 1) {
-                    var idcbpertoko = "cbpertoko" + bankSampah_id;
-                    var selectedToko = document.getElementById(idcbpertoko);
-                    selectedToko.checked = false;
-                }
+                var idcbpertoko = "cbpertoko" + bankSampah_id;
+                var selectedToko = document.getElementById(idcbpertoko);
+                selectedToko.checked = false;
+                var checkboxall = document.getElementById("checkall");
+                checkboxall.checked = false;
             }
         }
 
@@ -258,6 +263,19 @@
                         dosomething(bankSampah_id, allCBSelectedToko[i].value, allCBSelectedToko[i]);
                     }
                 }
+
+                var allChecked = 0;
+                var all = document.getElementById("allcheckbox");
+                var allcbselected = all.querySelectorAll('.cbpertoko');
+                for (var i = 0; i < allcbselected.length; i++) {
+                    if (!allcbselected[i].checked) {
+                        allChecked = 1;
+                    }
+                }
+                if (allChecked == 0) {
+                    var checkboxall = document.getElementById("checkall");
+                    checkboxall.checked = true;
+                }
             } else {
                 for (var i = 0; i < allCBSelectedToko.length; i++) {
                     if (allCBSelectedToko[i].checked) {
@@ -265,6 +283,9 @@
                         dosomething(bankSampah_id, allCBSelectedToko[i].value, allCBSelectedToko[i]);
                     }
                 }
+
+                var checkboxall = document.getElementById("checkall");
+                checkboxall.checked = false;
             }
         }
 
