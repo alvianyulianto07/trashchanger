@@ -24,7 +24,7 @@ class TokoController extends Controller
         //
         $searchquery = '';
         $banksampah = BankSampah::all();
-        $sampah = Sampah::all();
+        $sampah = Sampah::where('status', 'Tersedia')->get();
         $kategori = Kategori::all();
         return view('pengepul.toko.index', compact('sampah', 'banksampah', 'kategori', 'searchquery'));
     }
@@ -40,7 +40,7 @@ class TokoController extends Controller
         $banksampah = BankSampah::all();
         $kategori = Kategori::all();
         $searchTerm = '%' . $searchquery . '%';
-        $sampah = Sampah::where('nama_sampah', 'like', $searchTerm)->get();
+        $sampah = Sampah::where('nama_sampah', 'like', $searchTerm)->where('status', 'Tersedia')->get();
         // dd($sampah);
         return view('pengepul.toko.searchresult', compact('sampah', 'banksampah', 'kategori', 'searchquery'));
     }
