@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\BankSampah;
 use App\Models\Keranjang;
 use App\Models\Pembelian;
 use App\Models\Transaksi;
-use App\Models\BankSampah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
@@ -58,25 +58,29 @@ class KeranjangController extends Controller
                 }
             }
         }
-        $id = Auth::user()->id;
-        $time = Carbon::now()->isoFormat('YYYY-MM-DD');
-        Pembelian::create([
-            "users_id" => $id,
-            "tanggal" => $time,
-        ]);
-        foreach ($collect as $order) {
-            $keranjang = Keranjang::findOrFail($order['idkeranjang']);
-            $pembelian = Pembelian::where("users_id", $id)->where("tanggal", $time)->firstOrFail();
-            Transaksi::create([
-                "sampah_id" => $keranjang->sampah_id,
-                "bankSampah_id" => $keranjang->bankSampah_id,
-                "pembelian_id" => $pembelian->id,
-                "jumlah_barang" => $order['jumlah_barang'],
-                "total_harga" => $order['total_harga'],
-                "status" => "Dalam Proses",
+        if ($collect != []) {
+
+            $id = Auth::user()->id;
+            $time = Carbon::now()->isoFormat('YYYY-MM-DD');
+            Pembelian::create([
+                "users_id" => $id,
+                "tanggal" => $time,
             ]);
-            $keranjang->delete();
+            foreach ($collect as $order) {
+                $keranjang = Keranjang::findOrFail($order['idkeranjang']);
+                $pembelian = Pembelian::where("users_id", $id)->where("tanggal", $time)->firstOrFail();
+                Transaksi::create([
+                    "sampah_id" => $keranjang->sampah_id,
+                    "bankSampah_id" => $keranjang->bankSampah_id,
+                    "pembelian_id" => $pembelian->id,
+                    "jumlah_barang" => $order['jumlah_barang'],
+                    "total_harga" => $order['total_harga'],
+                    "status" => "Dalam Proses",
+                ]);
+                $keranjang->delete();
+            }
+            return redirect('/pembelian');
         }
-        return redirect('/pembelian');
+        return back()->with('success', 'Sukses Menambahkan Barang');
     }
 }

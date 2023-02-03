@@ -11,7 +11,7 @@
                             <h3 class="header-keranjang">Keranjang</h3>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="checkall"
-                                    onchange="event.preventDefault(); checkallbox(this);">
+                                    onchange="event.preventDefault(); cbAll(this);">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Pilih Semua
                                 </label>
@@ -26,7 +26,7 @@
                                                     <div class="form-check">
                                                         <input class="form-check-input cbpertoko" type="checkbox"
                                                             value="{{ $bankSampah_id }}" id="cbpertoko{{ $bankSampah_id }}"
-                                                            onchange="event.preventDefault(); changeToko({{ $bankSampah_id }}, this);">
+                                                            onchange="event.preventDefault(); cbToko({{ $bankSampah_id }}, this);">
                                                     </div>
                                                 </div>
                                                 <div class="col-11">
@@ -39,7 +39,7 @@
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox"
                                                                         value="{{ $item->id }}"
-                                                                        onchange="event.preventDefault(); dosomething({{ $bankSampah_id }}, this.value, this);"
+                                                                        onchange="event.preventDefault(); cbItem({{ $bankSampah_id }}, this.value, this);"
                                                                         id="cbperitem{{ $item->id }}">
                                                                     <input name="item{{ $item->id }}[id]"
                                                                         id="item{{ $item->id }}[id]"
@@ -61,7 +61,7 @@
                                                                         {{ number_format($item->harga, 0, ',', '.') }}/kg
                                                                     </p>
                                                                     <input
-                                                                        value="Rp. {{ number_format($item->total_harga, 0, ',', '.') }}"
+                                                                        value="Rp. {{ number_format($item->harga * $item->jumlah_barang, 0, ',', '.') }}"
                                                                         name="item{{ $item->id }}[total_harga]"
                                                                         id="item{{ $item->id }}[total_harga]"
                                                                         class="cost-keranjang" readonly />
@@ -115,7 +115,8 @@
                                 <p id="total_bayar" class="total-harga-cart-akhir">Rp. {{ number_format(0, 0, ',', '.') }}
                                 </p>
                             </div>
-                            <button id="btnsubmit" type="submit" class="btn btn-success btn-block mt-3">Beli (0)</button>
+                            <button id="btnsubmit" type="submit" class="btn btn-success btn-block mt-3" disabled>Beli
+                                (0)</button>
                         </div>
                     </div>
                 </div>
@@ -124,7 +125,7 @@
     </div>
 
     <script>
-        function dosomething(bankSampah_id, id, checkboxElem) {
+        function cbItem(bankSampah_id, id, checkboxElem) {
             var idsampah = "item" + id + "[id]";
             var idtotalharga = "item" + id + "[total_harga]";
 
@@ -140,6 +141,7 @@
             var texttotal_bayar = parseInt(total_bayar.innerHTML.replace(/[^,\d]/g, ''));
 
             if (checkboxElem.checked) {
+                btnsubmit.disabled = false;
                 textsubmit = textsubmit + 1;
                 texttotal_keranjang = texttotal_keranjang + textprice;
                 texttotal_bayar = texttotal_bayar + textprice;
@@ -191,6 +193,19 @@
                 selectedToko.checked = false;
                 var checkboxall = document.getElementById("checkall");
                 checkboxall.checked = false;
+
+
+                var allCBUnchecked = 1;
+                var all = document.getElementById("allcheckbox");
+                var allcbselected = all.querySelectorAll('.cbpertoko');
+                for (var i = 0; i < allcbselected.length; i++) {
+                    if (allcbselected[i].checked) {
+                        allCBUnchecked = 0;
+                    }
+                }
+                if (allCBUnchecked == 1) {
+                    btnsubmit.disabled = true;
+                }
             }
         }
 
@@ -218,16 +233,17 @@
             var price = document.getElementById(idprice).innerHTML;
             var totalproduct = document.getElementById(idtotalitem).value;
 
+            var oldtotal = parseInt((document.getElementById(idtotalharga).value).replace(/[^,\d]/g, ''));
+
             price = parseInt(price.replace(/[^,\d]/g, ''));
             var totalprice = 0;
             var totalprice = price * totalproduct;
-            totalprice = currency(totalprice.toString(), 'Rp');
-            document.getElementById(idtotalharga).value = totalprice;
+            document.getElementById(idtotalharga).value = currency(totalprice.toString(), 'Rp');
 
             var idsampah = "item" + id + "[id]";
             var idcb = "cbperitem" + id;
 
-            var inputsampah = document.getElementById(idsampah);
+            var inputsampah = document.getElementById(idtotalitem);
             var total_keranjang = document.getElementById("total_keranjang");
             var total_bayar = document.getElementById("total_bayar");
             var price = document.getElementById(idprice);
@@ -238,21 +254,14 @@
             var texttotal_bayar = parseInt(total_bayar.innerHTML.replace(/[^,\d]/g, ''));
 
             if (checkboxElem.checked) {
-                if (step == "+") {
-                    texttotal_keranjang = texttotal_keranjang + textprice;
-                    texttotal_bayar = texttotal_bayar + textprice;
-                } else {
-                    if (inputsampah.value < 1) {
-                        texttotal_keranjang = texttotal_keranjang - textprice;
-                        texttotal_bayar = texttotal_bayar - textprice;
-                    }
-                }
+                texttotal_keranjang = texttotal_keranjang - oldtotal + totalprice;
+                texttotal_bayar = texttotal_bayar - oldtotal + totalprice;
                 total_keranjang.innerHTML = currency(texttotal_keranjang.toString(), 'Rp');
                 total_bayar.innerHTML = currency(texttotal_bayar.toString(), 'Rp');
             }
         }
 
-        function changeToko(bankSampah_id, checkboxElem) {
+        function cbToko(bankSampah_id, checkboxElem) {
             var selectedToko = document.getElementById(bankSampah_id);
             var allCBSelectedToko = selectedToko.querySelectorAll('input[type="checkbox"]');
 
@@ -260,7 +269,7 @@
                 for (var i = 0; i < allCBSelectedToko.length; i++) {
                     if (!allCBSelectedToko[i].checked) {
                         allCBSelectedToko[i].checked = true;
-                        dosomething(bankSampah_id, allCBSelectedToko[i].value, allCBSelectedToko[i]);
+                        cbItem(bankSampah_id, allCBSelectedToko[i].value, allCBSelectedToko[i]);
                     }
                 }
 
@@ -280,7 +289,7 @@
                 for (var i = 0; i < allCBSelectedToko.length; i++) {
                     if (allCBSelectedToko[i].checked) {
                         allCBSelectedToko[i].checked = false;
-                        dosomething(bankSampah_id, allCBSelectedToko[i].value, allCBSelectedToko[i]);
+                        cbItem(bankSampah_id, allCBSelectedToko[i].value, allCBSelectedToko[i]);
                     }
                 }
 
@@ -289,7 +298,7 @@
             }
         }
 
-        function checkallbox(checkboxElem) {
+        function cbAll(checkboxElem) {
             var all = document.getElementById("allcheckbox");
             var allcbselected = all.querySelectorAll('.cbpertoko');
 
@@ -297,14 +306,14 @@
                 for (var i = 0; i < allcbselected.length; i++) {
                     if (!allcbselected[i].checked) {
                         allcbselected[i].checked = true;
-                        changeToko(allcbselected[i].value, allcbselected[i]);
+                        cbToko(allcbselected[i].value, allcbselected[i]);
                     }
                 }
             } else {
                 for (var i = 0; i < allcbselected.length; i++) {
                     if (allcbselected[i].checked) {
                         allcbselected[i].checked = false;
-                        changeToko(allcbselected[i].value, allcbselected[i]);
+                        cbToko(allcbselected[i].value, allcbselected[i]);
                     }
                 }
             }
