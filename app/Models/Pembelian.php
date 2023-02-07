@@ -11,6 +11,7 @@ class Pembelian extends Model
     protected $fillable = [
         'users_id',
         'tanggal',
+        'total_harga',
     ];
     protected $table = 'pembelian';
 

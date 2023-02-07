@@ -74,7 +74,7 @@ class KeranjangController extends Controller
                     "bankSampah_id" => $keranjang->bankSampah_id,
                     "pembelian_id" => $pembelian->id,
                     "jumlah_barang" => $order['jumlah_barang'],
-                    "total_harga" => $order['total_harga'],
+                    "total_harga" => preg_replace('/[^0-9]/', '', $order['total_harga']),
                     "status" => "Dalam Proses",
                 ]);
                 $keranjang->delete();

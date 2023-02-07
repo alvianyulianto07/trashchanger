@@ -5,6 +5,7 @@ use App\Models\Sampah;
 use App\Models\Kategori;
 use App\Models\Pembelian;
 use App\Models\BankSampah;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,9 +32,10 @@ class PembelianController extends Controller
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
         ->where('pembelian.users_id', $id)
-        ->select('pembelian.id', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah')
+        ->select('pembelian.id', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', DB::raw('SUM(transaksi.total_harga) AS jumlah'))
         ->get()
         ->groupBy(['id', 'nama_banksampah']);
+        dd($allpembelian);
         $kategori = Kategori::all();
         return view('pengepul.pembelian.index', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'allpembelian'));
     }

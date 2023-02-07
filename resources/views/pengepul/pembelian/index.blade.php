@@ -23,7 +23,7 @@
                                             </p>
                                             <input value="10000" name="item" id="item" class="cost-keranjang"
                                                 readonly />
-                                            <p style="margin: 0">3 produk</p>
+                                            <p style="margin: 0">{{$loop->count}} produk</p>
                                             <div class="d-flex justify-content-end">
                                                 <button class="btn btn-sm btn-success mx-3"><i class="far fa-eye"
                                                         style="margin-right: 5px"></i>Lihat Transaksi</button>
