@@ -59,40 +59,43 @@
 
         {{-- KONTEN DISINI --}}
         <div class="container card my-3">
+            <h4 class="text-center mt-2 header-detail-transaksi" style="margin: 0">Detail Transaksi</h4>
             <div class="card mt-3">
-                <div class="invoice">
-                    <p>No.invoice</p>
-                    <p>Tanggal Pembelian</p>
-                </div>
-                <div class="invoice">
-                    <p>INI NOMER</p>
-                    <p>{{$pembelian->tanggal}}</p>
+                <div class="row p-3">
+                    <div class="col-2">
+                        <p class="invoice">No.invoice</p>
+                        <p class="invoice">Tanggal Pembelian</p>
+                    </div>
+                    <div class="col-10">
+                        <p class="invoice-nomer">: {{ $pembelian->tanggal }}/mpl</p>
+                        <p class="invoice-data">: {{ $pembelian->tanggal }}</p>
+                    </div>
                 </div>
             </div>
-            <div class="card mt-3">
-                <p style="margin: 0">Detail Produk</p>
+            <div class="card mt-3 p-3">
+                <p class="header-detail-produk">Detail Produk</p>
                 @foreach ($alltransaksi as $banksampahid => $alltransaksibanksampah)
                     @foreach ($allbanksampah as $banksampah)
-                        <p {{ $banksampah->id != $banksampahid ? 'hidden' : '' }}>
+                        <p class="bankname-detail-transaksi mt-2" {{ $banksampah->id != $banksampahid ? 'hidden' : '' }}>
                             {{ $banksampah->nama_banksampah }}</p>
                     @endforeach
                     @foreach ($alltransaksibanksampah as $transaksi)
-                        <div class="detail-produk card m-2">
+                        <div class="detail-produk card mt-2">
                             <div class="row">
                                 <div class="col-3">
                                     <img src="{{ asset('storage/foto') }}" class="card-img-pembelian">
                                 </div>
                                 <div class="col-9">
-                                    <div class="row">
+                                    <div class="row align-items-center py-2">
                                         <div class="col-8">
-                                            <p>{{ $transaksi->nama_sampah }}</p>
-                                            <p>{{ $transaksi->jumlah_barang }} x Rp. {{ $transaksi->harga_satuan }}/Kg
+                                            <p class="nama-sampah-detail-transaksi">{{ $transaksi->nama_sampah }}</p>
+                                            <p class="harga-sampah-detail-transaksi">{{ $transaksi->jumlah_barang }} x Rp. {{ $transaksi->harga_satuan }}/Kg
                                             </p>
-                                            <p>{{ $transaksi->status }}</p>
+                                            <p class="status-detail-transaksi">{{ $transaksi->status }}</p>
                                         </div>
-                                        <div class="col-4">
-                                            <p>Total Harga</p>
-                                            <p>Rp. {{ number_format($transaksi->total_harga, 0, ',', '.') }}</p>
+                                        <div class="col-4 total-harga-container">
+                                            <p class="label-total-detail-transaksi">Total Harga</p>
+                                            <p class="total-harga-detail-transaksi">Rp. {{ number_format($transaksi->total_harga, 0, ',', '.') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -103,15 +106,15 @@
             </div>
             <div class="card mt-3">
                 <div class="rincian-pembayaran">
-                    <div class="d-flex justify-content-between mx-5 my-2">
-                        <h4 style="margin: 0">Total Belanja</h4>
-                        <h4 style="margin: 0">Rp. {{ number_format($pembelian->total_harga, 0, ',', '.') }}</h4>
+                    <div class="d-flex justify-content-between align-items-center mx-5 my-2">
+                        <h4 class="total-belanja-detail-transaksi">Total Belanja :</h4>
+                        <h4 class="harga-total-belanja-detail-transaksi">Rp. {{ number_format($pembelian->total_harga, 0, ',', '.') }}</h4>
                     </div>
                 </div>
             </div>
             <div class="card mt-3 mb-3">
                 <div class="map m-3">
-                    Rekomendasi Rute Pembelian
+                    <p>Rekomendasi Rute Pembelian</p> 
                     <div class="card">
                         <iframe class="mb-3"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.896465492711!2d112.17734576977537!3d-7.100003399999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e778c56bba95239%3A0x1b5fbffeb58417f!2sUD.%20Bintang%20Motor!5e0!3m2!1sid!2sid!4v1675145505514!5m2!1sid!2sid"

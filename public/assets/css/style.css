@@ -264,3 +264,87 @@ input[type=number] {
     background-color: #49f070;
     border-radius: 10px;
 }
+
+.header-detail-transaksi {
+    font-weight: 600;
+    color: var(--main-gray);
+}
+
+.invoice {
+    margin: 0;
+    font-size: 16px;
+}
+
+.invoice-data {
+    margin: 0;
+    font-size: 16px;
+}
+
+.invoice-nomer {
+    margin: 0;
+    color: var(--main-green);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.header-detail-produk {
+    font-size: 18px;
+    color: var(--main-gray);
+    font-weight: 600;
+    margin: 0;
+}
+
+.bankname-detail-transaksi {
+    font-size: 16px;
+    color: var(--main-green);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.nama-sampah-detail-transaksi {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.harga-sampah-detail-transaksi {
+    font-size: 16px;
+}
+
+.status-detail-transaksi {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    padding: 5px 10px;
+    background-color: var(--main-green);
+    border-radius: 10px;
+    margin: 0;
+}
+
+.label-total-detail-transaksi {
+    margin: 0;
+    font-size: 18px;
+}
+
+.total-harga-detail-transaksi {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--main-green);
+}
+
+.total-belanja-detail-transaksi {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--main-gray);
+    margin-right: 30px;
+}
+
+.harga-total-belanja-detail-transaksi {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--main-green);
+}
