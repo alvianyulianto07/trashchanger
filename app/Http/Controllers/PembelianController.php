@@ -40,4 +40,15 @@ class PembelianController extends Controller
     }
 
     
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+        return view('pengepul.pembelian.show');
+    }
+    
 }
