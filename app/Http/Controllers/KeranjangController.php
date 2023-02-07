@@ -65,7 +65,7 @@ class KeranjangController extends Controller
         if ($collect != []) {
 
             $id = Auth::user()->id;
-            $time = Carbon::now()->isoFormat('YYYY-MM-DD');
+            $time = Carbon::now()->toDateTimeString();
             Pembelian::create([
                 "users_id" => $id,
                 "tanggal" => $time,

@@ -35,7 +35,6 @@ class PembelianController extends Controller
         ->select('pembelian.id', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', 'pembelian.total_harga')
         ->get()
         ->groupBy(['id', 'nama_banksampah']);
-
         $kategori = Kategori::all();
         return view('pengepul.pembelian.index', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'allpembelian'));
     }
