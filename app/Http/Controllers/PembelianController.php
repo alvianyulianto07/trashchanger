@@ -32,10 +32,10 @@ class PembelianController extends Controller
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
         ->where('pembelian.users_id', $id)
-        ->select('pembelian.id', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', DB::raw('SUM(transaksi.total_harga) AS jumlah'))
+        ->select('pembelian.id', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', 'pembelian.total_harga')
         ->get()
         ->groupBy(['id', 'nama_banksampah']);
-        dd($allpembelian);
+
         $kategori = Kategori::all();
         return view('pengepul.pembelian.index', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'allpembelian'));
     }

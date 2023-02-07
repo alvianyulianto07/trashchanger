@@ -112,8 +112,7 @@
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <p class="label-total-harga-cart-akhir" style="margin: 0; padding: 0;">Total Harga</p>
-                                <p id="total_bayar" class="total-harga-cart-akhir">Rp. {{ number_format(0, 0, ',', '.') }}
-                                </p>
+                                <input id="total_bayar" name="total_bayar" value="Rp. {{ number_format(0, 0, ',', '.') }}" class="total-harga-cart-akhir" readonly/>
                             </div>
                             <button id="btnsubmit" type="submit" class="btn btn-success btn-block mt-3" disabled>Beli
                                 (0)</button>
@@ -138,7 +137,7 @@
             var textprice = parseInt(price.value.replace(/[^,\d]/g, ''));
             var textsubmit = parseInt(btnsubmit.innerHTML.replace(/[^,\d]/g, ''));
             var texttotal_keranjang = parseInt(total_keranjang.innerHTML.replace(/[^,\d]/g, ''));
-            var texttotal_bayar = parseInt(total_bayar.innerHTML.replace(/[^,\d]/g, ''));
+            var texttotal_bayar = parseInt(total_bayar.value.replace(/[^,\d]/g, ''));
 
             if (checkboxElem.checked) {
                 btnsubmit.disabled = false;
@@ -149,7 +148,7 @@
                 inputsampah.value = id;
                 btnsubmit.innerHTML = "Beli (" + textsubmit.toString() + ")";
                 total_keranjang.innerHTML = currency(texttotal_keranjang.toString(), 'Rp');
-                total_bayar.innerHTML = currency(texttotal_bayar.toString(), 'Rp');
+                total_bayar.value = currency(texttotal_bayar.toString(), 'Rp');
 
                 var allChecked = 0;
                 var selectedToko = document.getElementById(bankSampah_id);
@@ -186,7 +185,7 @@
                 inputsampah.value = "";
                 btnsubmit.innerHTML = "Beli (" + textsubmit.toString() + ")";
                 total_keranjang.innerHTML = currency(texttotal_keranjang.toString(), 'Rp');
-                total_bayar.innerHTML = currency(texttotal_bayar.toString(), 'Rp');
+                total_bayar.value = currency(texttotal_bayar.toString(), 'Rp');
 
                 var idcbpertoko = "cbpertoko" + bankSampah_id;
                 var selectedToko = document.getElementById(idcbpertoko);
@@ -251,13 +250,13 @@
 
             var textprice = parseInt(price.innerHTML.replace(/[^,\d]/g, ''));
             var texttotal_keranjang = parseInt(total_keranjang.innerHTML.replace(/[^,\d]/g, ''));
-            var texttotal_bayar = parseInt(total_bayar.innerHTML.replace(/[^,\d]/g, ''));
+            var texttotal_bayar = parseInt(total_bayar.value.replace(/[^,\d]/g, ''));
 
             if (checkboxElem.checked) {
                 texttotal_keranjang = texttotal_keranjang - oldtotal + totalprice;
                 texttotal_bayar = texttotal_bayar - oldtotal + totalprice;
                 total_keranjang.innerHTML = currency(texttotal_keranjang.toString(), 'Rp');
-                total_bayar.innerHTML = currency(texttotal_bayar.toString(), 'Rp');
+                total_bayar.value = currency(texttotal_bayar.toString(), 'Rp');
             }
         }
 

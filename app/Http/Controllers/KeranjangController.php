@@ -44,8 +44,10 @@ class KeranjangController extends Controller
     {
         $collect = [];
 
+        $total_harga = null;
+
         foreach ($request->all() as $input_key => $input_value) {
-            if ($input_key != "cbperitem" && $input_value != null && $input_key != "_token") {
+            if ($input_key != "cbperitem" && $input_value != null && $input_key != "_token" && $input_key != "total_bayar") {
                 $id = $input_value['id'];
                 $jumlah_barang = $input_value['jumlah_barang'];
                 $total_harga = $input_value['total_harga'];
@@ -56,6 +58,8 @@ class KeranjangController extends Controller
                         'total_harga' => $total_harga,
                     );
                 }
+            } else if($input_key == "total_bayar"){
+                $total_harga = $input_value;
             }
         }
         if ($collect != []) {
@@ -65,6 +69,7 @@ class KeranjangController extends Controller
             Pembelian::create([
                 "users_id" => $id,
                 "tanggal" => $time,
+                "total_harga" => preg_replace('/[^0-9]/', '', $total_harga),
             ]);
             foreach ($collect as $order) {
                 $keranjang = Keranjang::findOrFail($order['idkeranjang']);

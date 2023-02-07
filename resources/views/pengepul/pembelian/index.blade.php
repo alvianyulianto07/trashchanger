@@ -21,7 +21,7 @@
                                             </p>
                                             <p class="cost-satuan-keranjang">Harga satuan 5000/kg
                                             </p>
-                                            <input value="10000" name="item" id="item" class="cost-keranjang"
+                                            <input value="Rp. {{ number_format($sampah->total_harga, 0, ',', '.') }}" name="item" id="item" class="cost-keranjang"
                                                 readonly />
                                             <p style="margin: 0">{{$loop->count}} produk</p>
                                             <div class="d-flex justify-content-end">
