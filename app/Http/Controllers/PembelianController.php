@@ -50,8 +50,7 @@ class PembelianController extends Controller
     public function show($pembelianid)
     {
         //
-        $searchquery = '';
-        $banksampah = BankSampah::all();
+        $allbanksampah = BankSampah::all();
         $sampah = Sampah::where('status', 'Tersedia')->get();
 
         $id = Auth::user()->id;
@@ -70,11 +69,11 @@ class PembelianController extends Controller
                 'jumlah_barang' => $item->jumlah_barang,
                 'harga_satuan' => $sampah->harga,
                 'total_harga' => $item->total_harga,
+                'status' => $item->status,
             ]);
         }
         $alltransaksi = $alltransaksi->groupBy('bankSampah_id');
-        dd($alltransaksi);
-        return view('pengepul.pembelian.show', compact('searchquery', 'pembelian', 'alltransaksi'));
+        return view('pengepul.pembelian.show', compact('pembelian', 'alltransaksi', 'allbanksampah'));
     }
     
 }
