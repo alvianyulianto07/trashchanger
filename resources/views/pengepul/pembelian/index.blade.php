@@ -12,7 +12,7 @@
                                     @if ($loop->first)
                                         <div class="row align-items-center mb-3">
                                             <div class="col-4 text-center">
-                                                <img src="{{ asset('storage/foto') }}" class="card-img-pembelian">
+                                                <img src="{{ asset('storage/foto/' . $sampah->foto) }}" class="card-img-pembelian">
                                             </div>
                                             <div class="col-8 p-0">
                                                 <p class="status-pembelian">{{ $sampah->status }}</p>

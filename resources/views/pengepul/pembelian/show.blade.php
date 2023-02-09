@@ -83,7 +83,7 @@
                         <div class="detail-produk card mt-2">
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="{{ asset('storage/foto') }}" class="card-img-pembelian">
+                                    <img src="{{ asset('storage/foto/' . $transaksi->foto) }}" class="card-img-pembelian">
                                 </div>
                                 <div class="col-9">
                                     <div class="row align-items-center py-2">
