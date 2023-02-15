@@ -348,3 +348,20 @@ input[type=number] {
     font-weight: 700;
     color: var(--main-green);
 }
+
+.img-toko {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.nama-toko-show {
+    font-size: 18px;
+    color: var(--main-green);
+    margin: 0;
+    font-weight: 600;
+}
+
+.alamat-toko-show {
+    font-size: 16px;
+}
