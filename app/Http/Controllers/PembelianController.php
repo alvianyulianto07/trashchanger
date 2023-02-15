@@ -34,7 +34,7 @@ class PembelianController extends Controller
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
         ->where('pembelian.users_id', $id)
-        ->select('pembelian.id', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', 'pembelian.total_harga')
+        ->select('pembelian.id', 'sampah.foto', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', 'pembelian.total_harga')
         ->get()
         ->groupBy(['id', 'nama_banksampah']);
         $kategori = Kategori::all();
@@ -65,6 +65,7 @@ class PembelianController extends Controller
                 'bankSampah_id' => $item->bankSampah_id,
                 'nama_bankSampah' => BankSampah::findOrFail($item->bankSampah_id)->nama_banksampah,
                 'sampah_id' => $item->sampah_id,
+                'foto' => $sampah->foto,
                 'nama_sampah' => $sampah->nama_sampah,
                 'jumlah_barang' => $item->jumlah_barang,
                 'harga_satuan' => $sampah->harga,

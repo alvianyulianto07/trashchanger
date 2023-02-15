@@ -67,7 +67,7 @@ class SampahController extends Controller
         }
 
         $num = rand(1, 100);
-        $basenamefile = str_replace(' ', '_', $request->name);
+        $basenamefile = str_replace(' ', '_', $request->nama_sampah);
 
         $newName = "";
         if ($request->hasFile('foto')) {
@@ -126,7 +126,7 @@ class SampahController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            'name' => 'required',
+            'nama_sampah' => 'required',
             'jumlah' => 'required',
             'harga' => 'required',
             'kategori' => 'required',
@@ -135,7 +135,7 @@ class SampahController extends Controller
         $sampah = Sampah::findOrFail($id);
 
         $num = rand(1, 100);
-        $basenamefile = str_replace(' ', '_', $request->name);
+        $basenamefile = str_replace(' ', '_', $request->nama_sampah);
 
         $newName = "";
         $namaFoto = $sampah->foto;
