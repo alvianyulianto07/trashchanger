@@ -56,7 +56,9 @@ class TokoController extends Controller
         //
         $searchquery = '';
         $banksampah = BankSampah::findOrFail($id);
-        return view('pengepul.toko.show', compact('banksampah', 'searchquery'));
+        $kategori = Kategori::all();
+        $sampah = Sampah::where('bankSampah_id', $banksampah->id)->where('status', 'Tersedia')->get();
+        return view('pengepul.toko.show', compact('banksampah', 'searchquery', 'sampah', 'kategori'));
     }
 
     /**
