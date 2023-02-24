@@ -12,7 +12,9 @@
                     <p>Stok: <strong>{{ $sampah->jumlah }}</strong></p>
                     <p id="price" class="harga-display" >Rp. {{ number_format($sampah->harga, 0, ',', '.');}}</p>
                     <hr>
+                    <a href="{{ route('beranda.show', $banksampah->id)}}">
                     <p style="margin: 0">Nama Bank Sampah: <strong>{{ $banksampah->nama_banksampah }}</strong></p>
+                    </a>
                     <p style="margin: 0">Alamat: <strong>{{ $alamatbanksampah }}</strong></p>
                     <hr>
                     <iframe class="mb-3"
