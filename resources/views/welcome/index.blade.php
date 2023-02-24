@@ -17,14 +17,16 @@
     <body>
         <div class="wrapper">
             <!-- Responsive navbar-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-white shadow-sm fixed-top">
                 <div class="container">
-                    <a class="navbar-brand" href="#">TrashChanger</a>
+                    <a class="navbar-title" href="#">TrashChanger</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" aria-current="page" href="/welcome">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
+                            <li class="nav-item"><a class="nav-link" aria-current="page" href="/welcome">Beranda</a></li>
+                            <li class="nav-item"><a class="nav-link" aria-current="page" href="/welcome">Fitur</a></li>
+                            <li class="nav-item"><a class="nav-link" aria-current="page" href="/welcome">Bank Sampah</a></li>
+                            <a class="btn-login" href="/login"><button class="btn btn-sm btn-success rounded-pill" style="margin-left: 20px;">Login</button></a>
                             {{-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -39,7 +41,10 @@
                 </div>
             </nav>
             <!-- Page content-->
-            <div class="container">
+            <div class="container content">
+              <br>
+
+              <br>
                 <div class="text-center mt-5">
                     {{-- Carousel --}}
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
