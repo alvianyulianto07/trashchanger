@@ -445,6 +445,14 @@
                                             @endif
                                         </div>
                                         <div class="form-group mb-3">
+                                            <label class="form-label" for="koordinat">Koordinat</label>
+                                            <input class="form-control" id="koordinat" name="koordinat" type="text"
+                                                value="{{ old('koordinat') }}" placeholder="Masukkan Koordinat" />
+                                            @if ($errors->has('koordinat'))
+                                                <span class="error font-error text-danger">Koordinat wajib diisi!</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group mb-3">
                                             <label class="form-label" for="inputPassword">Password</label>
                                             <input class="form-control" id="inputPassword" type="password"
                                                 name="password" placeholder="Masukkan Password" />
@@ -500,11 +508,12 @@
 
     function getAlamat() {
         var address = document.getElementById('alamat').value;
+        var koordinat = document.getElementById('koordinat');
         geocoder.geocode({
             'address': address
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                console.log(results[0].geometry.location.lat() + " " + results[0].geometry.location.lng())
+                koordinat.value = (results[0].geometry.location.lat() + " " + results[0].geometry.location.lng());
             } else {
                 alert('Geocode gagal karena : ' + status);
             }
