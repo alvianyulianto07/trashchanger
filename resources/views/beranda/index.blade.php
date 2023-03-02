@@ -17,7 +17,7 @@
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"
                             height="30" alt="Avatar" loading="lazy" />
-                        Admin
+                            {{ Auth::user()->nama  }}
                     </a>
                     <form action="/logout" method="POST">
                         @csrf

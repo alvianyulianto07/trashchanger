@@ -238,6 +238,14 @@ a {
   color: #0d6efd;
   text-decoration: underline;
 }
+
+.navbar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #26a745;
+  text-decoration: none;
+}
+
 a:hover {
   color: #0a58ca;
 }
@@ -3094,8 +3102,8 @@ textarea.form-control-lg {
   border-color: #198754;
 }
 .btn-success:hover {
-  color: #fff;
-  background-color: #157347;
+  color: #146c43;
+  background-color: #fff;
   border-color: #146c43;
 }
 .btn-check:focus + .btn-success, .btn-success:focus {
@@ -3487,9 +3495,19 @@ textarea.form-control-lg {
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 1.5rem;
   font-size: 0.875rem;
   border-radius: 0.2rem;
+}
+
+.btn-login {
+  color: white;
+  text-decoration: none;
+}
+
+.btn-login:hover {
+  color: #26a745;
+  text-decoration: none;
 }
 
 .fade {
@@ -3941,6 +3959,8 @@ textarea.form-control-lg {
 
 .nav-link {
   display: block;
+  font-size: 14px;
+  font-weight: 500;
   padding: 0.5rem 1rem;
   color: #0d6efd;
   text-decoration: none;
@@ -4473,23 +4493,23 @@ textarea.form-control-lg {
 }
 
 .navbar-dark .navbar-brand {
-  color: #fff;
+  color: #26a745;
 }
 .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {
-  color: #fff;
+  color: #26a745;
 }
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.55);
+  color: hsl(0, 0%, 33%);
 }
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
-  color: rgba(255, 255, 255, 0.75);
+  color: #26a745;
 }
 .navbar-dark .navbar-nav .nav-link.disabled {
-  color: rgba(255, 255, 255, 0.25);
+  color: #26a745;
 }
 .navbar-dark .navbar-nav .show > .nav-link,
 .navbar-dark .navbar-nav .nav-link.active {
-  color: #fff;
+  color: #26a745;
 }
 .navbar-dark .navbar-toggler {
   color: rgba(255, 255, 255, 0.55);

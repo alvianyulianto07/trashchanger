@@ -16,4 +16,9 @@ class WelcomeController extends Controller
             return redirect()->intended('/sampah');
         }
     }
+
+    public function index2()
+    {
+        return view('welcome.landing2');
+    }
 }

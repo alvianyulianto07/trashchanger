@@ -76,3 +76,5 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
     Route::post('/daftarbanksampah', [AuthController::class, 'create']);
 
 });
+
+Route::get('/landing2', [WelcomeController::class, 'index2']);

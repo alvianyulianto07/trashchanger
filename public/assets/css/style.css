@@ -16,11 +16,6 @@
     color: var(--main-green);
 }
 
-.navbar-brand {
-    font-size: 18px;
-    font-weight: 600;
-}
-
 ul {
     text-decoration: none;
 }
@@ -28,6 +23,10 @@ ul {
 .nav-item {
     display: flex;
     justify-content: flex-end;
+}
+
+.content {
+    padding-top: 10px;
 }
 
 .dropdown-profile {
