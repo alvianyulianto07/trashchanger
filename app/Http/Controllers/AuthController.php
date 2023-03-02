@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\BankSampah;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,9 +35,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if(Auth::user()->role == "0"){
+            if (Auth::user()->role == "0") {
                 return redirect()->intended('/beranda');
-            } else if (Auth::user()->role == "1"){
+            } else if (Auth::user()->role == "1") {
                 return redirect()->intended('/beranda');
             } else {
                 return redirect()->intended('/sampah');
@@ -66,6 +67,14 @@ class AuthController extends Controller
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
         ]);
+        $address = "16-18, Argyle Street, Camden, London, WC1H 8EG, United Kingdom";
+        $result = app('geocoder')->geocode($address)->get();
+        $coordinates = $result[0]->getCoordinates();
+        $lat = $coordinates->getLatitude();
+        $long = $coordinates->getLongitude();
+        
+        dd($coordinates);
+
         $role = "1";
         if ($request->check != null) {
             $role = "2";

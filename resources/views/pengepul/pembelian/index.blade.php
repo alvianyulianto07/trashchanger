@@ -7,12 +7,14 @@
                 <div>
                     <div class="row align-items-center">
                         @foreach ($pembelian as $nama_banksampah => $transaksi)
+                            @if ($loop->first)
                                 <div class="toko-name-pembelian">{{ $nama_banksampah }}</div>
                                 @foreach ($transaksi as $sampah)
                                     @if ($loop->first)
                                         <div class="row align-items-center mb-3">
                                             <div class="col-4 text-center">
-                                                <img src="{{ asset('storage/foto/' . $sampah->foto) }}" class="card-img-pembelian">
+                                                <img src="{{ asset('storage/foto/' . $sampah->foto) }}"
+                                                    class="card-img-pembelian">
                                             </div>
                                             <div class="col-8 p-0">
                                                 <p class="status-pembelian">{{ $sampah->status }}</p>
@@ -25,14 +27,16 @@
                                                     name="item" id="item" class="cost-keranjang" readonly />
                                                 <p style="margin: 0">{{ $loop->count }} produk</p>
                                                 <div class="d-flex justify-content-end">
-                                                    <a href="{{ route('pembelian.show', $pembelianid) }}" class="btn btn-sm btn-success mx-3"><i
-                                                            class="far fa-eye" style="margin-right: 5px"></i>Lihat
+                                                    <a href="{{ route('pembelian.show', $pembelianid) }}"
+                                                        class="btn btn-sm btn-success mx-3"><i class="far fa-eye"
+                                                            style="margin-right: 5px"></i>Lihat
                                                         Transaksi</a>
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
                                 @endforeach
+                            @endif
                         @endforeach
                     </div>
                 </div>
