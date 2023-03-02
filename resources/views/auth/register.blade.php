@@ -11,6 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
     <!-- Bootstrap -->
+    <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/global.css') }}">
@@ -437,12 +438,19 @@
                                             @endif
                                         </div>
                                         <div class="form-group mb-3">
-                                            <label class="form-label" for="alamat">Alamat</label>
-                                            <input class="form-control" id="alamat" name="alamat" type="text"
-                                                value="{{ old('alamat') }}" placeholder="Masukkan Alamat" />
+                                            <label class="form-label" for="address-input">Alamat</label>
+                                            <input class="form-control map-input" id="address-input"
+                                                name="address-input" type="text" value="{{ old('address-input') }}"
+                                                placeholder="Masukkan Alamat" />
                                             @if ($errors->has('alamat'))
                                                 <span class="error font-error text-danger">Alamat wajib diisi!</span>
                                             @endif
+                                        </div>
+
+                                        <div class="form-group mb-3">
+                                            <div id="address-map-container" style="width:100%;height:400px; ">
+                                                <div style="width: 100%; height: 100%" id="address-map"></div>
+                                            </div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label class="form-label" for="koordinat">Koordinat</label>
@@ -479,7 +487,8 @@
                                             <button class="btn btn-success" type="submit">Daftar</button>
                                         </div>
                                         <div class="text-center">
-                                            <p>Sudah punya akun? <a href="/login" style="color: #26a745;">Masuk</a></p>
+                                            <p>Sudah punya akun? <a href="/login" style="color: #26a745;">Masuk</a>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
@@ -497,11 +506,157 @@
 </div>
 </div>
 <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZiyRtAqqNQdmijoQJl5_neDhxzczwIHI&callback=initMap"></script>
+    src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize">
+</script>
 
 <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
 <script>
+    function initialize() {
+
+        $('regForm').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        const locationInputs = document.getElementsByClassName("map-input");
+
+        const autocompletes = [];
+        const geocoder = new google.maps.Geocoder;
+        for (let i = 0; i < locationInputs.length; i++) {
+
+            const input = locationInputs[i];
+            // const fieldKey = input.id.replace("-input", "");
+            // const isEdit = document.getElementById(fieldKey + "-latitude").value != '' && document.getElementById(
+            //     fieldKey + "-longitude").value != '';
+
+            // const latitude = parseFloat(document.getElementById(fieldKey + "-latitude").value) || -33.8688;
+            // const longitude = parseFloat(document.getElementById(fieldKey + "-longitude").value) || 151.2195;
+
+            const map = new google.maps.Map(document.getElementById('address-map'), {
+                center: {
+                    lat: 0,
+                    lng: 0
+                },
+                zoom: 13
+            });
+            const marker = new google.maps.Marker({
+                map: map,
+                position: {
+                    lat: 0,
+                    lng: 0
+                },
+            });
+
+            // marker.setVisible(isEdit);
+
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.key = "address";
+            autocompletes.push({
+                input: input,
+                map: map,
+                marker: marker,
+                autocomplete: autocomplete
+            });
+        }
+
+        for (let i = 0; i < autocompletes.length; i++) {
+            const input = autocompletes[i].input;
+            const autocomplete = autocompletes[i].autocomplete;
+            const map = autocompletes[i].map;
+            const marker = autocompletes[i].marker;
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                marker.setVisible(false);
+                const place = autocomplete.getPlace();
+
+                geocoder.geocode({
+                    'placeId': place.place_id
+                }, function(results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        const lat = results[0].geometry.location.lat();
+                        const lng = results[0].geometry.location.lng();
+                        setLocationCoordinates(autocomplete.key, lat, lng);
+                    }
+                });
+
+                if (!place.geometry) {
+                    window.alert("No details available for input: '" + place.name + "'");
+                    input.value = "";
+                    return;
+                }
+
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+
+            });
+        }
+    }
+
+    function setLocationCoordinates(key, lat, lng) {
+        var marker;
+        var map;
+
+        const latitudeField = document.getElementById(key + "-" + "latitude");
+        const longitudeField = document.getElementById(key + "-" + "longitude");
+
+        map = new google.maps.Map(document.getElementById('address-map'), {
+            zoom: 10,
+            center: {
+                lat: lat,
+                lng: lng
+            },
+            zoom: 13
+        });
+
+        marker = new google.maps.Marker({
+            position: {
+                lat: lat,
+                lng: lng
+            },
+            map: map
+        });
+
+        map.addListener("click", (mapsMouseEvent) => {
+            marker.setMap(null);
+
+            var position = JSON.stringify(mapsMouseEvent.latLng.toJSON());
+            var lat = JSON.parse(position).lat;
+            var lng = JSON.parse(position).lng;
+
+            const center = new google.maps.LatLng(lat, lng);
+            map.panTo(center);
+
+            marker = new google.maps.Marker({
+                position: mapsMouseEvent.latLng,
+                map: map
+            });
+
+            var latlng = new google.maps.LatLng(lat, lng);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        var address = document.getElementById('address-input');
+                        address.value = results[1].formatted_address;
+                    }
+                }
+            });
+        });
+    }
+</script>
+{{-- <script>
     let geocoder;
+
     function initMap() {
         geocoder = new google.maps.Geocoder();
     }
@@ -513,7 +668,8 @@
             'address': address
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                koordinat.value = (results[0].geometry.location.lat() + " " + results[0].geometry.location.lng());
+                koordinat.value = (results[0].geometry.location.lat() + " " + results[0].geometry.location
+                    .lng());
             } else {
                 alert('Geocode gagal karena : ' + status);
             }
@@ -523,7 +679,7 @@
     address.addEventListener('keyup', function(e) {
         getAlamat();
     })
-</script>
+</script> --}}
 </body>
 
 </html>
