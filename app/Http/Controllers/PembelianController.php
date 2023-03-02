@@ -34,10 +34,12 @@ class PembelianController extends Controller
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
         ->where('pembelian.users_id', $id)
+        ->orderBy('transaksi.created_at', 'desc')
         ->select('pembelian.id', 'sampah.foto', 'bank_sampah.nama_banksampah', 'transaksi.status', 'sampah.nama_sampah', 'pembelian.total_harga')
         ->get()
         ->groupBy(['id', 'nama_banksampah']);
         $kategori = Kategori::all();
+        //dd($allpembelian);
         return view('pengepul.pembelian.index', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'allpembelian'));
     }
 

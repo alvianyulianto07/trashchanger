@@ -20,81 +20,85 @@
                             <div id="allcheckbox">
                                 @foreach ($banksampah as $b)
                                     @foreach ($cart as $bankSampah_id => $toko)
-                                        @if ($b->id == $bankSampah_id)
-                                            <div class="row align-items-center">
-                                                <div class="col-1 d-flex justify-content-center">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input cbpertoko" type="checkbox"
-                                                            value="{{ $bankSampah_id }}" id="cbpertoko{{ $bankSampah_id }}"
-                                                            onchange="event.preventDefault(); cbToko({{ $bankSampah_id }}, this);">
+                                        @if ($loop->first)
+                                            @if ($b->id == $bankSampah_id)
+                                                <div class="row align-items-center">
+                                                    <div class="col-1 d-flex justify-content-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input cbpertoko" type="checkbox"
+                                                                value="{{ $bankSampah_id }}"
+                                                                id="cbpertoko{{ $bankSampah_id }}"
+                                                                onchange="event.preventDefault(); cbToko({{ $bankSampah_id }}, this);">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="toko-name-keranjang">{{ $b->nama_banksampah }}</div>
+                                                    </div>
+                                                    <div id="{{ $bankSampah_id }}">
+                                                        @foreach ($toko as $item)
+                                                            <div class="row align-items-center mb-3">
+                                                                <div class="col-1 d-flex justify-content-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            value="{{ $item->id }}"
+                                                                            onchange="event.preventDefault(); cbItem({{ $bankSampah_id }}, this.value, this);"
+                                                                            id="cbperitem{{ $item->id }}">
+                                                                        <input name="item{{ $item->id }}[id]"
+                                                                            id="item{{ $item->id }}[id]"
+                                                                            style="display: none;" value="" hidden>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3 text-center">
+                                                                    <img src="{{ asset('storage/foto/' . $item->foto) }}"
+                                                                        class="card-img-keranjang">
+                                                                </div>
+                                                                <div class="col-8 p-0">
+                                                                    <div class="m-2">
+                                                                        <p class="trash-name-keranjang">
+                                                                            {{ $item->nama_sampah }}
+                                                                        </p>
+                                                                        <p class="cost-satuan-keranjang"
+                                                                            id="item{{ $item->id }}[price]">
+                                                                            Rp.
+                                                                            {{ number_format($item->harga, 0, ',', '.') }}/kg
+                                                                        </p>
+                                                                        <input
+                                                                            value="Rp. {{ number_format($item->harga * $item->jumlah_barang, 0, ',', '.') }}"
+                                                                            name="item{{ $item->id }}[total_harga]"
+                                                                            id="item{{ $item->id }}[total_harga]"
+                                                                            class="cost-keranjang" readonly />
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end">
+                                                                        <div class="d-flex justify-content-end">
+                                                                            <div class="btn btn-link px-2"
+                                                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost({{ $item->id }}, '-');">
+                                                                                <i class="fas fa-minus"></i>
+                                                                            </div>
+
+                                                                            <input
+                                                                                id="item{{ $item->id }}[jumlah_barang]"
+                                                                                min="1"
+                                                                                name="item{{ $item->id }}[jumlah_barang]"
+                                                                                value="{{ $item->jumlah_barang }}"
+                                                                                type="number"
+                                                                                class="form-control form-control-barang-keranjang" />
+
+                                                                            <div class="btn btn-link px-2"
+                                                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost({{ $item->id }}, '+');">
+                                                                                <i class="fas fa-plus"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <a class="btn btn-sm btn-danger mx-3"><i
+                                                                                class="far fa-trash-alt"
+                                                                                style="margin-right: 5px"></i>Hapus</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                 </div>
-                                                <div class="col-11">
-                                                    <div class="toko-name-keranjang">{{ $b->nama_banksampah }}</div>
-                                                </div>
-                                                <div id="{{ $bankSampah_id }}">
-                                                    @foreach ($toko as $item)
-                                                        <div class="row align-items-center mb-3">
-                                                            <div class="col-1 d-flex justify-content-center">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        value="{{ $item->id }}"
-                                                                        onchange="event.preventDefault(); cbItem({{ $bankSampah_id }}, this.value, this);"
-                                                                        id="cbperitem{{ $item->id }}">
-                                                                    <input name="item{{ $item->id }}[id]"
-                                                                        id="item{{ $item->id }}[id]"
-                                                                        style="display: none;" value="" hidden>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-3 text-center">
-                                                                <img src="{{ asset('storage/foto/' . $item->foto) }}"
-                                                                    class="card-img-keranjang">
-                                                            </div>
-                                                            <div class="col-8 p-0">
-                                                                <div class="m-2">
-                                                                    <p class="trash-name-keranjang">
-                                                                        {{ $item->nama_sampah }}
-                                                                    </p>
-                                                                    <p class="cost-satuan-keranjang"
-                                                                        id="item{{ $item->id }}[price]">
-                                                                        Rp.
-                                                                        {{ number_format($item->harga, 0, ',', '.') }}/kg
-                                                                    </p>
-                                                                    <input
-                                                                        value="Rp. {{ number_format($item->harga * $item->jumlah_barang, 0, ',', '.') }}"
-                                                                        name="item{{ $item->id }}[total_harga]"
-                                                                        id="item{{ $item->id }}[total_harga]"
-                                                                        class="cost-keranjang" readonly />
-                                                                </div>
-                                                                <div class="d-flex justify-content-end">
-                                                                    <div class="d-flex justify-content-end">
-                                                                        <div class="btn btn-link px-2"
-                                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost({{ $item->id }}, '-');">
-                                                                            <i class="fas fa-minus"></i>
-                                                                        </div>
-
-                                                                        <input id="item{{ $item->id }}[jumlah_barang]"
-                                                                            min="1"
-                                                                            name="item{{ $item->id }}[jumlah_barang]"
-                                                                            value="{{ $item->jumlah_barang }}"
-                                                                            type="number"
-                                                                            class="form-control form-control-barang-keranjang" />
-
-                                                                        <div class="btn btn-link px-2"
-                                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost({{ $item->id }}, '+');">
-                                                                            <i class="fas fa-plus"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <button class="btn btn-sm btn-danger mx-3"><i
-                                                                            class="far fa-trash-alt"
-                                                                            style="margin-right: 5px"></i>Hapus</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <hr style="margin-top: 0">
+                                                <hr style="margin-top: 0">
+                                            @endif
                                         @endif
                                     @endforeach
                                 @endforeach
@@ -112,7 +116,8 @@
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <p class="label-total-harga-cart-akhir" style="margin: 0; padding: 0;">Total Harga</p>
-                                <input id="total_bayar" name="total_bayar" value="Rp. {{ number_format(0, 0, ',', '.') }}" class="total-harga-cart-akhir" readonly/>
+                                <input id="total_bayar" name="total_bayar" value="Rp. {{ number_format(0, 0, ',', '.') }}"
+                                    class="total-harga-cart-akhir" readonly />
                             </div>
                             <button id="btnsubmit" type="submit" class="btn btn-success btn-block mt-3" disabled>Beli
                                 (0)</button>
