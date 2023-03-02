@@ -17,8 +17,4 @@ class WelcomeController extends Controller
         }
     }
 
-    public function index2()
-    {
-        return view('welcome.landing2');
-    }
 }

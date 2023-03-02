@@ -77,4 +77,3 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
 
 });
 
-Route::get('/landing2', [WelcomeController::class, 'index2']);
