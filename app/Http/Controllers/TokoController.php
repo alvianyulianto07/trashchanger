@@ -72,10 +72,12 @@ class TokoController extends Controller
         //
         $searchquery = '';
         $banksampah = BankSampah::findOrFail($id);
+        $user = User::findOrFail($banksampah->users_id);
         $kategori = Kategori::all();
         $alamatbanksampah = User::findOrFail($banksampah->users_id)->alamat;
         $sampah = Sampah::findOrFail($idsampah);
-        return view('pengepul.toko.showsampah', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'alamatbanksampah'));
+        $koordinat = [$user->lat, $user->lng];
+        return view('pengepul.toko.showsampah', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'alamatbanksampah', 'koordinat'));
     }
 
     public function addToCart(Request $request)

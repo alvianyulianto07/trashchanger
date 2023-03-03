@@ -10,17 +10,17 @@
                 <div class="col-5">
                     <h3 style="margin: 0">{{ $sampah->nama_sampah }}</h3>
                     <p>Stok: <strong>{{ $sampah->jumlah }}</strong></p>
-                    <p id="price" class="harga-display" >Rp. {{ number_format($sampah->harga, 0, ',', '.');}}</p>
+                    <p id="price" class="harga-display">Rp. {{ number_format($sampah->harga, 0, ',', '.') }}</p>
                     <hr>
-                    <a href="{{ route('beranda.show', $banksampah->id)}}">
-                    <p style="margin: 0">Nama Bank Sampah: <strong>{{ $banksampah->nama_banksampah }}</strong></p>
+                    <a href="{{ route('beranda.show', $banksampah->id) }}">
+                        <p style="margin: 0">Nama Bank Sampah: <strong>{{ $banksampah->nama_banksampah }}</strong></p>
                     </a>
                     <p style="margin: 0">Alamat: <strong>{{ $alamatbanksampah }}</strong></p>
                     <hr>
-                    <iframe class="mb-3"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.896465492711!2d112.17734576977537!3d-7.100003399999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e778c56bba95239%3A0x1b5fbffeb58417f!2sUD.%20Bintang%20Motor!5e0!3m2!1sid!2sid!4v1675145505514!5m2!1sid!2sid"
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                    <div id="address-map-container" style="width:100%;height:100%; ">
+                        <div style="width: 100%; height: 100%" id="address-map"></div>
+                    </div>
                 </div>
                 <div class="col-3">
                     <form action="{{ route('beranda.keranjang') }}" method="POST">
@@ -35,7 +35,8 @@
                                 <div class="col-7">
                                     <p class="deskripsi-pembelian">Nama Item: <strong>{{ $sampah->nama_sampah }}</strong>
                                     </p>
-                                    <p class="deskripsi-pembelian">Kategori: <strong>{{ $sampah->kategori_id }}</strong></p>
+                                    <p class="deskripsi-pembelian">Kategori: <strong>{{ $sampah->kategori_id }}</strong>
+                                    </p>
                                 </div>
                             </div>
                             <hr>
@@ -53,8 +54,8 @@
                                             <i class="fas fa-minus"></i>
                                         </div>
 
-                                        <input id="jumlah_barang" min="1" name="jumlah_barang" value="1" type="number"
-                                            class="form-control form-control-barang" />
+                                        <input id="jumlah_barang" min="1" name="jumlah_barang" value="1"
+                                            type="number" class="form-control form-control-barang" />
 
                                         <div class="btn btn-link px-2"
                                             onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost();">
@@ -69,7 +70,7 @@
                             <div class="d-flex justify-content-between px-2 align-items-center">
                                 <p class="label-total-harga">Total harga</p>
                                 <p><input class="total-harga" id="totalprice" name="total_harga"
-                                        value="Rp. {{ number_format($sampah->harga, 0, ',', '.');}}" readonly></p>
+                                        value="Rp. {{ number_format($sampah->harga, 0, ',', '.') }}" readonly></p>
                             </div>
                             <button class="btn btn-success btn-sm mb-2" type="submit">Tambah ke Keranjang</button>
                             <button class="btn btn-outline-success btn-sm">Beli langsung</button>
@@ -80,8 +81,35 @@
         </div>
     </div>
 
+    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initialize">
+    </script>
+    <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
     <script>
-        
+        var koordinat = {!! json_encode($koordinat) !!};
+
+        function initialize() {
+
+            var initLat = parseFloat(koordinat[0]);
+            var initLng = parseFloat(koordinat[1]);
+            const map = new google.maps.Map(document.getElementById('address-map'), {
+                center: {
+                    lat: initLat,
+                    lng: initLng
+                },
+                zoom: 17
+            });
+
+
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: parseFloat(koordinat[0]),
+                    lng: parseFloat(koordinat[1])
+                },
+                map: map
+            });
+        }
+    </script>
+    <script>
         function currency(angka, prefix) {
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
