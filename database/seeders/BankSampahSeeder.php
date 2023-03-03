@@ -18,7 +18,7 @@ class BankSampahSeeder extends Seeder
         //
         BankSampah::create([
             'users_id'=> 2,
-            'nama_banksampah' => 'Kotakku',
+            'nama_banksampah' => 'Bank Sampah Penjual',
             'status' => 'Mengajukan',
         ]);
     }

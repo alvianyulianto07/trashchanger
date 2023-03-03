@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BankSampahSeeder::class,
             KategoriSeeder::class,
+            SampahSeeder::class,
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

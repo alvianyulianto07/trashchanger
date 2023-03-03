@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('alamat');
+            $table->string('lat');
+            $table->string('lng');
             $table->string('no_hp');
             $table->enum('role',['0','1','2'])->default(0);
             $table->timestamps();
