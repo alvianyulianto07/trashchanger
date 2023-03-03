@@ -122,8 +122,8 @@
                     <div class="col-sm-3 text-center">
                         <div class="services-box" data-aos="fade-down" data-aos-easing="linear"
                             data-aos-duration="1500">
-                            <img src="{{ asset('assets/landing/images/praktis.svg') }}"
-                                alt="integrated-marketing" data-aos="zoom-in">
+                            <img src="{{ asset('assets/landing/images/praktis.svg') }}" alt="integrated-marketing"
+                                data-aos="zoom-in">
                             <h6 class="text-dark mb-3 mt-4 font-weight-medium">Praktis
                             </h6>
                             <p>Pengelolaan data dilakukan secara digital.
@@ -133,8 +133,8 @@
                     <div class="col-sm-3 text-center">
                         <div class="services-box" data-aos="fade-down" data-aos-easing="linear"
                             data-aos-duration="1500">
-                            <img src="{{ asset('assets/landing/images/aman.svg') }}"
-                                alt="design-development" data-aos="zoom-in">
+                            <img src="{{ asset('assets/landing/images/aman.svg') }}" alt="design-development"
+                                data-aos="zoom-in">
                             <h6 class="text-dark mb-3 mt-4 font-weight-medium">Aman
                             </h6>
                             <p>Keamanan data pengguna dan sistem pembayaran transaksi terjamin.
@@ -144,8 +144,8 @@
                     <div class="col-sm-3 text-center">
                         <div class="services-box" data-aos="fade-down" data-aos-easing="linear"
                             data-aos-duration="1500">
-                            <img src="{{ asset('assets/landing/images/integrasi.svg') }}"
-                                alt="digital-strategy" data-aos="zoom-in">
+                            <img src="{{ asset('assets/landing/images/integrasi.svg') }}" alt="digital-strategy"
+                                data-aos="zoom-in">
                             <h6 class="text-dark mb-3 mt-4 font-weight-medium">Terintegrasi
                             </h6>
                             <p>Data bank sampah yang tergabung sudah terintegrasi sehingga memudahkan pemantauan
@@ -156,8 +156,8 @@
                     <div class="col-sm-3 text-center">
                         <div class="services-box  pb-lg-0" data-aos="fade-down" data-aos-easing="linear"
                             data-aos-duration="1500">
-                            <img src="{{ asset('assets/landing/images/map.svg') }}"
-                                alt="digital-marketing" data-aos="zoom-in">
+                            <img src="{{ asset('assets/landing/images/map.svg') }}" alt="digital-marketing"
+                                data-aos="zoom-in">
                             <h6 class="text-dark mb-3 mt-4 font-weight-medium">Rekomendasi Rute
                             </h6>
                             <p>Rekomendasi rute paling efisien untuk pengambilan sampah.
@@ -179,10 +179,9 @@
             </div>
             <div class="mb-5" data-aos="fade-up">
                 <div class="container">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.0496516624244!2d112.40608971420274!3d-7.120244671801697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e77f0b5bba55409%3A0x8739f313495b22c4!2sUD.%20BINTANG%20MOTOR!5e0!3m2!1sid!2sid!4v1672371321591!5m2!1sid!2sid"
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div id="address-map-container" style="width:100%;height:450px; ">
+                        <div style="width: 100%; height: 100%" id="address-map"></div>
+                    </div>
                 </div>
 
             </div>
@@ -255,6 +254,40 @@
     <script src="{{ asset('assets/landing/vendors/aos/js/aos.js') }}"></script>
     <script src="{{ asset('assets/landing/vendors/jquery-flipster/js/jquery.flipster.min.js') }}"></script>
     <script src="{{ asset('assets/landing/js/template.js') }}"></script>
+
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize">
+    </script>
+    <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script>
+        var marker = null;
+        var markers = {!! json_encode($listbanksampah) !!};
+
+        function initialize() {
+            var initLat = -7.1203566;
+            var initLng = 112.4156448;
+            
+            const map = new google.maps.Map(document.getElementById('address-map'), {
+                center: {
+                    lat: initLat,
+                    lng: initLng
+                },
+                zoom: 17
+            });
+
+
+            for (var i = 0; i < markers.length; i++) {
+                var koordinat = markers[i];
+                marker = new google.maps.Marker({
+                    position: {
+                        lat: parseFloat(koordinat[0]),
+                        lng: parseFloat(koordinat[1])
+                    },
+                    map: map
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -63,18 +63,13 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'alamat' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
             'no_hp' => 'required',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
         ]);
-        $address = "16-18, Argyle Street, Camden, London, WC1H 8EG, United Kingdom";
-        $result = app('geocoder')->geocode($address)->get();
-        $coordinates = $result[0]->getCoordinates();
-        $lat = $coordinates->getLatitude();
-        $long = $coordinates->getLongitude();
         
-        dd($coordinates);
-
         $role = "1";
         if ($request->check != null) {
             $role = "2";
@@ -83,6 +78,8 @@ class AuthController extends Controller
             'nama' => $request->name,
             'email' => $request->email,
             'alamat' => $request->alamat,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
             'no_hp' => $request->no_hp,
             'role' => $role,
             'password' => Hash::make($request->password),
