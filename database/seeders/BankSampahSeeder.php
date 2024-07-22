@@ -18,8 +18,8 @@ class BankSampahSeeder extends Seeder
         //
         BankSampah::create([
             'users_id'=> 2,
-            'nama_banksampah' => 'Bank Sampah Penjual',
-            'status' => 'Mengajukan',
+            'nama_banksampah' => 'DLH Lamongan',
+            'status' => 'Mengajukan'
         ]);
     }
 }

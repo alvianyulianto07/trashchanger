@@ -69,18 +69,28 @@ class AuthController extends Controller
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
         ]);
+
+        $no_hp = $request->no_hp;
         
         $role = "1";
         if ($request->check != null) {
             $role = "2";
         }
+        $first_char = substr($no_hp, 0, 1);
+
+        if ($first_char == '0') {
+            $no_hp = str_replace('0', '62', $no_hp);
+        } else if ($first_char == "+") {
+            $no_hp = ltrim($no_hp, '+');
+        }
+        
         $user = User::create([
             'nama' => $request->name,
             'email' => $request->email,
             'alamat' => $request->alamat,
             'lat' => $request->lat,
             'lng' => $request->lng,
-            'no_hp' => $request->no_hp,
+            'no_hp' => $no_hp,
             'role' => $role,
             'password' => Hash::make($request->password),
         ]);
@@ -104,6 +114,9 @@ class AuthController extends Controller
         $validate = $request->validate([
             'name' => 'required',
         ]);
+        
+        $no_hp = Auth::user()->no_hp;
+
         $banksampah = BankSampah::create([
             'nama_banksampah' => $request->name,
             'users_id' => Auth::user()->id,

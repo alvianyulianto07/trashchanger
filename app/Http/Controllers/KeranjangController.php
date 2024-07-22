@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\BankSampah;
 use App\Models\Keranjang;
+use App\Models\Sampah;
 use App\Models\Pembelian;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
@@ -65,10 +66,12 @@ class KeranjangController extends Controller
         if ($collect != []) {
 
             $id = Auth::user()->id;
+            $autocancelledtime = Carbon::now()->addSeconds(10)->toDateTimeString();
             $time = Carbon::now()->toDateTimeString();
             Pembelian::create([
                 "users_id" => $id,
                 "tanggal" => $time,
+                "tanggal_batal" => $autocancelledtime,
                 "total_harga" => preg_replace('/[^0-9]/', '', $total_harga),
             ]);
             foreach ($collect as $order) {
@@ -82,6 +85,14 @@ class KeranjangController extends Controller
                     "total_harga" => preg_replace('/[^0-9]/', '', $order['total_harga']),
                     "status" => "Dalam Proses",
                 ]);
+                
+                $sampah = Sampah::findOrFail($keranjang->sampah_id);
+                
+                $current_stok = $sampah->jumlah;
+                $new_stok = $current_stok - $order['jumlah_barang'];
+                $sampah->jumlah = $new_stok;
+                $sampah->save();
+                
                 $keranjang->delete();
             }
             return redirect('/pembelian');

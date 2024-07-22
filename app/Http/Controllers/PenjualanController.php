@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
+use App\Models\BankSampah;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PenjualanController extends Controller
 {

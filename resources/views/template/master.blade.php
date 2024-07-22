@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
 
 

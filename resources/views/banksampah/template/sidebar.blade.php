@@ -9,15 +9,20 @@
         <ul class="sidebar-menu" id="sidebar-menu">
 
             <li class="{{ request()->is('sampah', 'sampah/*') ? 'active' : '' }}">
-                <a class="nav-link" href="#"><i class="fas fa-bars-progress"></i><span>Manajemen</span></a>
+                <a class="nav-link" href="/sampah"><i class="fas fa-bars-progress"></i><span>Manajemen</span></a>
             </li>
 
-            <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="#"><i class="fas fa-shop"></i><span>Penjualan</span></a>
+
+            <li class="{{ request()->is('kategori') ? 'active' : '' }}">
+              <a class="nav-link" href="/kategori"><i class="fas fa-shop"></i><span>Kategori</span></a>
+          </li>
+
+            <li class="{{ request()->is('penjualan') ? 'active' : '' }}">
+                <a class="nav-link" href="/penjualan"><i class="fas fa-shop"></i><span>Penjualan</span></a>
             </li>
 
-            <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="#"><i class="fas fa-user"></i><span>Profile</span></a>
+            <li class="{{ request()->is('profil') ? 'active' : '' }}">
+                <a class="nav-link" href="/profil"><i class="fas fa-user"></i><span>Profile</span></a>
             </li>
 
             {{-- <li class="{{ request()->is('kendaraan', 'kendaraan-mobil', 'kendaraan/*', 'kendaraan-mobil/*') ? 'active' : ''}}">

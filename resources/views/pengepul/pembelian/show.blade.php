@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
 
 
@@ -102,6 +103,23 @@
                             </div>
                         </div>
                     @endforeach
+                    @foreach ($allbanksampah as $banksampah)
+                        <div {{ $banksampah->id != $banksampahid ? 'hidden' : '' }}>
+                            <div class="d-flex justify-content-center">
+                                <a href="https://wa.me/{{$banksampah->no_hp}}" target="_blank"
+                                    class="btn btn-sm btn-success mx-3"><i class="fa-brands fa-whatsapp"
+                                        style="margin-right: 5px"></i>Chat Penjual</a>
+
+                                @foreach ($alltransaksibanksampah as $transaksi)
+                                    @if ($loop->first)
+                                        @if ($transaksi->status != "Dibatalkan")
+                                            <a href="" class="btn btn-sm btn-success mx-3"><i class="fa-solid fa-xmark" style="margin-right: 5px"></i>Batalkan Transaksi</a>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                 @endforeach
             </div>
             <div class="card mt-3">
@@ -125,6 +143,7 @@
                 </div>
             </div>
         </div>
+        
         <script src="{{ asset('assets/modules/popper.js') }}"></script>
         <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.js') }}"></script>
         <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
