@@ -148,7 +148,7 @@ class SampahController extends Controller
             $request->file('foto')->storeAs('foto', $newName);
             $sampah->foto = $newName;
         }
-        $sampah->nama_sampah = $request->name;
+        $sampah->nama_sampah = $request->nama_sampah;
         $sampah->jumlah = $request->jumlah;
         $sampah->harga = preg_replace('/[^0-9]/', '', $request->harga);
         $sampah->kategori_id = $request->kategori;
