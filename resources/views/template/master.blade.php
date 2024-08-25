@@ -94,54 +94,69 @@
         {{-- KATEGORI --}}
         <div class="container px-5 justify-content-center">
 
-            <form action="{{ route('beranda.search') }}" method="POST">
-                @csrf
-
-            <div class="row kategori" style="padding: 0 150px">
-                <div class="col text-center item-kategori">
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
-                        id="filterquery" value="Plastik" hidden>
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
-                        id="searchtype" value="filter" hidden>
-                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Plastik</button>
+                <div class="row kategori" style="padding: 0 150px">
+                    <div class="col text-center item-kategori">
+                        <form action="{{ route('beranda.search') }}" method="POST">
+                            @csrf
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                                id="filterquery" value="Plastik" hidden>
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                id="searchtype" value="filter" hidden>
+                            <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Plastik</button>
+                        </form>
+                    </div>
+                    <div class="col text-center item-kategori">
+                        <form action="{{ route('beranda.search') }}" method="POST">
+                            @csrf
+                                <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                                    id="filterquery" value="Botol" hidden>
+                                <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                    id="searchtype" value="filter" hidden>
+                                <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Botol</button>
+                        </form>
+                    </div>
+                    <div class="col text-center item-kategori">
+                        <form action="{{ route('beranda.search') }}" method="POST">
+                            @csrf
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                                id="filterquery" value="Kertas" hidden>
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                id="searchtype" value="filter" hidden>
+                            <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kertas</button>
+                    
+                        </form>
+                    </div>
+                    <div class="col text-center item-kategori">
+                        <form action="{{ route('beranda.search') }}" method="POST">
+                            @csrf
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                                id="filterquery" value="Kaca" hidden>
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                id="searchtype" value="filter" hidden>
+                            <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kaca</button>
+                        </form>
+                    </div>
+                    <div class="col text-center item-kategori">
+                        <form action="{{ route('beranda.search') }}" method="POST">
+                            @csrf
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                                id="filterquery" value="Karet" hidden>
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                id="searchtype" value="filter" hidden>
+                            <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Karet</button>
+                        </form>
+                    </div>
+                    <div class="col text-center item-kategori">
+                        <form action="{{ route('beranda.search') }}" method="POST">
+                            @csrf
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                                id="filterquery" value="Kardus" hidden>
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                id="searchtype" value="filter" hidden>
+                            <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kardus</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="col text-center item-kategori">
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
-                        id="filterquery" value="Botol" hidden>
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
-                        id="searchtype" value="filter" hidden>
-                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Botol</button>
-                </div>
-                <div class="col text-center item-kategori">
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
-                        id="filterquery" value="Kertas" hidden>
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
-                        id="searchtype" value="filter" hidden>
-                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kertas</button>
-                </div>
-                <div class="col text-center item-kategori">
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
-                        id="filterquery" value="Kaca" hidden>
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
-                        id="searchtype" value="filter" hidden>
-                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kaca</button>
-                </div>
-                <div class="col text-center item-kategori">
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
-                        id="filterquery" value="Karet" hidden>
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
-                        id="searchtype" value="filter" hidden>
-                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Karet</button>
-                </div>
-                <div class="col text-center item-kategori">
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
-                        id="filterquery" value="Kardus" hidden>
-                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
-                        id="searchtype" value="filter" hidden>
-                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kardus</button>
-                </div>
-            </div>
-            </form>
         </div>
         @yield('konten')
     </div>

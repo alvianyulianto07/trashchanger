@@ -36,26 +36,33 @@ class TokoController extends Controller
      */
     public function search(Request $request)
     {
+        try {
+            $type = $request->searchtype;
 
-        $type = $request->searchtype;
-        $banksampah = BankSampah::all();
-        $kategori = Kategori::all();
+            $banksampah = BankSampah::all();
+            $kategori = Kategori::all();
 
 
-        if ($type == "search" )
-        {
-            $searchquery = $request->searchquery;
-            $searchTerm = '%' . $searchquery . '%';
-            $sampah = Sampah::where('nama_sampah', 'like', $searchTerm)->where('status', 'Tersedia')->get();
-        } else if ($type == "filter") {
-            $filterquery = $request->filterquery;
-            $filterTerm = '%' . $filterquery . '%';
+            if ($type == "search" )
+            {
+                $searchquery = $request->searchquery;
+                $searchTerm = '%' . $searchquery . '%';
+                $sampah = Sampah::where('nama_sampah', 'like', $searchTerm)->where('status', 'Tersedia')->get();
+            } else if ($type == "filter") {
+                $filterquery = $request->filterquery;
+                $filterTerm = '%' . $filterquery . '%';
 
-            $kategori_id = Kategori::where('nama_kategori', 'like', $filterTerm)->firstOrFail();
-            $sampah = Sampah::where('kategori_id', 'like', $kategori_id->id)->where('status', 'Tersedia')->get();
+                $kategori_id = Kategori::where('nama_kategori', 'like', $filterTerm)->firstOrFail();
+                $sampah = Sampah::where('kategori_id', 'like', $kategori_id->id)->where('status', 'Tersedia')->get();
 
-            $searchquery = "";
-            // dd($sampah);
+                $searchquery = "";
+                // dd($sampah);
+            }
+        } catch (MethodNotAllowedHttpException $e) {
+            $searchquery = '';
+            $banksampah = BankSampah::all();
+            $sampah = Sampah::where('status', 'Tersedia')->get();
+            $kategori = Kategori::all();
         }
         // dd($sampah);
         return view('pengepul.toko.searchresult', compact('sampah', 'banksampah', 'kategori', 'searchquery'));

@@ -15,8 +15,14 @@
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
-
-
+    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap" async defer></script>
+    </script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <style>
@@ -134,10 +140,11 @@
                 <div class="map m-3">
                     <p>Rekomendasi Rute Pembelian</p> 
                     <div class="card">
-                        <iframe class="mb-3"
+                        <div id="map"></div>
+                        {{-- <iframe class="mb-3"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.896465492711!2d112.17734576977537!3d-7.100003399999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e778c56bba95239%3A0x1b5fbffeb58417f!2sUD.%20Bintang%20Motor!5e0!3m2!1sid!2sid!4v1675145505514!5m2!1sid!2sid"
                             width="100%" height="500px" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
                     </div>
 
                 </div>
@@ -151,4 +158,94 @@
 
 
 
+<script>
+    function initMap() {
+        
+        const points = @json($points);
+
+        const new_points = []
+
+        // console.log(points);
+
+        // Calculate the center of the map
+        let latSum = 0;
+        let lngSum = 0;
+
+        points.forEach(point => {
+            latSum += point[0];
+            lngSum += point[1];
+
+            new_points.push({lat: point[0], lng: point[1]})
+        });
+
+        const centerLat = latSum / points.length;
+        const centerLng = lngSum / points.length;
+        
+        const mapCenter = { lat: centerLat, lng: centerLng };
+
+        // // Initialize the map
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: mapCenter, // Center the map based on the average of the points
+        });
+
+        // Initialize the Directions service and renderer
+        const directionsService = new google.maps.DirectionsService();
+        // const directionsRenderer = new google.maps.DirectionsRenderer();
+        // directionsRenderer.setMap(map);
+        const directionsRenderer = new google.maps.DirectionsRenderer({
+            map: map,
+            suppressMarkers: true // Prevent default markers
+        });
+
+        // Extract origin, destination, and waypoints
+        const origin = new_points[0];
+        const destination = new_points[points.length - 1];
+        const waypoints = new_points.slice(1, -1).map(function (point) {
+            return {
+                location: point,
+                stopover: true
+            };
+        });
+
+        // Request route from Directions service
+        directionsService.route(
+            {
+                origin: origin,
+                destination: destination,
+                waypoints: waypoints,
+                travelMode: google.maps.TravelMode.DRIVING,
+            }, function(response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(response);
+
+                    // Custom marker for origin
+                    new google.maps.Marker({
+                        position: origin,
+                        map: map,
+                        label: 'O'  // Origin label
+                    });
+
+                    // Custom marker for each waypoint
+                    waypoints.forEach((waypoint, index) => {
+                        new google.maps.Marker({
+                            position: waypoint.location,
+                            map: map,
+                            label: `W${index + 1}`  // Waypoint label (W1, W2, ...)
+                        });
+                    });
+
+                    // Custom marker for destination
+                    new google.maps.Marker({
+                        position: destination,
+                        map: map,
+                        label: 'D'  // Destination label
+                    });
+                } else {
+                    console.error('Directions request failed due to ' + status);
+                }
+            }
+        );
+    }
+</script>
 </html>

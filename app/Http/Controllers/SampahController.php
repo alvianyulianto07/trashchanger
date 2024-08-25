@@ -141,11 +141,11 @@ class SampahController extends Controller
         $namaFoto = $sampah->foto;
         if ($request->hasFile('foto')) {
             if ($namaFoto != null || $namaFoto != '') {
-                Storage::delete('foto/' . $namaFoto);
+                Storage::delete('public/foto/' . $namaFoto);
             }
             $extension = $request->file('foto')->getClientOriginalExtension();
             $newName = $basenamefile . $id . '&upd=' . $num . '.' . $extension;
-            $request->file('foto')->storeAs('foto', $newName);
+            $request->file('foto')->storeAs('public/foto', $newName);
             $sampah->foto = $newName;
         }
         $sampah->nama_sampah = $request->nama_sampah;

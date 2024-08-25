@@ -52,7 +52,7 @@
             <div class="product-grid ">
                     @foreach ($sampah as $item)
                         <a href="{{ route('beranda.showsampah', ['id' => 1, 'idsampah' => $item->id]) }}" class="card item">
-                            <img src="{{ asset('assets/images/sampah2.jpg') }}" class="card-img-top">
+                            <img src="{{ asset('storage/foto/' . $item->foto) }}" class="card-img-top">
                             <div class="m-2">
                                 @foreach ($kategori as $k)
                                     <h3 class="kategori"{{ $k->id != $item->kategori_id ? 'hidden' : '' }}>

@@ -86,7 +86,53 @@ class PembelianController extends Controller
         return view('pengepul.pembelian.index', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'allpembelian', 'alltanggalbatal'));
     }
 
+
+    public function haversineDistance($lat1, $lng1, $lat2, $lng2) {
+        $earthRadius = 6371; // Radius of the Earth in kilometers
     
+        // Convert latitude and longitude from degrees to radians
+        $lat1Rad = deg2rad($lat1);
+        $lng1Rad = deg2rad($lng1);
+        $lat2Rad = deg2rad($lat2);
+        $lng2Rad = deg2rad($lng2);
+    
+        // Difference in coordinates
+        $dLat = $lat2Rad - $lat1Rad;
+        $dLng = $lng2Rad - $lng1Rad;
+    
+        // Haversine formula
+        $a = sin($dLat / 2) ** 2 + cos($lat1Rad) * cos($lat2Rad) * sin($dLng / 2) ** 2;
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        return $earthRadius * $c;
+    }
+
+    // Function to sort the points based on distance from the starting point
+    public function sortPointsByDistance($start, $points) {
+        $sortedPoints = [];
+        array_push($sortedPoints, $start);
+
+        while (count($points) > 0) {
+            $nearestIndex = 0;
+            $nearestDistance = $this->haversineDistance($start[0], $start[1], $points[0][0], $points[0][1]);
+            
+            foreach ($points as $index => $point) {
+                $distance = $this->haversineDistance($start[0], $start[1], $point[0], $point[1]);
+                if ($distance < $nearestDistance) {
+                    $nearestDistance = $distance;
+                    $nearestIndex = $index;
+                }
+            }
+
+            // Add the nearest point to the sorted list and update the starting point
+            $sortedPoints[] = $points[$nearestIndex];
+            $start = $points[$nearestIndex];
+            unset($points[$nearestIndex]);
+            $points = array_values($points); // Re-index array
+        }
+
+        return $sortedPoints;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -103,6 +149,16 @@ class PembelianController extends Controller
 
         $alltransaksi = new Collection();
 
+        $new_points = [];
+
+        $user_lat = (float) Auth::user()->lat;
+        $user_lng = (float) Auth::user()->lng;
+        $user_loc = array($user_lat, $user_lng);
+
+        array_push($new_points, $user_loc);
+
+        $points = [];
+
         $transaksi = Transaksi::where('pembelian_id', $pembelianid)->get();
         foreach($transaksi as $item){
             $sampah = Sampah::findOrFail($item->sampah_id);
@@ -118,9 +174,22 @@ class PembelianController extends Controller
                 'total_harga' => $item->total_harga,
                 'status' => $item->status,
             ]);
+
+            $cur_user_id = BankSampah::findOrFail($item->bankSampah_id)->users_id;
+            $lat = (float) User::findOrFail($cur_user_id)->lat;
+            $lng = (float) User::findOrFail($cur_user_id)->lng;
+
+            $cur_loc = array($lat, $lng);
+            if (!in_array($cur_loc, $points)) {
+                array_push($points, array($lat, $lng));
+            }
+            
         }
+
+        $points = $this->sortPointsByDistance($new_points[0], $points);
+
         $alltransaksi = $alltransaksi->groupBy('bankSampah_id');
-        return view('pengepul.pembelian.show', compact('pembelian', 'alltransaksi', 'allbanksampah'));
+        return view('pengepul.pembelian.show', compact('pembelian', 'alltransaksi', 'allbanksampah', 'points'));
     }
 
 
