@@ -32,6 +32,8 @@ class KeranjangController extends Controller
             'sampah.nama_sampah', 'sampah.harga', 'sampah.foto'])
             ->groupBy('bankSampah_id');
         $banksampah = BankSampah::all();
+
+        // dd($cart);
         return view('pengepul.keranjang.index', compact('cart', 'searchquery', 'banksampah'));
     }
 

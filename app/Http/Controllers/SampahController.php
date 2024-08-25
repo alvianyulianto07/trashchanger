@@ -73,7 +73,7 @@ class SampahController extends Controller
         if ($request->hasFile('foto')) {
             $extension = $request->file('foto')->getClientOriginalExtension();
             $newName = $basenamefile . $id . '&upd=' . $num . '.' . $extension;
-            $request->file('foto')->storeAs('foto', $newName);
+            $request->file('foto')->storeAs('public/foto', $newName);
         }
 
         $sampah = Sampah::create([

@@ -76,6 +76,8 @@
                                 <input type="text" class="form-control" placeholder="Cari sampah" name="searchquery"
                                     id="searchquery">
                             @endif
+                            <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                                id="searchtype" value="search" hidden>
                             <button class="btn btn-outline-search" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
@@ -91,14 +93,55 @@
 
         {{-- KATEGORI --}}
         <div class="container px-5 justify-content-center">
+
+            <form action="{{ route('beranda.search') }}" method="POST">
+                @csrf
+
             <div class="row kategori" style="padding: 0 150px">
-                <div class="col text-center item-kategori">Plastik</div>
-                <div class="col text-center item-kategori">Botol</div>
-                <div class="col text-center item-kategori">Kertas</div>
-                <div class="col text-center item-kategori">Kaca</div>
-                <div class="col text-center item-kategori">Karet</div>
-                <div class="col text-center item-kategori">Kardus</div>
+                <div class="col text-center item-kategori">
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                        id="filterquery" value="Plastik" hidden>
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                        id="searchtype" value="filter" hidden>
+                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Plastik</button>
+                </div>
+                <div class="col text-center item-kategori">
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                        id="filterquery" value="Botol" hidden>
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                        id="searchtype" value="filter" hidden>
+                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Botol</button>
+                </div>
+                <div class="col text-center item-kategori">
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                        id="filterquery" value="Kertas" hidden>
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                        id="searchtype" value="filter" hidden>
+                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kertas</button>
+                </div>
+                <div class="col text-center item-kategori">
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                        id="filterquery" value="Kaca" hidden>
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                        id="searchtype" value="filter" hidden>
+                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kaca</button>
+                </div>
+                <div class="col text-center item-kategori">
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                        id="filterquery" value="Karet" hidden>
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                        id="searchtype" value="filter" hidden>
+                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Karet</button>
+                </div>
+                <div class="col text-center item-kategori">
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="filterquery"
+                        id="filterquery" value="Kardus" hidden>
+                    <input type="text" class="form-control" placeholder="Cari sampah" name="searchtype"
+                        id="searchtype" value="filter" hidden>
+                    <button class="col text-center item-kategori border-0 bg-transparent" type="submit" >Kardus</button>
+                </div>
             </div>
+            </form>
         </div>
         @yield('konten')
     </div>
