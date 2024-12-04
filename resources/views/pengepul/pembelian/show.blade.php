@@ -17,6 +17,96 @@
 
     <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap" async defer></script>
     </script>
+    <script>
+    function initMap() {
+        
+        const points = @json($points);
+
+        const new_points = []
+
+        // console.log(points);
+
+        // Calculate the center of the map
+        let latSum = 0;
+        let lngSum = 0;
+
+        points.forEach(point => {
+            latSum += point[0];
+            lngSum += point[1];
+
+            new_points.push({lat: point[0], lng: point[1]})
+        });
+
+        const centerLat = latSum / points.length;
+        const centerLng = lngSum / points.length;
+        
+        const mapCenter = { lat: centerLat, lng: centerLng };
+
+        // // Initialize the map
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: mapCenter, // Center the map based on the average of the points
+        });
+
+        // Initialize the Directions service and renderer
+        const directionsService = new google.maps.DirectionsService();
+        // const directionsRenderer = new google.maps.DirectionsRenderer();
+        // directionsRenderer.setMap(map);
+        const directionsRenderer = new google.maps.DirectionsRenderer({
+            map: map,
+            suppressMarkers: true // Prevent default markers
+        });
+
+        // Extract origin, destination, and waypoints
+        const origin = new_points[0];
+        const destination = new_points[points.length - 1];
+        const waypoints = new_points.slice(1, -1).map(function (point) {
+            return {
+                location: point,
+                stopover: true
+            };
+        });
+
+        // Request route from Directions service
+        directionsService.route(
+            {
+                origin: origin,
+                destination: destination,
+                waypoints: waypoints,
+                travelMode: google.maps.TravelMode.DRIVING,
+            }, function(response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(response);
+
+                    // Custom marker for origin
+                    new google.maps.Marker({
+                        position: origin,
+                        map: map,
+                        label: 'O'  // Origin label
+                    });
+
+                    // Custom marker for each waypoint
+                    waypoints.forEach((waypoint, index) => {
+                        new google.maps.Marker({
+                            position: waypoint.location,
+                            map: map,
+                            label: `W${index + 1}`  // Waypoint label (W1, W2, ...)
+                        });
+                    });
+
+                    // Custom marker for destination
+                    new google.maps.Marker({
+                        position: destination,
+                        map: map,
+                        label: 'D'  // Destination label
+                    });
+                } else {
+                    console.error('Directions request failed due to ' + status);
+                }
+            }
+        );
+    }
+</script>
     <style>
         #map {
             height: 500px;
@@ -158,94 +248,5 @@
 
 
 
-<script>
-    function initMap() {
-        
-        const points = @json($points);
 
-        const new_points = []
-
-        // console.log(points);
-
-        // Calculate the center of the map
-        let latSum = 0;
-        let lngSum = 0;
-
-        points.forEach(point => {
-            latSum += point[0];
-            lngSum += point[1];
-
-            new_points.push({lat: point[0], lng: point[1]})
-        });
-
-        const centerLat = latSum / points.length;
-        const centerLng = lngSum / points.length;
-        
-        const mapCenter = { lat: centerLat, lng: centerLng };
-
-        // // Initialize the map
-        const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: mapCenter, // Center the map based on the average of the points
-        });
-
-        // Initialize the Directions service and renderer
-        const directionsService = new google.maps.DirectionsService();
-        // const directionsRenderer = new google.maps.DirectionsRenderer();
-        // directionsRenderer.setMap(map);
-        const directionsRenderer = new google.maps.DirectionsRenderer({
-            map: map,
-            suppressMarkers: true // Prevent default markers
-        });
-
-        // Extract origin, destination, and waypoints
-        const origin = new_points[0];
-        const destination = new_points[points.length - 1];
-        const waypoints = new_points.slice(1, -1).map(function (point) {
-            return {
-                location: point,
-                stopover: true
-            };
-        });
-
-        // Request route from Directions service
-        directionsService.route(
-            {
-                origin: origin,
-                destination: destination,
-                waypoints: waypoints,
-                travelMode: google.maps.TravelMode.DRIVING,
-            }, function(response, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsRenderer.setDirections(response);
-
-                    // Custom marker for origin
-                    new google.maps.Marker({
-                        position: origin,
-                        map: map,
-                        label: 'O'  // Origin label
-                    });
-
-                    // Custom marker for each waypoint
-                    waypoints.forEach((waypoint, index) => {
-                        new google.maps.Marker({
-                            position: waypoint.location,
-                            map: map,
-                            label: `W${index + 1}`  // Waypoint label (W1, W2, ...)
-                        });
-                    });
-
-                    // Custom marker for destination
-                    new google.maps.Marker({
-                        position: destination,
-                        map: map,
-                        label: 'D'  // Destination label
-                    });
-                } else {
-                    console.error('Directions request failed due to ' + status);
-                }
-            }
-        );
-    }
-</script>
 </html>
