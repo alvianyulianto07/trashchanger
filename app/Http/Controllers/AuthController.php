@@ -36,7 +36,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if (Auth::user()->role == "0") {
-                return redirect()->intended('/beranda');
+                return redirect()->intended('/banksampah');
             } else if (Auth::user()->role == "1") {
                 return redirect()->intended('/beranda');
             } else {

@@ -10,7 +10,10 @@ class BerandaController extends Controller
     {
         if(Auth::user() == "null"){
             return view('beranda.index');
-        } else if (Auth::user()->role == "1"){
+        }  else if (Auth::user()->role == "0"){
+            return redirect()->intended('/banksampah');
+        }
+        else if (Auth::user()->role == "1"){
             return redirect()->intended('/beranda');
         } else {
             return redirect()->intended('/sampah');

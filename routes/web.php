@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
         'user' => UserController::class,
         'banksampah' => BankSampahController::class,
     ]);
+    // Route::get('/banksampah', [BankSampahController::class, 'show'])->name('banksampah.index');
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
