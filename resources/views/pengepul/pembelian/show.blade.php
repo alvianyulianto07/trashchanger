@@ -100,6 +100,15 @@
                         map: map,
                         label: 'D'  // Destination label
                     });
+
+
+                    // Extract and log the steps
+                    const steps = response.routes[0].legs.flatMap(leg => leg.steps.map(step => step.instructions));
+                    steps.forEach((step, index) => {
+                        const div = document.createElement("div");
+                        div.innerHTML = step;
+                        console.log(`${index + 1}. ${div.textContent || div.innerText || ""}`);
+                    });
                 } else {
                     console.error('Directions request failed due to ' + status);
                 }
@@ -229,6 +238,14 @@
             <div class="card mt-3 mb-3">
                 <div class="map m-3">
                     <p>Rekomendasi Rute Pembelian</p> 
+                    <div class="rincian-pembayaran mb-3">
+                        @foreach ($orderedplace as $place)
+                            <div class="d-flex justify-content-between align-items-left">
+                                {{-- <h4 class="total-belanja-detail-transaksi">{{$loop->iteration}}</h4> --}}
+                                <h4 class="total-belanja-detail-transaksi">{{$loop->iteration}} {{ $place }}</h4>
+                            </div>
+                        @endforeach
+                    </div>
                     <div class="card">
                         <div id="map"></div>
                         {{-- <iframe class="mb-3"

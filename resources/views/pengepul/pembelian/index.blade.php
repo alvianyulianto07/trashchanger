@@ -53,83 +53,90 @@
 
 
     <script>
-        var all_cancelled_date = {!! json_encode($alltanggalbatal) !!};
-        Object.entries(all_cancelled_date).forEach(([key, item]) => {
+        window.onload = function() {
+            run();
 
-            var id_pembelian = "";
-            var tanggal_batal = "";
-            var status = "Selesai";
+            function run() {
+                var all_cancelled_date = {!! json_encode($alltanggalbatal) !!};
+                Object.entries(all_cancelled_date).forEach(([key, item]) => {
 
-            var dibatalkan_count = 0;
-            var cur_status = "Selesai";
+                    var id_pembelian = "";
+                    var tanggal_batal = "";
+                    var status = "Selesai";
 
-            item.forEach(function(trx) {
-                id_pembelian = trx["id"];
-                tanggal_batal = trx["tanggal_batal"];
+                    var dibatalkan_count = 0;
+                    var cur_status = "Selesai";
 
-                var trx_status = trx["status"];
+                    item.forEach(function(trx) {
+                        id_pembelian = trx["id"];
+                        tanggal_batal = trx["tanggal_batal"];
 
-                if (trx_status == "Dalam Proses"){
-                    cur_status = "Dalam Proses";
-                } else if (trx_status == "Dibatalkan") {
-                    dibatalkan_count += 1;
-                }
-                
-            });
+                        var trx_status = trx["status"];
 
-            if (dibatalkan_count > 0) {
-                status = "Dibatalkan";
-            }
-            
-            tanggal_batal = tanggal_batal + "Z";
-            var countDownDate = new Date(tanggal_batal).getTime();
-
-            if (status != "Dibatalkan"){
-            // Update the count down every 1 second
-                var x = setInterval(function() {
-
-                    // Get today's date and time
-                    var now = new Date().getTime();
-
-                    // Find the distance between now and the count down date
-                    var distance = countDownDate - now;
-
-                    // Time calculations for days, hours, minutes and seconds
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    
-                    var content = "Batal otomatis dalam "
-                    if (days != 0){
-                        content = content + days + " Hari "
-                    }
-                    if (hours != 0){
-                        content = content + hours + " Jam "
-                    }
-                    if (minutes != 0){
-                        content = content + minutes + " Menit "
-                    }
-                    if (seconds != 0){
-                        content = content + seconds + " Detik"
-                    }
-
-                    const idtimer = "timer-pembelian-" + id_pembelian;
-
-                    if (distance <= 0) {
-                        clearInterval(x);
-                        document.getElementById(idtimer).innerHTML = "";
-                        if (status != "Dibatalkan"){
-                            location.reload();
+                        if (trx_status == "Dalam Proses"){
+                            cur_status = "Dalam Proses";
+                        } else if (trx_status == "Dibatalkan") {
+                            dibatalkan_count += 1;
                         }
-                    } else {
-                        document.getElementById(idtimer).innerHTML = content;
+                        
+                    });
+
+                    if (dibatalkan_count > 0) {
+                        status = "Dibatalkan";
                     }
-                }, 1000);
-            } else {
-                const idtimer = "timer-pembelian-" + id_pembelian;
-                document.getElementById(idtimer).innerHTML = "";
-            }
-        });
+                    
+                    tanggal_batal = tanggal_batal + "Z";
+                    var countDownDate = new Date(tanggal_batal).getTime();
+
+                    if (status != "Dibatalkan"){
+                    // Update the count down every 1 second
+                        var x = setInterval(function() {
+
+                            // Get today's date and time
+                            var now = new Date().getTime();
+
+                            // Find the distance between now and the count down date
+                            var distance = countDownDate - now;
+
+                            // Time calculations for days, hours, minutes and seconds
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            
+                            var content = "Batal otomatis dalam "
+                            if (days != 0){
+                                content = content + days + " Hari "
+                            }
+                            if (hours != 0){
+                                content = content + hours + " Jam "
+                            }
+                            if (minutes != 0){
+                                content = content + minutes + " Menit "
+                            }
+                            if (seconds != 0){
+                                content = content + seconds + " Detik"
+                            }
+
+                            const idtimer = "timer-pembelian-" + id_pembelian;
+
+                            if (distance <= 0) {
+                                clearInterval(x);
+                                document.getElementById(idtimer).innerHTML = "";
+                                if (status != "Dibatalkan"){
+                                    location.reload();
+                                }
+                            } else {
+                                document.getElementById(idtimer).innerHTML = content;
+                            }
+                        }, 1000);
+                    } else {
+                        const idtimer = "timer-pembelian-" + id_pembelian;
+                        document.getElementById(idtimer).innerHTML = "";
+                    }
+                });
+            };
+
+        }
     </script>
 @endsection
