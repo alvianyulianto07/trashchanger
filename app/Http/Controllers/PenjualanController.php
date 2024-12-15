@@ -18,13 +18,28 @@ class PenjualanController extends Controller
     {
         //
         $banksampah = BankSampah::where('users_id', Auth::user()->id)->get();
+        // $bs_id = $banksampah->id;
         $banksampahid = 0;
         foreach ($banksampah as $data) {
             $banksampahid = $data->id;
         }
-        $penjualan = Transaksi::where('bankSampah_id', $banksampahid)->get();
+        // $penjualan = Transaksi::where('bankSampah_id', $banksampahid)->get();
 
-        return view('banksampah.penjualan.index', compact('penjualan'));
+
+        $allpenjualan = Transaksi::join('bank_sampah', 'bank_sampah.id', '=', 'transaksi.bankSampah_id')
+        ->join('pembelian', 'pembelian.id', '=', 'transaksi.pembelian_id')
+        ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
+        ->join('users', 'users.id', '=', 'pembelian.users_id')
+        ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
+        ->orderBy('transaksi.created_at', 'desc')
+        ->select('sampah.nama_sampah', 'sampah.foto', 'sampah.harga', 'transaksi.jumlah_barang', 'transaksi.total_harga', 'users.nama', 'transaksi.status')
+        ->get();
+        // ->groupBy(['status', 'id', 'nama_banksampah']);
+        // $kategori = Kategori::all();
+
+        // dd($allpenjualan);
+
+        return view('banksampah.penjualan.index', compact('allpenjualan'));
     }
 
     /**

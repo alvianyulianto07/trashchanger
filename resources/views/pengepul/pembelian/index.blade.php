@@ -54,9 +54,9 @@
 
     <script>
         window.onload = function() {
-            what();
+            run();
 
-            function what() {
+            function run() {
                 var all_cancelled_date = {!! json_encode($alltanggalbatal) !!};
                 Object.entries(all_cancelled_date).forEach(([key, item]) => {
 

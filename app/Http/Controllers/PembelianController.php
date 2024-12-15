@@ -109,28 +109,37 @@ class PembelianController extends Controller
     // Function to sort the points based on distance from the starting point
     public function sortPointsByDistance($start, $points) {
         $sortedPoints = [];
+        $sortedKeys = [];
         array_push($sortedPoints, $start);
 
         while (count($points) > 0) {
-            $nearestIndex = 0;
-            $nearestDistance = $this->haversineDistance($start[0], $start[1], $points[0][0], $points[0][1]);
+            $nearestKey = array_key_first($points);
+
+            $nearestDistance = $this->haversineDistance($start[0], $start[1], $points[array_key_first($points)][0], $points[array_key_first($points)][1]);
             
-            foreach ($points as $index => $point) {
+            foreach ($points as $key => $point) {
                 $distance = $this->haversineDistance($start[0], $start[1], $point[0], $point[1]);
                 if ($distance < $nearestDistance) {
                     $nearestDistance = $distance;
-                    $nearestIndex = $index;
+                    $nearestKey = $key;
                 }
             }
 
-            // Add the nearest point to the sorted list and update the starting point
-            $sortedPoints[] = $points[$nearestIndex];
-            $start = $points[$nearestIndex];
-            unset($points[$nearestIndex]);
-            $points = array_values($points); // Re-index array
-        }
+            // Add the nearest point and its key to the sorted arrays
+            $sortedPoints[] = $points[$nearestKey];
+            $sortedKeys[] = $nearestKey;
 
-        return $sortedPoints;
+            // Update the starting point
+            $start = $points[$nearestKey];
+
+            // Remove the nearest point from the original list
+            unset($points[$nearestKey]);
+        }
+        
+        return array(
+            'key' => $sortedKeys,
+            'points' => $sortedPoints
+        );
     }
 
     /**
@@ -149,13 +158,19 @@ class PembelianController extends Controller
 
         $alltransaksi = new Collection();
 
-        $new_points = [];
+        // $new_points = [];
 
         $user_lat = (float) Auth::user()->lat;
         $user_lng = (float) Auth::user()->lng;
-        $user_loc = array($user_lat, $user_lng);
+        $new_points = ['start' => [$user_lat, $user_lng]];
 
-        array_push($new_points, $user_loc);
+        // dd($new_points);
+
+        // $user_lat = (float) Auth::user()->lat;
+        // $user_lng = (float) Auth::user()->lng;
+        // $user_loc = array($user_lat, $user_lng);
+
+        // array_push($new_points, $user_loc);
 
         $points = [];
 
@@ -181,15 +196,24 @@ class PembelianController extends Controller
 
             $cur_loc = array($lat, $lng);
             if (!in_array($cur_loc, $points)) {
-                array_push($points, array($lat, $lng));
+                // array_push($points, array($lat, $lng));
+                $new_points[BankSampah::findOrFail($item->bankSampah_id)->nama_banksampah] = array($lat, $lng);
             }
             
         }
 
-        $points = $this->sortPointsByDistance($new_points[0], $points);
+        $points_only = array_filter($new_points, function ($key) {
+            return $key !== "start";
+        }, ARRAY_FILTER_USE_KEY);
+        $results = $this->sortPointsByDistance($new_points['start'], $points_only);
+
+        $orderedplace = $results['key'];
+        $points = $results['points'];
 
         $alltransaksi = $alltransaksi->groupBy('bankSampah_id');
-        return view('pengepul.pembelian.show', compact('pembelian', 'alltransaksi', 'allbanksampah', 'points'));
+
+        // dd($points);
+        return view('pengepul.pembelian.show', compact('pembelian', 'alltransaksi', 'allbanksampah', 'points', 'orderedplace'));
     }
 
 
