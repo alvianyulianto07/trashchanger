@@ -15,8 +15,15 @@ class BankSampahController extends Controller
     public function index()
     {
         //
-        $banksampah = BankSampah::all();
-        return view('admin.banksampah.index', compact('banksampah'));
+        // $banksampah = BankSampah::all();
+
+
+        $allbanksampah = BankSampah::join('users', 'bank_sampah.users_id', '=', 'users.id')
+        ->orderBy('bank_sampah.status', 'desc')
+        ->select('bank_sampah.id', 'bank_sampah.nama_banksampah', 'users.alamat', 'users.no_hp', 'bank_sampah.status')
+        ->get();
+
+        return view('admin.banksampah.index', compact('allbanksampah'));
     }
 
     /**

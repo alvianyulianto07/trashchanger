@@ -31,9 +31,12 @@ class PenjualanController extends Controller
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('users', 'users.id', '=', 'pembelian.users_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
-        ->orderBy('transaksi.created_at', 'desc')
-        ->select('sampah.nama_sampah', 'sampah.foto', 'sampah.harga', 'transaksi.jumlah_barang', 'transaksi.total_harga', 'users.nama', 'transaksi.status')
-        ->get();
+        // ->groupBy('pembelian.tanggal')
+        ->select('pembelian.id', 'pembelian.tanggal', 'users.nama', 'pembelian.total_harga', 'transaksi.status')
+        ->orderBy('pembelian.id', 'desc')
+        ->get()
+        ->groupBy(['id', 'status']);
+        // dd($allpenjualan);
         // ->groupBy(['status', 'id', 'nama_banksampah']);
         // $kategori = Kategori::all();
 

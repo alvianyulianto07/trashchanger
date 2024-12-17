@@ -8,26 +8,32 @@
             <table id="example" class="display nowrap" style="width: 100%">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Foto</th>
-                        <th>Nama Sampah</th>
-                        <th>Jumlah</th>
-                        <th>Harga/kg</th>
+                        {{-- <th>No</th> --}}
+                        <th>Tanggal</th>
+                        <th>No Invoice</th>
                         <th>Nama Pembeli</th>
+                        <th>Total Pembelian</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($allpenjualan as $data)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->foto }}</td>
-                            <td>{{ $data->nama_sampah }}</td>
-                            <td>{{ $data->jumlah_barang }}</td>
-                            <td>Rp. {{ number_format($data->harga, 0, ',', '.');}}</td>
-                            <td>{{ $data->nama }}</td>
-                            <td>{{ $data->status }}</td>
-                        </tr>
+                    @foreach ($allpenjualan as $all => $pembelian)
+                        @foreach ($pembelian as $status => $da)
+                            @foreach ($da as $data)
+                                @if ($loop->first)
+                                    <tr>
+                                        {{-- <td>{{ $loop->iteration }}</td> --}}
+                                        <td>{{ $data->tanggal }}</td>
+                                        <td> No INVOICE EXAMPLE </td>
+                                        <td>{{ $data->nama }}</td>
+                                        <td>Rp. {{ number_format($data->total_harga, 0, ',', '.');}}</td>
+                                        <td>{{ $status }}</td>
+                                        <td>  </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>

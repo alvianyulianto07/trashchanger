@@ -68,7 +68,7 @@ class KeranjangController extends Controller
         if ($collect != []) {
 
             $id = Auth::user()->id;
-            $autocancelledtime = Carbon::now()->addSeconds(10)->toDateTimeString();
+            $autocancelledtime = Carbon::now()->addHours(24)->toDateTimeString();
             $time = Carbon::now()->toDateTimeString();
             Pembelian::create([
                 "users_id" => $id,

@@ -44,9 +44,11 @@ Route::post('/logout', [AuthController::class, 'logout']);
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
 Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
     Route::resources([
-        'user' => UserController::class,
+        'users' => UserController::class,
         'banksampah' => BankSampahController::class,
     ]);
+    Route::get('/banksampah/{id}', [BankSampahController::class, 'acceptBankSampah'])->name('banksampah.accept');
+    // Route::post('/accept', [BankSampahController::class, 'accept'])->name('banksampah.accept');
     // Route::get('/banksampah', [BankSampahController::class, 'show'])->name('banksampah.index');
 });
 
