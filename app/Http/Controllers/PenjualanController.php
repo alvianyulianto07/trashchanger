@@ -29,14 +29,13 @@ class PenjualanController extends Controller
             $banksampahid = $data->id;
         }
         // $penjualan = Transaksi::where('bankSampah_id', $banksampahid)->get();
-
-
+        
         $allpenjualan = Transaksi::join('bank_sampah', 'bank_sampah.id', '=', 'transaksi.bankSampah_id')
         ->join('pembelian', 'pembelian.id', '=', 'transaksi.pembelian_id')
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('users', 'users.id', '=', 'pembelian.users_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
-        // ->groupBy('pembelian.tanggal')
+        ->where('bank_sampah.id', '=', $banksampahid) 
         ->select('pembelian.id', 'pembelian.num_invoice', 'pembelian.tanggal', 'users.nama', 'pembelian.total_harga', 'transaksi.status')
         ->orderBy('pembelian.id', 'desc')
         ->get()
@@ -46,6 +45,7 @@ class PenjualanController extends Controller
         // $kategori = Kategori::all();
 
         // dd($allpenjualan);
+
 
         return view('banksampah.penjualan.index', compact('allpenjualan'));
     }
@@ -107,11 +107,25 @@ class PenjualanController extends Controller
         $validate = $request->validate([
             'status' => 'required',
         ]);
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->status = $request->status;
-        $transaksi->save();
 
-        return redirect()->route('penjualan.index')->with('success', 'Data penjualan anda berhasil diperbarui');
+        $user_id = Auth::user()->id;
+        $databanksampah = BankSampah::where('users_id', $user_id)->firstOrFail();      
+        $banksampah_id = $databanksampah->id;
+
+        $pembelian = Pembelian::where('id', $id)->firstOrFail();
+        $pembelian_id = $pembelian->id;
+
+        // dd($banksampah_id);
+        $transaksi = Transaksi::where('pembelian_id', $pembelian_id)
+        ->where('bankSampah_id', $banksampah_id)->get();
+
+        foreach ($transaksi as $data) {
+            $data->status = $request->status;
+            $data->save();
+        }
+
+        return redirect('/penjualan')->with('success','Data berhasil diubah');
+        // return redirect()->route('penjualan.index')->with('success', 'Data penjualan anda berhasil diperbarui');
 
     }
 
