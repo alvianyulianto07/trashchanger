@@ -28,12 +28,25 @@
                                         <td>{{ $data->num_invoice }}</td>
                                         <td>{{ $data->nama }}</td>
                                         <td>Rp. {{ number_format($data->total_harga, 0, ',', '.');}}</td>
-                                        <td>{{ $status }}</td>
+
+                                        <td>
+                                            <form action="{{ route('penjualan.update', $data->id) }}" method="POST">
+                                                @csrf
+                                                <select name="status" class="form-control" onchange="this.form.submit()">
+                                                    <option value="Dibatalkan" @if ($data->status == "Dibatalkan") selected="selected" @endif>Dibatalkan</option>
+                                                    <option value="Dalam Proses" @if ($data->status == "Dalam Proses") selected="selected" @endif>Dalam Proses</option>
+                                                    <option value="Selesai" @if ($data->status == "Selesai") selected="selected" @endif>Selesai</option>
+                                                </select>
+                                            </form>
+                                        </td>
+
+                                        {{-- <td>{{ $status }}</td> --}}
+                                        
                                         <td>
                                             <form action="{{ route('penjualan.cetak', $data->id) }}" method="POST">
                                                 @csrf
                                                 <button class="btn btn-primary btn-sm" value="{{ $data->id }}"
-                                                    type="submit" @if($status === "Dibatalkan") disabled @endif><i class="far fa-print"></i></button>
+                                                    type="submit" @if($status === "Dibatalkan" || $status === "Dalam Proses") disabled @endif><i class="far fa-print"></i></button>
                                             </form>
                                         </td>
                                     </tr>
