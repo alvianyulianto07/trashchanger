@@ -21,12 +21,27 @@
                             <td>{{ $data->nama_banksampah }}</td>
                             <td>{{ $data->alamat }}</td>
                             <td>{{ $data->no_hp }}</td>
-                            <td>{{ $data->status }}</td>
                             <td>
-                                <form id="{{ $data->id }}" class="p-0" action="{{ route('banksampah.accept', $data->id) }}" method="POST">
+                                <form action="{{ route('banksampah.update', $data->id) }}" method="POST">
+                                    @csrf
+                                    <select name="status" class="form-control" onchange="this.form.submit()">
+                                        <option value="Disetujui" @if ($data->status == "Disetujui") selected="selected" @endif>Disetujui</option>
+                                        <option value="Mengajukan" @if ($data->status == "Mengajukan") selected="selected" @endif>Mengajukan</option>
+                                    </select>
+                                </form>
+                            </td>
+                            {{-- <td>
+                                <select name="type" id="type" class="form-control">
+                                    <option value="Disetujui" @if ($data->status == "Disetujui") selected="selected" @endif>Disetujui</option>
+                                    <option value="Mengajukan" @if ($data->status == "Mengajukan") selected="selected" @endif>Mengajukan</option>
+                                </select>
+                            </td> --}}
+                            {{-- <td>{{ $data->status }}</td> --}}
+                            <td>
+                                <form id="{{ $data->id }}" class="p-0" action="{{ route('banksampah.update', $data->id) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <a href="{{ route('banksampah.accept', $data->id) }}" class="btn btn-primary btn-sm"><i
+                                    <a href="{{ route('banksampah.update', $data->id) }}" class="btn btn-primary btn-sm"><i
                                             class="fa fa-check"></i></a>
                                     {{-- <button class='delete btn btn-danger btn-sm' value="{{ $data->id }}"
                                         type="submit"><i class="far fa-trash-alt"></i></button> --}}

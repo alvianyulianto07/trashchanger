@@ -9,6 +9,7 @@ class Pembelian extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'num_invoice',
         'users_id',
         'tanggal',
         'tanggal_batal',

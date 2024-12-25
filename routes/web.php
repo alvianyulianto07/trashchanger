@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
         'users' => UserController::class,
         'banksampah' => BankSampahController::class,
     ]);
-    Route::get('/banksampah/{id}', [BankSampahController::class, 'acceptBankSampah'])->name('banksampah.accept');
+    Route::post('/banksampah/{id}', [BankSampahController::class, 'update'])->name('banksampah.update');
     // Route::post('/accept', [BankSampahController::class, 'accept'])->name('banksampah.accept');
     // Route::get('/banksampah', [BankSampahController::class, 'show'])->name('banksampah.index');
 });
@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
 
     Route::get('/daftarbanksampah', [AuthController::class, 'daftarbanksampah']);
     Route::post('/daftarbanksampah', [AuthController::class, 'create']);
+    Route::post('/penjualan/cetak/{id}', [PenjualanController::class, 'generate'])->name('penjualan.cetak');
 
 });
 

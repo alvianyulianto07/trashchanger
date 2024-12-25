@@ -67,10 +67,24 @@ class KeranjangController extends Controller
         }
         if ($collect != []) {
 
+            $characters = 'abcdefghijklmnopqrstuvwxyz';
+            $randomString = '';
+
+            for ($i = 0; $i < 5; $i++) {
+                $index = rand(0, strlen($characters) - 1);
+                $randomString .= $characters[$index];
+            }
+
             $id = Auth::user()->id;
             $autocancelledtime = Carbon::now()->addHours(24)->toDateTimeString();
             $time = Carbon::now()->toDateTimeString();
+            $invoice_num = strtoupper($randomString);
+            $invoice_date = Carbon::now()->isoFormat('YMMDD');
+
+            $invoice_all = $invoice_date . $invoice_num;
+
             Pembelian::create([
+                "num_invoice" => $invoice_all,
                 "users_id" => $id,
                 "tanggal" => $time,
                 "tanggal_batal" => $autocancelledtime,

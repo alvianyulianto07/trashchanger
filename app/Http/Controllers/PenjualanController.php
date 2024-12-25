@@ -3,9 +3,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use App\Models\BankSampah;
+use App\Models\Sampah;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Pembelian;
+use \Datetime;
+use PDF;
 
 class PenjualanController extends Controller
 {
@@ -32,7 +37,7 @@ class PenjualanController extends Controller
         ->join('users', 'users.id', '=', 'pembelian.users_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
         // ->groupBy('pembelian.tanggal')
-        ->select('pembelian.id', 'pembelian.tanggal', 'users.nama', 'pembelian.total_harga', 'transaksi.status')
+        ->select('pembelian.id', 'pembelian.num_invoice', 'pembelian.tanggal', 'users.nama', 'pembelian.total_harga', 'transaksi.status')
         ->orderBy('pembelian.id', 'desc')
         ->get()
         ->groupBy(['id', 'status']);
@@ -119,5 +124,61 @@ class PenjualanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function generate($id)
+    {
+
+        $user_id = Auth::user()->id;
+
+        $datapembelian = Pembelian::where('id', $id)->firstOrFail();
+        $pembelian_id = $datapembelian->id;
+        $pembelian_invoice = $datapembelian->num_invoice;
+        $pembelian_date = $datapembelian->tanggal;
+        $pembelian_date_in_format = new DateTime($pembelian_date);
+        
+        $databanksampah = BankSampah::where('users_id', $user_id)->firstOrFail();        
+        $banksampah_name = $databanksampah->nama_banksampah;
+        $banksampah_id = $databanksampah->id;
+
+        $datauser = User::where('id', $user_id)->firstOrFail();        
+        $banksampah_address = $datauser->alamat;
+        $banksampah_phone = $datauser->no_hp;
+        
+
+        $items = [];
+        $total = 0;
+        $datatransaksi = Transaksi::where('pembelian_id', $pembelian_id)
+                ->where('banksampah_id', $banksampah_id)
+                ->get();
+        foreach ($datatransaksi as $data) {
+            $c_sampah = Sampah::where('id', $data->sampah_id)->firstOrFail();
+            
+            $items[] = [
+                'name' => $c_sampah->nama_sampah,
+                'price' => $c_sampah->harga,
+                'stock' => $data->jumlah_barang,
+                'total' => $c_sampah->harga * $data->jumlah_barang,
+            ];
+            $total = $total + ($c_sampah->harga * $data->jumlah_barang);
+        }
+
+        // Define data for the invoice
+        $data = [
+            'bank_name' => $banksampah_name,
+            'address' => $banksampah_address,
+            'phone' => $banksampah_phone,
+            'date' => $pembelian_date_in_format->format('d/m/Y H:i'),
+            'invoice_number' => $pembelian_invoice,
+            'items' => $items,
+            'grand_total' => $total,
+        ];
+        
+        $pdf = PDF::loadView('banksampah.penjualan.invoice', $data);
+        $pdf->setPaper('A5', 'portrait'); // or 'landscape' for landscape orientation
+
+        $filename = $banksampah_name . "_" . $pembelian_invoice . "_" . $pembelian_date_in_format->format('d_m_Y_H_i') . ".pdf";
+
+        return $pdf->download($filename);
     }
 }

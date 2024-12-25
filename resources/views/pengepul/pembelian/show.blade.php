@@ -173,7 +173,7 @@
                         <p class="invoice">Tanggal Pembelian</p>
                     </div>
                     <div class="col-10">
-                        <p class="invoice-nomer">: {{ $pembelian->tanggal }}/mpl</p>
+                        <p class="invoice-nomer">: {{ $pembelian->num_invoice }}</p>
                         <p class="invoice-data">: {{ $pembelian->tanggal }}</p>
                     </div>
                 </div>

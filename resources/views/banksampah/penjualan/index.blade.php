@@ -25,11 +25,17 @@
                                     <tr>
                                         {{-- <td>{{ $loop->iteration }}</td> --}}
                                         <td>{{ $data->tanggal }}</td>
-                                        <td> No INVOICE EXAMPLE </td>
+                                        <td>{{ $data->num_invoice }}</td>
                                         <td>{{ $data->nama }}</td>
                                         <td>Rp. {{ number_format($data->total_harga, 0, ',', '.');}}</td>
                                         <td>{{ $status }}</td>
-                                        <td>  </td>
+                                        <td>
+                                            <form action="{{ route('penjualan.cetak', $data->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-primary btn-sm" value="{{ $data->id }}"
+                                                    type="submit" @if($status === "Dibatalkan" || $status === "Dalam Proses") disabled @endif><i class="far fa-print"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
