@@ -5,7 +5,7 @@ use App\Models\BankSampah;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class BankSampahController extends Controller
+class PengajuanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +20,11 @@ class BankSampahController extends Controller
 
         $allbanksampah = BankSampah::join('users', 'bank_sampah.users_id', '=', 'users.id')
         ->orderBy('bank_sampah.status', 'desc')
-        ->select('bank_sampah.id', 'bank_sampah.nama_banksampah', 'users.alamat', 'users.no_hp')
-        ->where('status', "Disetujui")
+        ->select('bank_sampah.id', 'bank_sampah.nama_banksampah', 'users.alamat', 'users.no_hp', 'bank_sampah.status')
+        ->where('status', "Mengajukan")
         ->get();
 
-        return view('admin.banksampah.index', compact('allbanksampah'));
+        return view('admin.pengajuan.index', compact('allbanksampah'));
     }
 
     /**

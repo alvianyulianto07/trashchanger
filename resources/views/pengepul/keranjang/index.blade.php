@@ -87,7 +87,10 @@
                                                                             <i class="fas fa-plus"></i>
                                                                         </div>
                                                                     </div>
-                                                                    <a class="btn btn-sm btn-danger mx-3"><i
+                                                                    {{-- <a href="{{ route('sampah.edit', $data->id) }}" class="btn btn-primary btn-sm"><i
+                                                                            class="fa fa-edit"></i></a> --}}
+                                                                    
+                                                                    <a id="remove-item-{{$item->id}}" href="{{ route('keranjang.removefromcart', $item->id) }}" class="btn btn-sm btn-danger mx-3"><i
                                                                             class="far fa-trash-alt"
                                                                             style="margin-right: 5px"></i>Hapus</a>
                                                                 </div>
@@ -224,7 +227,7 @@
             }
 
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
 
         function totalCost(id, step) {

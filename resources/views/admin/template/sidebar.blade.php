@@ -8,13 +8,13 @@
         </div>
         <ul class="sidebar-menu" id="sidebar-menu">
 
-            <li class="{{ request()->is('banksampah', 'banksampah/*') ? 'active' : '' }}">
-                <a class="nav-link" href="/banksampah"><i class="fas fa-bars-progress"></i><span>Bank Sampah</span></a>
+            <li class="{{ request()->is('pengajuan', 'pengajuan/*') ? 'active' : '' }}">
+                <a class="nav-link" href="/pengajuan"><i class="fas fa-bars-progress"></i><span>Pengajuan</span></a>
             </li>
 
 
-            <li class="{{ request()->is('users', 'users/*') ? 'active' : '' }}">
-              <a class="nav-link" href="/users"><i class="fas fa-shop"></i><span>Users</span></a>
+            <li class="{{ request()->is('banksampah', 'banksampah/*') ? 'active' : '' }}">
+              <a class="nav-link" href="/banksampah"><i class="fas fa-shop"></i><span>Bank Sampah</span></a>
             </li>
         </ul>
 {{-- 

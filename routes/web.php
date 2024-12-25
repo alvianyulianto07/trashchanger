@@ -10,6 +10,7 @@ use App\Http\Controllers\SampahController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\PengajuanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +45,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
 Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
     Route::resources([
-        'users' => UserController::class,
+        'pengajuan' => PengajuanController::class,
         'banksampah' => BankSampahController::class,
     ]);
     Route::post('/banksampah/{id}', [BankSampahController::class, 'update'])->name('banksampah.update');
@@ -64,6 +65,7 @@ Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
     Route::get('/toko/{id}/{idsampah}', [TokoController::class, 'showSampah'])->name('beranda.showsampah');
     Route::post('/search', [TokoController::class, 'search'])->name('beranda.search');
     Route::post('/addToCart', [TokoController::class, 'addToCart'])->name('beranda.keranjang');
+    Route::get('/removefromcart/{id}', [KeranjangController::class, 'removefromcart'])->name('keranjang.removefromcart');
     Route::post('/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
 });
 

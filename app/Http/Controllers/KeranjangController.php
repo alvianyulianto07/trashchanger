@@ -115,4 +115,14 @@ class KeranjangController extends Controller
         }
         return back()->with('success', 'Sukses Menambahkan Barang');
     }
+
+
+    public function removefromcart($id)
+    {
+
+        $keranjang = Keranjang::where('id', $id)->firstOrFail();
+
+        $keranjang->delete();
+        return back()->with('success', 'Sukses Menghapus Barang');
+    }
 }

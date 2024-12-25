@@ -11,19 +11,19 @@
             <li class="{{ request()->is('sampah', 'sampah/*') ? 'active' : '' }}">
                 <a class="nav-link" href="/sampah"><i class="fas fa-bars-progress"></i><span>Manajemen</span></a>
             </li>
-
+{{-- 
 
             <li class="{{ request()->is('kategori') ? 'active' : '' }}">
               <a class="nav-link" href="/kategori"><i class="fas fa-shop"></i><span>Kategori</span></a>
-          </li>
+          </li> --}}
 
             <li class="{{ request()->is('penjualan') ? 'active' : '' }}">
                 <a class="nav-link" href="/penjualan"><i class="fas fa-shop"></i><span>Penjualan</span></a>
             </li>
 
-            <li class="{{ request()->is('profil') ? 'active' : '' }}">
+            {{-- <li class="{{ request()->is('profil') ? 'active' : '' }}">
                 <a class="nav-link" href="/profil"><i class="fas fa-user"></i><span>Profile</span></a>
-            </li>
+            </li> --}}
 
             {{-- <li class="{{ request()->is('kendaraan', 'kendaraan-mobil', 'kendaraan/*', 'kendaraan-mobil/*') ? 'active' : ''}}">
           <a href="#" class="nav-link"><i class="fas fa-light fa-car-side"></i><span>Kendaraan</span></a>

@@ -33,7 +33,7 @@
                                             <form action="{{ route('penjualan.cetak', $data->id) }}" method="POST">
                                                 @csrf
                                                 <button class="btn btn-primary btn-sm" value="{{ $data->id }}"
-                                                    type="submit" @if($status === "Dibatalkan" || $status === "Dalam Proses") disabled @endif><i class="far fa-print"></i></button>
+                                                    type="submit" @if($status === "Dibatalkan") disabled @endif><i class="far fa-print"></i></button>
                                             </form>
                                         </td>
                                     </tr>
