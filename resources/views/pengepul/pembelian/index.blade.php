@@ -65,7 +65,6 @@
                     var status = "Selesai";
 
                     var dibatalkan_count = 0;
-                    var cur_status = "Selesai";
 
                     item.forEach(function(trx) {
                         id_pembelian = trx["id"];
@@ -74,7 +73,7 @@
                         var trx_status = trx["status"];
 
                         if (trx_status == "Dalam Proses"){
-                            cur_status = "Dalam Proses";
+                            status = "Dalam Proses";
                         } else if (trx_status == "Dibatalkan") {
                             dibatalkan_count += 1;
                         }
