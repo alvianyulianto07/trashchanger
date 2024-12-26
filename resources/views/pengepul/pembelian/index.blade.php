@@ -90,7 +90,7 @@
                     tanggal_batal = tanggal_batal + "Z";
                     var countDownDate = new Date(tanggal_batal).getTime();
 
-                    if (status != "Dibatalkan"){
+                    if (status == "Dalam Proses"){
                     // Update the count down every 1 second
                         var x = setInterval(function() {
 
@@ -125,16 +125,10 @@
                             if (distance <= 0) {
                                 clearInterval(x);
                                 document.getElementById(idtimer).innerHTML = "";
-                                // if (status != "Dibatalkan"){
-                                //     location.reload();
-                                // }
                             } else {
                                 document.getElementById(idtimer).innerHTML = content;
                             }
                         }, 1000);
-                    } else {
-                        const idtimer = "timer-pembelian-" + id_pembelian;
-                        document.getElementById(idtimer).innerHTML = "";
                     }
                 });
             };
