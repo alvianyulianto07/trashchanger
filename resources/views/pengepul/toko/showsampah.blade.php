@@ -72,8 +72,19 @@
                                 <p><input class="total-harga" id="totalprice" name="total_harga"
                                         value="Rp. {{ number_format($sampah->harga, 0, ',', '.') }}" readonly></p>
                             </div>
-                            <button class="btn btn-success btn-sm mb-2" type="submit">Tambah ke Keranjang</button>
-                            <button class="btn btn-outline-success btn-sm">Beli langsung</button>
+
+                            <input type="hidden" name="action_type" id="action_type" value="">
+                            {{-- <button class="btn btn-success btn-sm mb-2" type="submit">Tambah ke Keranjang</button>
+                            <button class="btn btn-outline-success btn-sm">Beli langsung</button> --}}
+
+                            <button class="btn btn-success btn-sm mb-2" type="submit" 
+                            onclick="document.getElementById('action_type').value='tambah';">
+                            Tambah ke Keranjang
+                            </button>
+                            <button class="btn btn-outline-success btn-sm" type="submit" 
+                                onclick="document.getElementById('action_type').value='beli';">
+                                Beli Langsung
+                            </button>
                         </div>
                     </form>
                 </div>

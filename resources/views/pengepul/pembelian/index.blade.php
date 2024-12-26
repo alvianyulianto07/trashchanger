@@ -20,7 +20,7 @@
                                                 </div>
                                                 <div class="col-8 p-0">
                                                     <p class="status-pembelian">{{ $sampah->status }}</p>
-                                                    <p style="margin: 0" id="timer-pembelian-{{ $sampah->id }}"></p>
+                                                    <p style="margin: 0" id="timer-pembelian-{{ $pembelianid }}"></p>
                                                     <p class="trash-name-keranjang">
                                                         {{-- {{ $pembelian->nama_sampah }} --}}
                                                     </p>
@@ -81,6 +81,8 @@
                         
                     });
 
+                    console.log(id_pembelian);
+
                     if (dibatalkan_count > 0) {
                         status = "Dibatalkan";
                     }
@@ -123,9 +125,9 @@
                             if (distance <= 0) {
                                 clearInterval(x);
                                 document.getElementById(idtimer).innerHTML = "";
-                                if (status != "Dibatalkan"){
-                                    location.reload();
-                                }
+                                // if (status != "Dibatalkan"){
+                                //     location.reload();
+                                // }
                             } else {
                                 document.getElementById(idtimer).innerHTML = content;
                             }
