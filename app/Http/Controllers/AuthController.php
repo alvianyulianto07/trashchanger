@@ -40,7 +40,13 @@ class AuthController extends Controller
             } else if (Auth::user()->role == "1") {
                 return redirect()->intended('/beranda');
             } else {
-                return redirect()->intended('/sampah');
+                $id = Auth::user()->id;
+                $banksampah = BankSampah::where('users_id', $id)->firstOrFail();
+                $status_banksampah = $banksampah->status;
+                if ($status_banksampah == 'Disetujui'){
+                    return redirect()->intended('/sampah');
+                }
+                return redirect()->intended('/beranda');
             }
         }
         return back()->with('login_gagal', 'login gagal');
