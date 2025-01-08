@@ -215,13 +215,13 @@
                                     class="btn btn-sm btn-success mx-3"><i class="fa-brands fa-whatsapp"
                                         style="margin-right: 5px"></i>Chat Penjual</a>
 
-                                @foreach ($alltransaksibanksampah as $transaksi)
+                                <!-- @foreach ($alltransaksibanksampah as $transaksi)
                                     @if ($loop->first)
                                         @if ($transaksi->status != "Dibatalkan")
                                             <a href="" class="btn btn-sm btn-success mx-3"><i class="fa-solid fa-xmark" style="margin-right: 5px"></i>Batalkan Transaksi</a>
                                         @endif
                                     @endif
-                                @endforeach
+                                @endforeach -->
                             </div>
                         </div>
                     @endforeach

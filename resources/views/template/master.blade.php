@@ -48,8 +48,8 @@
                     <form action="/logout" method="POST">
                         @csrf
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="/profil">Profile</a>
-                            <a class="dropdown-item" href="/pengaturan">Settings</a>
+                            <!-- <a class="dropdown-item" href="/profil">Profile</a>
+                            <a class="dropdown-item" href="/pengaturan">Settings</a> -->
                             <button type="submit" class="dropdown-item">Logout</button>
                         </div>
                     </form>
