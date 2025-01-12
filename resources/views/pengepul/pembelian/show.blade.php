@@ -67,6 +67,25 @@
             };
         });
 
+        const originIcon = {
+            path: "M12 2C8.13 2 5 5.13 5 9c0 3.9 3 7.69 6.39 11.53.37.43.89.67 1.42.67.53 0 1.05-.24 1.42-.67C16 16.69 19 12.9 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z", // SVG path for the "place" marker
+            fillColor: "blue",    // Color for origin
+            fillOpacity: 1,       // Fill opacity
+            scale: 1.5,           // Adjust size of the marker
+            strokeWeight: 1,      // Border thickness
+            strokeColor: "white"  // Border color
+        };
+
+        const destinationIcon = {
+            path: "M12 2C8.13 2 5 5.13 5 9c0 3.9 3 7.69 6.39 11.53.37.43.89.67 1.42.67.53 0 1.05-.24 1.42-.67C16 16.69 19 12.9 19 9c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z", // Same SVG path
+            fillColor: "red",     // Color for destination
+            fillOpacity: 1,       // Fill opacity
+            scale: 1.5,           // Adjust size of the marker
+            strokeWeight: 1,      // Border thickness
+            strokeColor: "white"  // Border color
+        };
+
+
         // Request route from Directions service
         directionsService.route(
             {
@@ -82,7 +101,8 @@
                     new google.maps.Marker({
                         position: origin,
                         map: map,
-                        label: 'O'  // Origin label
+                        label: { text: 'O', color: 'white', fontWeight: 'bold' }, // Origin label
+                        icon: originIcon
                     });
 
                     // Custom marker for each waypoint
@@ -98,7 +118,8 @@
                     new google.maps.Marker({
                         position: destination,
                         map: map,
-                        label: 'D'  // Destination label
+                        label: { text: 'D', color: 'white', fontWeight: 'bold' }, // Destination label
+                        icon: destinationIcon
                     });
 
 

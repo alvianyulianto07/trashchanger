@@ -10,7 +10,7 @@
                 <div class="col-5">
                     <h3 style="margin: 0">{{ $sampah->nama_sampah }}</h3>
                     <p>Stok: <strong>{{ $sampah->jumlah }}</strong></p>
-                    <p id="price" class="harga-display">Rp. {{ number_format($sampah->harga, 0, ',', '.') }}</p>
+                    <p id="price" class="harga-display">Rp {{ number_format($sampah->harga, 0, ',', '.') }}</p>
                     <hr>
                     <a href="{{ route('beranda.show', $banksampah->id) }}">
                         <p style="margin: 0">Nama Bank Sampah: <strong>{{ $banksampah->nama_banksampah }}</strong></p>
@@ -50,27 +50,29 @@
                                 <div class="col-7 mb-3">
                                     <div class="d-flex">
                                         <div class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost();">
+                                            onclick="adjustJumlahBarang(-1, {{ $sampah->jumlah }}); totalCost();"
+                                            @if ($sampah->jumlah < 1) disabled style="pointer-events: none; color: gray;" @endif>
                                             <i class="fas fa-minus"></i>
                                         </div>
-
-                                        <input id="jumlah_barang" min="1" name="jumlah_barang" value="1"
-                                            type="number" class="form-control form-control-barang" />
-
+                            
+                                        <input id="jumlah_barang" min="1" max="{{ $sampah->jumlah }}" name="jumlah_barang" value="1"
+                                            type="number" class="form-control form-control-barang" oninput="validateJumlahBarang({{ $sampah->jumlah }});" />
+                            
                                         <div class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost();">
+                                            onclick="adjustJumlahBarang(1, {{ $sampah->jumlah }}); totalCost();"
+                                            @if ($sampah->jumlah < 1) disabled style="pointer-events: none; color: gray;" @endif>
                                             <i class="fas fa-plus"></i>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-5 m-0 p-0">
-                                    <p style="font-size: 12px">Stok: <strong>{{ $sampah->jumlah }}</strong> Kg</p>
+                                    <p style="font-size: 12px">Stok: <strong>{{ $sampah->jumlah }}</strong></p>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between px-2 align-items-center">
                                 <p class="label-total-harga">Total harga</p>
                                 <p><input class="total-harga" id="totalprice" name="total_harga"
-                                        value="Rp. {{ number_format($sampah->harga, 0, ',', '.') }}" readonly></p>
+                                        value="Rp {{ number_format($sampah->harga, 0, ',', '.') }}" readonly></p>
                             </div>
 
                             <input type="hidden" name="action_type" id="action_type" value="">
@@ -146,6 +148,27 @@
             var totalprice = price * totalproduct;
             totalprice = currency(totalprice.toString(), 'Rp');
             document.getElementById("totalprice").value = totalprice;
+        }
+
+        function adjustJumlahBarang(change, max) {
+            const jumlahInput = document.getElementById('jumlah_barang');
+            let currentValue = parseInt(jumlahInput.value, 10) || 1;
+            currentValue += change;
+            if (currentValue >= 1 && currentValue <= max) {
+                jumlahInput.value = currentValue;
+            }
+            totalCost(); // Call your existing function
+        }
+
+        function validateJumlahBarang(max) {
+            const jumlahInput = document.getElementById('jumlah_barang');
+            let currentValue = parseInt(jumlahInput.value, 10) || 1;
+            if (currentValue > max) {
+                jumlahInput.value = max;
+            } else if (currentValue < 1) {
+                jumlahInput.value = 0;
+            }
+            totalCost(); // Call your existing function
         }
     </script>
 @endsection
