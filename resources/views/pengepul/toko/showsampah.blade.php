@@ -50,7 +50,7 @@
                                 <div class="col-7 mb-3">
                                     <div class="d-flex">
                                         <div class="btn btn-link px-2"
-                                            onclick="adjustJumlahBarang(-1, {{ $sampah->jumlah }}); totalCost();"
+                                            onclick="adjustJumlahBarang(-1, {{ $sampah->jumlah }});"
                                             @if ($sampah->jumlah < 1) disabled style="pointer-events: none; color: gray;" @endif>
                                             <i class="fas fa-minus"></i>
                                         </div>
@@ -59,7 +59,7 @@
                                             type="number" class="form-control form-control-barang" oninput="validateJumlahBarang({{ $sampah->jumlah }});" />
                             
                                         <div class="btn btn-link px-2"
-                                            onclick="adjustJumlahBarang(1, {{ $sampah->jumlah }}); totalCost();"
+                                            onclick="adjustJumlahBarang(1, {{ $sampah->jumlah }});"
                                             @if ($sampah->jumlah < 1) disabled style="pointer-events: none; color: gray;" @endif>
                                             <i class="fas fa-plus"></i>
                                         </div>

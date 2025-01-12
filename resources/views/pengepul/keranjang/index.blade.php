@@ -61,6 +61,11 @@
                                                                         Rp.
                                                                         {{ number_format($item->harga, 0, ',', '.') }}/kg
                                                                     </p>
+                                                                    <p class="cost-satuan-keranjang"
+                                                                        id="stok{{ $item->id }}[stok]">
+                                                                        Stok
+                                                                        {{ number_format($item->jumlah, 0, ',', '.') }}
+                                                                    </p>
                                                                     <input
                                                                         value="Rp. {{ number_format($item->harga * $item->jumlah_barang, 0, ',', '.') }}"
                                                                         name="item{{ $item->id }}[total_harga]"
@@ -69,7 +74,22 @@
                                                                 </div>
                                                                 <div class="d-flex justify-content-end">
                                                                     <div class="d-flex justify-content-end">
+
                                                                         <div class="btn btn-link px-2"
+                                                                            onclick="adjustJumlahBarang(-1, {{ $item->id }}, {{ $item->jumlah }});"
+                                                                            @if ($item->jumlah < 1) disabled style="pointer-events: none; color: gray;" @endif>
+                                                                            <i class="fas fa-minus"></i>
+                                                                        </div>
+                                                            
+                                                                        <input id="item{{ $item->id }}[jumlah_barang]" min="1" max="{{ $item->jumlah }}" name="item{{ $item->id }}[jumlah_barang]" value="1"
+                                                                            type="number" class="form-control form-control-barang" oninput="validateJumlahBarang({{ $item->jumlah }}, {{$item->id}});" />
+                                                            
+                                                                        <div class="btn btn-link px-2"
+                                                                            onclick="adjustJumlahBarang(1, {{ $item->id }}, {{ $item->jumlah }});"
+                                                                            @if ($item->jumlah < 1) disabled style="pointer-events: none; color: gray;" @endif>
+                                                                            <i class="fas fa-plus"></i>
+                                                                        </div>
+                                                                        {{-- <div class="btn btn-link px-2"
                                                                             onclick="this.parentNode.querySelector('input[type=number]').stepDown(); totalCost({{ $item->id }}, '-');">
                                                                             <i class="fas fa-minus"></i>
                                                                         </div>
@@ -85,7 +105,7 @@
                                                                         <div class="btn btn-link px-2"
                                                                             onclick="this.parentNode.querySelector('input[type=number]').stepUp(); totalCost({{ $item->id }}, '+');">
                                                                             <i class="fas fa-plus"></i>
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                     {{-- <a href="{{ route('sampah.edit', $data->id) }}" class="btn btn-primary btn-sm"><i
                                                                             class="fa fa-edit"></i></a> --}}
@@ -230,7 +250,7 @@
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
 
-        function totalCost(id, step) {
+        function totalCost(id) {
             var idtotalharga = "item" + id + "[total_harga]";
             var idtotalitem = "item" + id + "[jumlah_barang]";
             var idprice = "item" + id + "[price]";
@@ -322,6 +342,30 @@
                     }
                 }
             }
+        }
+
+        function adjustJumlahBarang(change, itemid, max) {
+            id_field = "item" + itemid + "[jumlah_barang]"
+            console.log(id_field);
+            const jumlahInput = document.getElementById(id_field);
+            let currentValue = parseInt(jumlahInput.value, 10) || 1;
+            currentValue += change;
+            if (currentValue >= 1 && currentValue <= max) {
+                jumlahInput.value = currentValue;
+            }
+            totalCost(itemid); // Call your existing function
+        }
+
+        function validateJumlahBarang(max, itemid) {
+            id_field = "item" + itemid + "[jumlah_barang]"
+            const jumlahInput = document.getElementById(id_field);
+            let currentValue = parseInt(jumlahInput.value, 10) || 1;
+            if (currentValue > max) {
+                jumlahInput.value = max;
+            } else if (currentValue < 1) {
+                jumlahInput.value = 1;
+            }
+            totalCost(itemid); // Call your existing function
         }
     </script>
 @endsection

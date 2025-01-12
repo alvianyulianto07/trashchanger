@@ -29,7 +29,7 @@ class KeranjangController extends Controller
             ->join('sampah', 'sampah.id', '=', 'keranjang.sampah_id')
             ->where('keranjang.users_id', $id);
         $cart = $allcart->get(['keranjang.*', 'bank_sampah.nama_banksampah',
-            'sampah.nama_sampah', 'sampah.harga', 'sampah.foto'])
+            'sampah.nama_sampah', 'sampah.jumlah', 'sampah.harga', 'sampah.foto'])
             ->groupBy('bankSampah_id');
         $banksampah = BankSampah::all();
 
