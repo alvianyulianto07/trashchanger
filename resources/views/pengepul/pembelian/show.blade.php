@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
-    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap" async defer></script>
-    </script>
+    <!-- <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap" async defer></script>
+    </script> -->
+    
     <script>
     function initMap() {
         
@@ -110,7 +111,7 @@
                         new google.maps.Marker({
                             position: waypoint.location,
                             map: map,
-                            label: `W${index + 1}`  // Waypoint label (W1, W2, ...)
+                            label: {text: `W${index + 1}`,color:"white"}  // Waypoint label (W1, W2, ...)
                         });
                     });
 
@@ -118,8 +119,8 @@
                     new google.maps.Marker({
                         position: destination,
                         map: map,
-                        label: { text: 'D', color: 'white', fontWeight: 'bold' }, // Destination label
-                        icon: destinationIcon
+                        label: {text: `W${new_points.length - 1}`, color:"white"}  // Waypoint label (W1, W2, ...)
+                        
                     });
 
 
@@ -137,6 +138,7 @@
         );
     }
 </script>
+<script async="false" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap"></script>
     <style>
         #map {
             height: 500px;
@@ -169,7 +171,7 @@
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"
                             height="30" alt="Avatar" loading="lazy" />
-                        Admin
+                            {{ Auth::user()->nama  }}
                     </a>
                     <form action="/logout" method="POST">
                         @csrf
@@ -269,10 +271,10 @@
                     </div>
                     <div class="card">
                         <div id="map"></div>
-                        {{-- <iframe class="mb-3"
+                        <!-- {{-- <iframe class="mb-3"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.896465492711!2d112.17734576977537!3d-7.100003399999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e778c56bba95239%3A0x1b5fbffeb58417f!2sUD.%20Bintang%20Motor!5e0!3m2!1sid!2sid!4v1675145505514!5m2!1sid!2sid"
                             width="100%" height="500px" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
+                            referrerpolicy="no-referrer-when-downgrade"></iframe> --}} -->
                     </div>
 
                 </div>

@@ -74,4 +74,79 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".select2").select2();
+        });
+
+        function currency(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+        }
+
+        var hargabeli = document.getElementById('harga');
+        hargabeli.addEventListener('keyup', function(e) {
+            hargabeli.value = currency(this.value, 'Rp')
+        })
+
+        function navigate(origin, sens) {
+            var inputs = $('#form').find(':input:enabled:not(:button)');
+            var index = inputs.index(origin);
+            index += sens;
+
+            if (index < 0) {
+                index = inputs.length - 1;
+            }
+            if (index > inputs.length - 1) {
+                index = 0;
+            }
+
+            if (index == 4) {
+                $("#pilihmerk").select2('open');
+            } else if (index == 6) {
+                $("#jenis").select2('open');
+            } else {
+                inputs.eq(index).focus();
+            }
+        }
+
+        $('input').keydown(function(e) {
+            if (e.keyCode == 38) {
+                navigate(e.target, -1);
+            }
+            if (e.keyCode == 40) {
+                navigate(e.target, 1);
+            }
+        });
+
+        $('textarea').keydown(function(e) {
+            if (e.keyCode == 38) {
+                navigate(e.target, -1);
+            }
+            if (e.keyCode == 40) {
+                navigate(e.target, 1);
+            }
+        });
+
+        function selectmetode(id) {
+            $(document).ready(function() {
+                if (id == 3) {
+                    document.getElementById("tipe").focus();
+                } else if (id == 5) {
+                    document.getElementById("model").focus();
+                }
+            });
+        };
+    </script>
 @endsection
