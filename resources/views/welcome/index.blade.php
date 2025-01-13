@@ -187,12 +187,12 @@
             </div>
             <div class="container">
                 <div class="row pt-5 mt-5 pb-5 mb-5">
-                    <div class="col-sm-3">
+                    <!-- <div class="col-sm-3">
                         <div class="d-flex py-3 my-3 my-lg-0 justify-content-center" data-aos="fade-down">
                             <img src="{{ asset('assets/landing/images/satisfied-client.svg') }}"
                                 alt="satisfied-client" class="mr-3">
                             <div>
-                                <h4 class="font-weight-bold text-dark mb-0"><span class="scVal">0</span>%</h4>
+                                <h4 class="font-weight-bold text-dark mb-0"><span class="scVal">1</span>%</h4>
                                 <h5 class="text-dark mb-0">Satisfied clients</h5>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
                                 <h5 class="text-dark mb-0">Our Blog Posts</h5>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>

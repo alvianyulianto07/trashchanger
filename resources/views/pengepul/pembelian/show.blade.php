@@ -111,7 +111,7 @@
                         new google.maps.Marker({
                             position: waypoint.location,
                             map: map,
-                            label: {text: `W${index + 1}`,color:"white"}  // Waypoint label (W1, W2, ...)
+                            label: {text: `T${index + 1}`,color:"white"}  // Waypoint label (W1, W2, ...)
                         });
                     });
 
@@ -119,7 +119,7 @@
                     new google.maps.Marker({
                         position: destination,
                         map: map,
-                        label: {text: `W${new_points.length - 1}`, color:"white"}  // Waypoint label (W1, W2, ...)
+                        label: {text: `T${new_points.length - 1}`, color:"white"}  // Waypoint label (W1, W2, ...)
                         
                     });
 
