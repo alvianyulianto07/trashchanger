@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'cekrole:0']], function () {
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //
-Route::group(['middleware' => ['auth', 'cekrole:1,2']], function () {
+Route::group(['middleware' => ['auth', 'cekrole:1']], function () {
     Route::resources([
         'beranda' => TokoController::class,
         'keranjang' => KeranjangController::class,
@@ -64,10 +64,10 @@ Route::group(['middleware' => ['auth', 'cekrole:1,2']], function () {
     Route::get('/toko/{id}', [TokoController::class, 'show'])->name('beranda.show');
     Route::get('/toko/{id}/{idsampah}', [TokoController::class, 'showSampah'])->name('beranda.showsampah');
     Route::post('/search', [TokoController::class, 'search'])->name('beranda.search');
-    Route::post('/laporan', [PembelianController::class, 'laporan'])->name('beranda.laporan');
     Route::post('/addToCart', [TokoController::class, 'addToCart'])->name('beranda.keranjang');
     Route::get('/removefromcart/{id}', [KeranjangController::class, 'removefromcart'])->name('keranjang.removefromcart');
     Route::post('/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
+    Route::post('/laporan', [PembelianController::class, 'laporan'])->name('beranda.laporan');
     Route::post('/laporan/cetak', [PembelianController::class, 'generate'])->name('pembelian.cetak');
 });
 
@@ -83,8 +83,8 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
     Route::post('/daftarbanksampah', [AuthController::class, 'create']);
     Route::post('/penjualan/cetak/{id}', [PenjualanController::class, 'generate'])->name('penjualan.cetak');
     Route::post('/penjualan/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
-    Route::post('/laporan', [PenjualanController::class, 'laporan'])->name('penjualan.laporan');
-    Route::post('/laporan/cetak', [PenjualanController::class, 'generatelaporan'])->name('penjualan.cetaklaporan');
+    Route::post('/laporanpenjualan', [PenjualanController::class, 'laporan'])->name('penjualan.laporan');
+    Route::post('/laporan/cetakpenjualan', [PenjualanController::class, 'generatelaporan'])->name('penjualan.cetaklaporan');
 
 });
 
