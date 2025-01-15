@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth', 'cekrole:2']], function () {
     Route::post('/daftarbanksampah', [AuthController::class, 'create']);
     Route::post('/penjualan/cetak/{id}', [PenjualanController::class, 'generate'])->name('penjualan.cetak');
     Route::post('/penjualan/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
+    Route::get('/laporan', [PenjualanController::class, 'laporan'])->name('penjualan.laporan');
 
 });
 

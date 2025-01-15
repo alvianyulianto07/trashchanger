@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Pembelian;
 use \Datetime;
 use PDF;
@@ -35,21 +36,64 @@ class PenjualanController extends Controller
         ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
         ->join('users', 'users.id', '=', 'pembelian.users_id')
         ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
-        ->where('bank_sampah.id', '=', $banksampahid) 
-        ->select('pembelian.id', 'pembelian.num_invoice', 'pembelian.tanggal', 'users.nama', 'pembelian.total_harga', 'transaksi.status')
+        ->where('bank_sampah.id', '=', $banksampahid)
+        ->select(
+            'pembelian.id',
+            'pembelian.num_invoice',
+            'pembelian.tanggal',
+            'users.nama',
+            DB::raw('SUM(transaksi.total_harga) as total_harga'), // Sum total_harga for each pembelian
+            'transaksi.status'
+        )
+        ->groupBy('pembelian.id', 'pembelian.num_invoice', 'pembelian.tanggal', 'users.nama', 'transaksi.status') // Ensure all selected columns are in the groupBy
         ->orderBy('pembelian.id', 'desc')
         ->get()
         ->groupBy(['id', 'status']);
-        // dd($allpenjualan);
-        // ->groupBy(['status', 'id', 'nama_banksampah']);
-        // $kategori = Kategori::all();
-
-        // dd($allpenjualan);
 
 
         return view('banksampah.penjualan.index', compact('allpenjualan'));
     }
 
+    
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function laporan()
+    {
+        //
+        $banksampah = BankSampah::where('users_id', Auth::user()->id)->get();
+        // $bs_id = $banksampah->id;
+        $banksampahid = 0;
+        foreach ($banksampah as $data) {
+            $banksampahid = $data->id;
+        }
+        // $penjualan = Transaksi::where('bankSampah_id', $banksampahid)->get();
+        
+        $allpenjualan = Transaksi::join('bank_sampah', 'bank_sampah.id', '=', 'transaksi.bankSampah_id')
+        ->join('pembelian', 'pembelian.id', '=', 'transaksi.pembelian_id')
+        ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
+        ->join('users', 'users.id', '=', 'pembelian.users_id')
+        ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
+        ->where('bank_sampah.id', '=', $banksampahid)
+        ->select(
+            'pembelian.id',
+            'pembelian.num_invoice',
+            'pembelian.tanggal',
+            'users.nama',
+            DB::raw('SUM(transaksi.total_harga) as total_harga'), // Sum total_harga for each pembelian
+            'transaksi.status'
+        )
+        ->groupBy('pembelian.id', 'pembelian.num_invoice', 'pembelian.tanggal', 'users.nama', 'transaksi.status') // Ensure all selected columns are in the groupBy
+        ->orderBy('pembelian.id', 'desc')
+        ->get()
+        ->groupBy(['id', 'status']);
+
+
+        return view('banksampah.laporan.index', compact('allpenjualan'));
+    }
     /**
      * Show the form for creating a new resource.
      *

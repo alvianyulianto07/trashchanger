@@ -81,7 +81,7 @@
                                                                             <i class="fas fa-minus"></i>
                                                                         </div>
                                                             
-                                                                        <input id="item{{ $item->id }}[jumlah_barang]" min="1" max="{{ $item->jumlah }}" name="item{{ $item->id }}[jumlah_barang]" value="1"
+                                                                        <input id="item{{ $item->id }}[jumlah_barang]" min="1" max="{{ $item->jumlah }}" name="item{{ $item->id }}[jumlah_barang]" value="{{$item->jumlah_barang}}"
                                                                             type="number" class="form-control form-control-barang" oninput="validateJumlahBarang({{ $item->jumlah }}, {{$item->id}});" />
                                                             
                                                                         <div class="btn btn-link px-2"

@@ -21,9 +21,9 @@
                 <a class="nav-link" href="/penjualan"><i class="fas fa-shop"></i><span>Penjualan</span></a>
             </li>
 
-            {{-- <li class="{{ request()->is('profil') ? 'active' : '' }}">
-                <a class="nav-link" href="/profil"><i class="fas fa-user"></i><span>Profile</span></a>
-            </li> --}}
+            <li class="{{ request()->is('laporan') ? 'active' : '' }}">
+                <a class="nav-link" href="/laporan"><i class="fas fa-chart-bar"></i><span>Laporan</span></a>
+            </li>
 
             {{-- <li class="{{ request()->is('kendaraan', 'kendaraan-mobil', 'kendaraan/*', 'kendaraan-mobil/*') ? 'active' : ''}}">
           <a href="#" class="nav-link"><i class="fas fa-light fa-car-side"></i><span>Kendaraan</span></a>
