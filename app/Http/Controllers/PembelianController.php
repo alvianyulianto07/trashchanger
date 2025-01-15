@@ -419,6 +419,7 @@ class PembelianController extends Controller
 
         $period = "";
 
+
         if ($s_year == "all")
         {
             $period = "Semua Periode";
@@ -427,6 +428,9 @@ class PembelianController extends Controller
         if ($s_year != "all" && $s_month != "all")
         {
             $period = $s_year . " " . $s_month;
+        } else if ($s_year != "all" && $s_month == "all")
+        {
+            $period = $s_year;
         }
 
         $data = [

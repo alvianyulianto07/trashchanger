@@ -10,10 +10,14 @@
     </style>
 </head>
 <body>
-    <h2 style="text-align: center;">{{ $bank_name }}</h2>
-    <p style="text-align: center;">{{ $address }}</p>
-    <p style="text-align: center;">{{ $phone }}</p>
+
     
+    <h2 style="text-align: center;">Laporan Penjualan</h2>
+
+    <h4 style="margin-bottom: 0px; margin-top: 0px;">{{ $bank_name }}</h4>
+    <p style="margin-bottom: 0px; margin-top: 0px;">{{ $address }}</p>
+    <p style="margin-bottom: px; margin-top: 0px;">{{ $phone }}</p>
+
     <p>Periode: {{ $period }}</p>
 
     <table>
@@ -21,17 +25,15 @@
             <tr>
                 <th>Sampah</th>
                 <th>Terjual</th>
-                <th>Harga</th>
                 <th>Total Penjualan</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($items as $item)
                 <tr>
-                    <td>{{ $item['sampah'] }}</td>
-                    <td>{{ $item['jumlah'] }}</td>
-                    <td>{{ number_format($item['harga'], 0, ',', '.') }}</td>
-                    <td>{{ number_format($item['total'], 0, ',', '.') }}</td>
+                    <td>{{ $item['nama_sampah'] }}</td>
+                    <td>{{ $item['jumlah_barang'] }}</td>
+                    <td>{{ number_format($item['total_harga'], 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
