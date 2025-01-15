@@ -8,8 +8,8 @@
                 </div>
                 <div class="col-10">
                     <p class="nama-toko-show">{{ $banksampah->nama_banksampah }}</p>
-                    <p class="alamat-toko-show">Alamat</p>
-                    <button class="btn btn-sm btn-success">Chat penjual</button>
+                    <!-- <p class="alamat-toko-show">Alamat</p>
+                    <button class="btn btn-sm btn-success">Chat penjual</button> -->
                 </div>
             </div>
         </div>
