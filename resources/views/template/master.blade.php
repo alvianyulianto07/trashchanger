@@ -9,14 +9,14 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap/css/bootstrap.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"> --}}
+
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-
-
-
 </head>
 
 <style>
@@ -85,6 +85,14 @@
                 <div class="col d-flex justify-content-center">
                     <a href="/keranjang"><i class="fas fam fa-cart-shopping"></i></a>
                     <a href="/pembelian"><i class="fas fam fa-receipt"></i></a>
+
+                    <form action="{{ route('beranda.laporan') }}" method="POST">
+                        @csrf
+                        <input type="text" name="year" id="year" value="all" hidden>
+                        <input type="text" name="month" id="month" value="all" hidden>
+                        <button class="text-center border-0 bg-transparent" type="submit" ><i class="fas fam fa-chart-simple"></i></button>
+                    </form>
+                    {{-- <a href="/laporan"><i class="fas fam fa-chart-simple"></i></a> --}}
                 </div>
             </div>
         </div>
@@ -164,6 +172,10 @@
     <script src="{{ asset('assets/modules/popper.js') }}"></script>
     <script src="{{ asset('assets/modules/bootstrap/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/modules/jquery/jquery.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> --}}
 </body>
 
 

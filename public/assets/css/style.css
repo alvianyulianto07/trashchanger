@@ -364,3 +364,8 @@ input[type=number] {
 .alamat-toko-show {
     font-size: 16px;
 }
+
+.filter-date {
+    display: flex;
+}
+

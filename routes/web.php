@@ -64,9 +64,11 @@ Route::group(['middleware' => ['auth', 'cekrole:1,2']], function () {
     Route::get('/toko/{id}', [TokoController::class, 'show'])->name('beranda.show');
     Route::get('/toko/{id}/{idsampah}', [TokoController::class, 'showSampah'])->name('beranda.showsampah');
     Route::post('/search', [TokoController::class, 'search'])->name('beranda.search');
+    Route::post('/laporan', [PembelianController::class, 'laporan'])->name('beranda.laporan');
     Route::post('/addToCart', [TokoController::class, 'addToCart'])->name('beranda.keranjang');
     Route::get('/removefromcart/{id}', [KeranjangController::class, 'removefromcart'])->name('keranjang.removefromcart');
     Route::post('/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
+    Route::post('/laporan/cetak', [PembelianController::class, 'generate'])->name('pembelian.cetak');
 });
 
 // group middleware agar login terlebih dahulu baru bisa akses dashboard dkk //

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
+use PDF;
 
 class PembelianController extends Controller
 {
@@ -28,7 +30,6 @@ class PembelianController extends Controller
         $searchquery = '';
         $banksampah = BankSampah::all();
         $sampah = Sampah::where('status', 'Tersedia')->get();
-
 
         $id = Auth::user()->id;
 
@@ -84,6 +85,93 @@ class PembelianController extends Controller
 
         // dd($alltanggalbatal);
         return view('pengepul.pembelian.index', compact('sampah', 'banksampah', 'kategori', 'searchquery', 'allpembelian', 'alltanggalbatal'));
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function laporan(Request $request)
+    {
+        $currentYear = now()->year;
+
+        $years = [];
+        for ($i = 0; $i < 5; $i++) {
+            $years[] = $currentYear - $i;
+        }
+        $months = [
+            'Desember',
+            'November',
+            'Oktober',
+            'September',
+            'Agustus',
+            'Juli',
+            'Juni',
+            'Mei',
+            'April',
+            'Maret',
+            'Februari',
+            'Januari'
+        ];
+        $months_map = [
+            'Januari' => '01',
+            'Februari' => '02',
+            'Maret' => '03',
+            'April' => '04',
+            'Mei' => '05',
+            'Juni' => '06',
+            'Juli' => '07',
+            'Agustus' => '08',
+            'September' => '09',
+            'Oktober' => '10',
+            'November' => '11',
+            'Desember' => '12',
+        ];
+
+        $id = Auth::user()->id;
+        $s_year = $request->year;
+        $s_month = $request->month;
+
+        $alltransaksi = Pembelian::join('users', 'users.id', '=', 'pembelian.users_id')
+        ->join('transaksi', 'transaksi.pembelian_id', '=', 'pembelian.id')
+        ->join('bank_sampah', 'bank_sampah.id', '=', 'transaksi.bankSampah_id')
+        ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
+        ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
+        ->where('transaksi.status', 'Selesai')
+        ->where('pembelian.users_id', $id);
+
+        if ($s_year != 'all') {
+            if ($s_year == 'current'){
+                $s_year = $currentYear;
+                $alltransaksi->whereYear('pembelian.tanggal', $s_year);
+            } else {
+                $alltransaksi->whereYear('pembelian.tanggal', $s_year);
+            }
+        }
+        if (($s_month != 'all' && $s_year != 'all') && $s_year != 'all') {
+            $c_month = $months_map[$s_month];
+            $alltransaksi->whereMonth('pembelian.tanggal', $c_month);
+        }
+
+        $grand_total = $alltransaksi->sum('pembelian.total_harga');
+
+        $alltransaksi = $alltransaksi->orderBy('pembelian.tanggal', 'desc')
+            ->select(
+                'pembelian.tanggal',
+                'bank_sampah.nama_banksampah',
+                'sampah.nama_sampah',
+                'transaksi.jumlah_barang',
+                'sampah.harga',
+                'pembelian.total_harga'
+            )
+            ->get();
+
+
+        $searchquery = '';
+
+        return view('pengepul.pembelian.laporan', compact('searchquery', 'years', 'months', 'alltransaksi', 's_year', 's_month', 'grand_total'));
     }
 
 
@@ -231,5 +319,184 @@ class PembelianController extends Controller
         return redirect()->route('pembelian.index')->with('success', 'Pembelian dibatalkan');
 
     }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generate(Request $request)
+    {
+        $searchquery = '';
+        $currentYear = now()->year;
+
+        $years = [];
+        for ($i = 0; $i < 5; $i++) {
+            $years[] = $currentYear - $i;
+        }
+        $months = [
+            'Desember',
+            'November',
+            'Oktober',
+            'September',
+            'Agustus',
+            'Juli',
+            'Juni',
+            'Mei',
+            'April',
+            'Maret',
+            'Februari',
+            'Januari'
+        ];
+        $months_map = [
+            'Januari' => '01',
+            'Februari' => '02',
+            'Maret' => '03',
+            'April' => '04',
+            'Mei' => '05',
+            'Juni' => '06',
+            'Juli' => '07',
+            'Agustus' => '08',
+            'September' => '09',
+            'Oktober' => '10',
+            'November' => '11',
+            'Desember' => '12',
+        ];
+
+        $id = Auth::user()->id;
+        $s_year = $request->year;
+        $s_month = $request->month;
+
+        $alltransaksi = Pembelian::join('users', 'users.id', '=', 'pembelian.users_id')
+        ->join('transaksi', 'transaksi.pembelian_id', '=', 'pembelian.id')
+        ->join('bank_sampah', 'bank_sampah.id', '=', 'transaksi.bankSampah_id')
+        ->join('sampah', 'sampah.id', '=', 'transaksi.sampah_id')
+        ->join('kategori', 'kategori.id', '=', 'sampah.kategori_id')
+        ->where('transaksi.status', 'Selesai')
+        ->where('pembelian.users_id', $id);
+
+        if ($s_year != 'all') {
+            if ($s_year == 'current'){
+                $s_year = $currentYear;
+                $alltransaksi->whereYear('pembelian.tanggal', $s_year);
+            } else {
+                $alltransaksi->whereYear('pembelian.tanggal', $s_year);
+            }
+        }
+        if (($s_month != 'all' && $s_year != 'all') && $s_year != 'all') {
+            $c_month = $months_map[$s_month];
+            $alltransaksi->whereMonth('pembelian.tanggal', $c_month);
+        }
+
+        $grand_total = $alltransaksi->sum('pembelian.total_harga');
+
+        $alltransaksi = $alltransaksi->orderBy('pembelian.tanggal', 'desc')
+            ->select(
+                'pembelian.tanggal',
+                'bank_sampah.nama_banksampah',
+                'sampah.nama_sampah',
+                'transaksi.jumlah_barang',
+                'sampah.harga',
+                'pembelian.total_harga'
+            )
+            ->get();
+
+    
+        $items = [];
+        foreach ($alltransaksi as $data) {
+            $items[] = [
+                'tanggal' => $data->tanggal,
+                'nama_banksampah' => $data->nama_banksampah,
+                'nama_sampah' => $data->nama_sampah,
+                'jumlah_barang' => $data->jumlah_barang,
+                'harga' => $data->harga,
+                'total_harga' => $data->total_harga ,
+            ];
+            
+        }
+
+        $period = "";
+
+        if ($s_year == "all")
+        {
+            $period = "Semua Periode";
+        }
+
+        if ($s_year != "all" && $s_month != "all")
+        {
+            $period = $s_year . " " . $s_month;
+        }
+
+        $data = [
+            'period' => $period,
+            'items' => $items,
+            'grand_total' => $grand_total,
+        ];
+        
+        $pdf = PDF::loadView('pengepul.pembelian.report', $data);
+        $pdf->setPaper('A4', 'landscape'); // or 'landscape' for landscape orientation
+
+        $filename = "Laporan Pembelian Periode " . $period . ".pdf";
+    
+        return $pdf->download($filename);
+    }
+
+
+    // public function generate($id)
+    // {
+
+    //     $user_id = Auth::user()->id;
+
+    //     $datapembelian = Pembelian::where('id', $id)->firstOrFail();
+    //     $pembelian_id = $datapembelian->id;
+    //     $pembelian_invoice = $datapembelian->num_invoice;
+    //     $pembelian_date = $datapembelian->tanggal;
+    //     $pembelian_date_in_format = new DateTime($pembelian_date);
+        
+    //     $databanksampah = BankSampah::where('users_id', $user_id)->firstOrFail();        
+    //     $banksampah_name = $databanksampah->nama_banksampah;
+    //     $banksampah_id = $databanksampah->id;
+
+    //     $datauser = User::where('id', $user_id)->firstOrFail();        
+    //     $banksampah_address = $datauser->alamat;
+    //     $banksampah_phone = $datauser->no_hp;
+        
+
+    //     $items = [];
+    //     $total = 0;
+    //     $datatransaksi = Transaksi::where('pembelian_id', $pembelian_id)
+    //             ->where('banksampah_id', $banksampah_id)
+    //             ->get();
+    //     foreach ($datatransaksi as $data) {
+    //         $c_sampah = Sampah::where('id', $data->sampah_id)->firstOrFail();
+            
+    //         $items[] = [
+    //             'name' => $c_sampah->nama_sampah,
+    //             'price' => $c_sampah->harga,
+    //             'stock' => $data->jumlah_barang,
+    //             'total' => $c_sampah->harga * $data->jumlah_barang,
+    //         ];
+    //         $total = $total + ($c_sampah->harga * $data->jumlah_barang);
+    //     }
+
+    //     // Define data for the invoice
+    //     $data = [
+    //         'bank_name' => $banksampah_name,
+    //         'address' => $banksampah_address,
+    //         'phone' => $banksampah_phone,
+    //         'date' => $pembelian_date_in_format->format('d/m/Y H:i'),
+    //         'invoice_number' => $pembelian_invoice,
+    //         'items' => $items,
+    //         'grand_total' => $total,
+    //     ];
+        
+    //     $pdf = PDF::loadView('banksampah.penjualan.invoice', $data);
+    //     $pdf->setPaper('A5', 'portrait'); // or 'landscape' for landscape orientation
+
+    //     $filename = $banksampah_name . "_" . $pembelian_invoice . "_" . $pembelian_date_in_format->format('d_m_Y_H_i') . ".pdf";
+
+    //     return $pdf->download($filename);
+    // }
     
 }
