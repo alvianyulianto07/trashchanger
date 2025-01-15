@@ -155,8 +155,6 @@ class PembelianController extends Controller
             $alltransaksi->whereMonth('pembelian.tanggal', $c_month);
         }
 
-        $grand_total = $alltransaksi->sum('pembelian.total_harga');
-
         $alltransaksi = $alltransaksi->orderBy('pembelian.tanggal', 'desc')
             ->select(
                 'pembelian.tanggal',
@@ -164,10 +162,11 @@ class PembelianController extends Controller
                 'sampah.nama_sampah',
                 'transaksi.jumlah_barang',
                 'sampah.harga',
-                'pembelian.total_harga'
+                DB::raw('transaksi.jumlah_barang * sampah.harga as total_harga')
             )
             ->get();
 
+        $grand_total = $alltransaksi->sum('total_harga');
 
         $searchquery = '';
 
@@ -398,9 +397,11 @@ class PembelianController extends Controller
                 'sampah.nama_sampah',
                 'transaksi.jumlah_barang',
                 'sampah.harga',
-                'pembelian.total_harga'
+                DB::raw('transaksi.jumlah_barang * sampah.harga as total_harga')
             )
             ->get();
+
+        $grand_total = $alltransaksi->sum('total_harga');
 
     
         $items = [];
